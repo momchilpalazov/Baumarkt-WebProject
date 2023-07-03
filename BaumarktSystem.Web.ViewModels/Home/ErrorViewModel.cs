@@ -1,4 +1,4 @@
-namespace Baumarkt_E_commerce_Platform.Models
+namespace BaumarktSystem.Web.ViewModels.Home
 {
     public class ErrorViewModel
     {

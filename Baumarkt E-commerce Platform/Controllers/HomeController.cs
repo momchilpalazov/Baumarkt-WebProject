@@ -1,4 +1,4 @@
-﻿using Baumarkt_E_commerce_Platform.Models;
+﻿using BaumarktSystem.Web.ViewModels.Home;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

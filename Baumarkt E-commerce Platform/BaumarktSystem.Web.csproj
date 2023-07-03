@@ -16,4 +16,10 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.19" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BaumarktSystem.Common\BaumarktSystem.Common.csproj" />
+    <ProjectReference Include="..\BaumarktSystem.Data\BaumarktSystem.Data.csproj" />
+    <ProjectReference Include="..\BaumarktSystem.Web.ViewModels\BaumarktSystem.Web.ViewModels.csproj" />
+  </ItemGroup>
+
 </Project>
