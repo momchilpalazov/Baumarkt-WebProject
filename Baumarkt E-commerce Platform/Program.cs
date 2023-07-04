@@ -1,4 +1,5 @@
 using Baumarkt_E_commerce_Platform.Data;
+using BaumarktSystem.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,11 +14,11 @@ namespace Baumarkt_E_commerce_Platform
             // Add services to the container.
             var connectionString = 
                 builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            builder.Services.AddDbContext<BaumarktSystemDbContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+            builder.Services.AddDefaultIdentity<User>(options =>
 
             {
                 options.SignIn.RequireConfirmedAccount = true;
@@ -25,7 +26,7 @@ namespace Baumarkt_E_commerce_Platform
 
 
 
-            }).AddEntityFrameworkStores<ApplicationDbContext>();
+            }).AddEntityFrameworkStores<BaumarktSystemDbContext>();
 
             builder.Services.AddControllersWithViews();
 

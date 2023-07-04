@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Baumarkt_E_commerce_Platform.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class BaumarktSystemDbContext : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public BaumarktSystemDbContext(DbContextOptions<BaumarktSystemDbContext> options)
             : base(options)
         {
         }
