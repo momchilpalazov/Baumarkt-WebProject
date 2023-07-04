@@ -15,4 +15,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BaumarktSystem.Common\BaumarktSystem.Common.csproj" />
+    <ProjectReference Include="..\BaumarktSystem.Data.Models\BaumarktSystem.Data.Models.csproj" />
+  </ItemGroup>
+
 </Project>

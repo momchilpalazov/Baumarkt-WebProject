@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BaumarktSystem.Common\BaumarktSystem.Common.csproj" />
+  </ItemGroup>
+
 </Project>
