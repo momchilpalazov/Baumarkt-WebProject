@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Baumarkt_E_commerce_Platform.Data
 {
-    public class BaumarktSystemDbContext : IdentityDbContext<User,IdentityRole<Guid>,Guid>
+    public class BaumarktSystemDbContext : IdentityDbContext<ApplicationUser,IdentityRole<Guid>,Guid>
     {
         public BaumarktSystemDbContext(DbContextOptions<BaumarktSystemDbContext> options)
             : base(options)

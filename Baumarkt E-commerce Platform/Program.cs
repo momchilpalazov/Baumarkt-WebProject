@@ -18,7 +18,7 @@ namespace Baumarkt_E_commerce_Platform
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<User>(options =>
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 
             {
                 options.SignIn.RequireConfirmedAccount = true;

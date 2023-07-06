@@ -54,7 +54,7 @@ namespace BaumarktSystem.Data.Models
 
         public Guid? UserId { get; set; }
 
-        public virtual User? User { get; set; }=null!;
+        public virtual ApplicationUser? ApplicationUser { get; set; }=null!;
 
 
         public virtual ICollection<CartItem> CartItems { get; set; }=new HashSet<CartItem>();
