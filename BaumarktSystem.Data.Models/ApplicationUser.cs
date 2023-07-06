@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static BaumarktSystem.Common.EntityValidationConstanst.ApplicationUser;
 
 namespace BaumarktSystem.Data.Models
 {
@@ -14,32 +15,38 @@ namespace BaumarktSystem.Data.Models
     {
 
         public ApplicationUser()
-        {
-            this.Id = Guid.NewGuid();
+        {            
 
             this.CartItem = new HashSet<CartItem>();
 
-        }
-
-       
+        }      
 
 
 
             [Required]
-            public string Name { get; set; }=null!;             
+            [MaxLength(NameMaxLength)]
+            [MinLength(NameMinLength)]
+            public string Name { get; set; }=null!;
 
-             
+
+            [MaxLength(AddressMaxLength)]
+            [MinLength(AddressMinLength)]
             public string Address { get; set; }=null!;
-            
+
+            [MaxLength(CityMaxLength)]
+            [MinLength(CityMinLength)]
             public string City { get; set; }=null!;
-            
+
+            [MaxLength(PostalCodeMaxLength)]
+            [MinLength(PostalCodeMinLength)]
             public string PostalCode { get; set; }=null!;
 
-            public virtual ICollection<CartItem> CartItem { get; set; } = new HashSet<CartItem>();
+            [Required(ErrorMessage = "The Role field is required.")]
+            [MaxLength(RoleMaxLength)]
+            [MinLength(RoleMinLength)]
+            public string Role { get; set; } = null!;            
 
-
-
-
+            public virtual ICollection<CartItem> CartItem { get; set; } = new HashSet<CartItem>();     
 
 
 

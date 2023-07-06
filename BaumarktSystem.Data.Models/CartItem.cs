@@ -18,6 +18,11 @@ namespace BaumarktSystem.Data.Models
         [ForeignKey(nameof(ProductId))]
         public virtual Product Product { get; set; }=null!;
 
+        public Guid? ApplicationUserId { get; set; }
+
+        [ForeignKey(nameof(ApplicationUserId))]
+        public virtual ApplicationUser? ApplicationUser { get; set; }=null!;
+
 
 
     }
