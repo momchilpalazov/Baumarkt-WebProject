@@ -21,6 +21,7 @@ namespace BaumarktSystem.Data.Models
         public Guid? ApplicationUserId { get; set; }
 
         [ForeignKey(nameof(ApplicationUserId))]
+
         public virtual ApplicationUser? ApplicationUser { get; set; }=null!;
 
 

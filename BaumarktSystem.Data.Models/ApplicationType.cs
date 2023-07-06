@@ -6,8 +6,8 @@ namespace BaumarktSystem.Data.Models
     public class ApplicationType
     {
 
-
-        public int Id { get; set; } = 0;
+        [Key]
+        public int Id { get; set; } 
 
         [Required]
         [MaxLength(NameMaxLength)]

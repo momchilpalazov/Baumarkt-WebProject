@@ -46,10 +46,10 @@ namespace BaumarktSystem.Data.Models
         public virtual Category Category { get; set; }=null!;
 
         [Display(Name = "Type")]
-        public int TypeId { get; set; }
+        public int ApplicationTypeId { get; set; }
 
-        [ForeignKey(nameof(TypeId))]
-        public virtual ApplicationType Type { get; set; }=null!;
+        [ForeignKey(nameof(ApplicationTypeId))]
+        public virtual ApplicationType ApplicationType { get; set; }=null!;
 
 
         public Guid? ApplicationUserId { get; set; }
