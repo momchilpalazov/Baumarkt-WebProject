@@ -28,10 +28,10 @@ namespace Baumarkt_E_commerce_Platform.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+
+            builder.ApplyConfigurationsFromAssembly (typeof(BaumarktSystemDbContext).Assembly);
+
             base.OnModelCreating(builder);
-
-
-
            
 
         }

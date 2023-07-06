@@ -15,11 +15,16 @@ namespace BaumarktSystem.Data.Configurations
         public void Configure(EntityTypeBuilder<Product> builder)
         {
 
+            builder.HasOne(p => p.Category)
+           .WithMany(c => c.Products)
+           .HasForeignKey(p => p.CategoryId)
+           .OnDelete(DeleteBehavior.Restrict);
 
+            builder.HasOne(p => p.ApplicationType)
+                .WithMany()
+                .HasForeignKey(p => p.ApplicationTypeId)
+                .OnDelete(DeleteBehavior.Restrict); 
 
-           
-
-           
         }
 
 
