@@ -12,39 +12,39 @@ using Category = BaumarktSystem.Data.Models.Category;
 
 namespace BaumarktSystem.Data.Configurations
 {
-    public class ApplicationTypeEntityConfiguration : IEntityTypeConfiguration<ApplicationType>
-    {
-        public void Configure(EntityTypeBuilder<ApplicationType> builder)
-        {
-            builder.HasData(AddApplicationType());
-        }
+    //public class ApplicationTypeEntityConfiguration : IEntityTypeConfiguration<ApplicationType>
+    //{
+    //    public void Configure(EntityTypeBuilder<ApplicationType> builder)
+    //    {
+    //        builder.HasData(AddApplicationType());
+    //    }
 
 
-        private ApplicationType[] AddApplicationType()
-        {
+    //    private ApplicationType[] AddApplicationType()
+    //    {
 
-            ICollection<ApplicationType> applicationTypes = new HashSet<ApplicationType>();
+    //        ICollection<ApplicationType> applicationTypes = new HashSet<ApplicationType>();
 
-            ApplicationType applicationType;
+    //        ApplicationType applicationType;
 
-            applicationType = new ApplicationType()
-            {
-                Id = 1,
-                Name = "Admin"
-
-
-            };
-
-            applicationTypes.Add(applicationType);
-
-            return applicationTypes.ToArray();
+    //        applicationType = new ApplicationType()
+    //        {
+    //            Id = 1,
+    //            Name = "Admin"
 
 
+    //        };
+
+    //        applicationTypes.Add(applicationType);
+
+    //        return applicationTypes.ToArray();
 
 
 
-        }
 
 
-    }
+    //    }
+
+
+    //}
 }

@@ -5,17 +5,21 @@ VisualStudioVersion = 17.6.33801.468
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaumarktSystem.Web", "Baumarkt E-commerce Platform\BaumarktSystem.Web.csproj", "{8718C7E9-9CED-43AD-A27B-D5797C264153}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaumarktSystem.Common", "BaumarktSystem.Common\BaumarktSystem.Common.csproj", "{47FEDDF0-E3B6-4873-9259-D38E440673AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaumarktSystem.Common", "BaumarktSystem.Common\BaumarktSystem.Common.csproj", "{47FEDDF0-E3B6-4873-9259-D38E440673AE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{55E42572-855E-488B-9384-18B144F512FE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{768A2B8D-54AE-44EC-A094-CC6C5C4FA791}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaumarktSystem.Data", "BaumarktSystem.Data\BaumarktSystem.Data.csproj", "{C59606F0-A4FE-4CAD-8BAA-C5194D4B2E62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaumarktSystem.Data", "BaumarktSystem.Data\BaumarktSystem.Data.csproj", "{C59606F0-A4FE-4CAD-8BAA-C5194D4B2E62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaumarktSystem.Data.Models", "BaumarktSystem.Data.Models\BaumarktSystem.Data.Models.csproj", "{B48FDF3F-DC28-46F3-B9C6-4BF8784EF700}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaumarktSystem.Data.Models", "BaumarktSystem.Data.Models\BaumarktSystem.Data.Models.csproj", "{B48FDF3F-DC28-46F3-B9C6-4BF8784EF700}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaumarktSystem.Web.ViewModels", "BaumarktSystem.Web.ViewModels\BaumarktSystem.Web.ViewModels.csproj", "{85B5D7E7-CD55-4451-9167-CCCC6A6C0F93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaumarktSystem.Web.ViewModels", "BaumarktSystem.Web.ViewModels\BaumarktSystem.Web.ViewModels.csproj", "{85B5D7E7-CD55-4451-9167-CCCC6A6C0F93}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{3BF8A187-4029-46BB-BF92-9BEA75AAF907}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaumarktSystem.Services.Data", "BaumarktSystem.Services.Data\BaumarktSystem.Services.Data.csproj", "{8441A0ED-68D3-4E01-A80C-BE6802D07E40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +47,10 @@ Global
 		{85B5D7E7-CD55-4451-9167-CCCC6A6C0F93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85B5D7E7-CD55-4451-9167-CCCC6A6C0F93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{85B5D7E7-CD55-4451-9167-CCCC6A6C0F93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8441A0ED-68D3-4E01-A80C-BE6802D07E40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8441A0ED-68D3-4E01-A80C-BE6802D07E40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8441A0ED-68D3-4E01-A80C-BE6802D07E40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8441A0ED-68D3-4E01-A80C-BE6802D07E40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +60,7 @@ Global
 		{C59606F0-A4FE-4CAD-8BAA-C5194D4B2E62} = {768A2B8D-54AE-44EC-A094-CC6C5C4FA791}
 		{B48FDF3F-DC28-46F3-B9C6-4BF8784EF700} = {768A2B8D-54AE-44EC-A094-CC6C5C4FA791}
 		{85B5D7E7-CD55-4451-9167-CCCC6A6C0F93} = {55E42572-855E-488B-9384-18B144F512FE}
+		{8441A0ED-68D3-4E01-A80C-BE6802D07E40} = {3BF8A187-4029-46BB-BF92-9BEA75AAF907}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {00B1317E-FE13-4E61-BA01-1831F92214E7}

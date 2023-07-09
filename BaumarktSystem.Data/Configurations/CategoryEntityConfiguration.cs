@@ -11,65 +11,65 @@ using Category = BaumarktSystem.Data.Models.Category;
 
 namespace BaumarktSystem.Data.Configurations
 {
-    public class CategoryEntityConfiguration : IEntityTypeConfiguration<Category>
-    {
-        public void Configure(EntityTypeBuilder<Category> builder)
-        {
-            builder.HasData(AddCategories());
-        }
+    //public class CategoryEntityConfiguration : IEntityTypeConfiguration<Category>
+    //{
+    //    public void Configure(EntityTypeBuilder<Category> builder)
+    //    {
+    //        builder.HasData(AddCategories());
+    //    }
 
 
-        private Category[] AddCategories()
-        {
+    //    private Category[] AddCategories()
+    //    {
 
-            ICollection<Category> categories = new HashSet<Category>();
+    //        ICollection<Category> categories = new HashSet<Category>();
 
-            Category category;
+    //        Category category;
 
-            category = new Category()
-            {
-                Id = 1,
-                Name = "Bodenbeläge",
-                ShowOrder = 1
+    //        category = new Category()
+    //        {
+    //            Id = 1,
+    //            Name = "Bodenbeläge",
+    //            ShowOrder = 1
 
-            };
+    //        };
 
-            categories.Add(category);
+    //        categories.Add(category);
 
-            category = new Category()
-            {
-                Id = 2,
-                Name = "Farben",
-               ShowOrder = 2
+    //        category = new Category()
+    //        {
+    //            Id = 2,
+    //            Name = "Farben",
+    //           ShowOrder = 2
 
-            };
-            categories.Add(category);
+    //        };
+    //        categories.Add(category);
 
-            category = new Category()
-            {
-                Id = 3,
-                Name = "Werkzeuge",
-                ShowOrder = 3
+    //        category = new Category()
+    //        {
+    //            Id = 3,
+    //            Name = "Werkzeuge",
+    //            ShowOrder = 3
 
-            };
+    //        };
 
-            categories.Add(category);
+    //        categories.Add(category);
 
-            category = new Category()
-            {
-                Id = 4,
-                Name = "Garten",
-                ShowOrder = 4
+    //        category = new Category()
+    //        {
+    //            Id = 4,
+    //            Name = "Garten",
+    //            ShowOrder = 4
 
-            };
-            categories.Add(category);
+    //        };
+    //        categories.Add(category);
 
-            return categories.ToArray();
-
-
-
-        }
+    //        return categories.ToArray();
 
 
-    }
+
+    //    }
+
+
+    //}
 }

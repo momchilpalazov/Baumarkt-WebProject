@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BaumarktSystem.Common\BaumarktSystem.Common.csproj" />
+    <ProjectReference Include="..\BaumarktSystem.Data.Models\BaumarktSystem.Data.Models.csproj" />
+    <ProjectReference Include="..\BaumarktSystem.Data\BaumarktSystem.Data.csproj" />
+    <ProjectReference Include="..\BaumarktSystem.Web.ViewModels\BaumarktSystem.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>

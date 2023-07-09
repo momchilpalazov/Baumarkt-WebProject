@@ -1,6 +1,7 @@
 using Baumarkt_E_commerce_Platform.Data;
 using BaumarktSystem.Data.Models;
-using Microsoft.AspNetCore.Identity;
+using BaumarktSystem.Services.Data;
+using BaumarktSystem.Services.Data.Interaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Baumarkt_E_commerce_Platform
@@ -30,6 +31,15 @@ namespace Baumarkt_E_commerce_Platform
             }).AddEntityFrameworkStores<BaumarktSystemDbContext>();
 
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddScoped<ICategoryInterface,CategoryService>();
+
+            //builder.Services.AddApplicationServices(typeof(IHouseService));
+
+
+            builder.Services.AddControllersWithViews();
+
+            builder.Services.AddRazorPages();
 
 
             var app = builder.Build();
