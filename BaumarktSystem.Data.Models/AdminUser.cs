@@ -12,11 +12,14 @@ namespace BaumarktSystem.Data.Models
 
         public AdminUser()
         {
-            this.Id = Guid.NewGuid();
-
-            this.CartItem = new HashSet<CartItem>();
+            this.Id = Guid.NewGuid();            
 
         }      
+
+
+
+
+
 
 
     }

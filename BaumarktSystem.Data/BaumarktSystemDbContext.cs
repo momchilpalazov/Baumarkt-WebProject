@@ -26,6 +26,9 @@ namespace Baumarkt_E_commerce_Platform.Data
         public DbSet<CartItem> CartItem { get; set; } = null!;
 
 
+       
+
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
 

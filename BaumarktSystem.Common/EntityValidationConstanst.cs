@@ -28,26 +28,22 @@ namespace BaumarktSystem.Common
         public static class Product
         {
             //NameValidation
-            public const int NameMinLength = 3;
-            public const int NameMaxLength = 50;
+            public const int FullNameMinLength = 3;
+            public const int FullNameMaxLength = 10000;
 
             public const int ShortProductDescriptionMinLength = 3;
-            public const int ShortProductDescriptionMaxLength = 50;
+            public const int ShortProductDescriptionMaxLength = 10000;
 
             public const int DescriptionMinLength = 3;
-            public const int DescriptionMaxLength = 1000;
+            public const int DescriptionMaxLength = 10000;
 
-            public const int PriceMinValue = 0;
+            public const int PriceMinValue = 1;
             public const int PriceMaxValue = 1000000;
 
-            public const int ImageUrlMinLength = 3;
-            public const int ImageUrlMaxLength = 1000;
+           
 
-            public const int CategoryIdMinValue = 1;
-            public const int CategoryIdMaxValue = 1000;
 
-            public const int TypeIdMinValue = 1;
-            public const int TypeIdMaxValue = 1000;
+          
         }
 
 

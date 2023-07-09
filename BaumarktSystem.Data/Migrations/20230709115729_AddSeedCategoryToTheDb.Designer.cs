@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BaumarktSystem.Data.Migrations
 {
     [DbContext(typeof(BaumarktSystemDbContext))]
-    [Migration("20230706162651_InitializeDb")]
-    partial class InitializeDb
+    [Migration("20230709115729_AddSeedCategoryToTheDb")]
+    partial class AddSeedCategoryToTheDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,8 +34,7 @@ namespace BaumarktSystem.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -52,12 +51,10 @@ namespace BaumarktSystem.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -79,7 +76,6 @@ namespace BaumarktSystem.Data.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -101,12 +97,10 @@ namespace BaumarktSystem.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("PostalCode")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Role")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -144,14 +138,9 @@ namespace BaumarktSystem.Data.Migrations
                     b.Property<Guid?>("ApplicationUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("CartItem");
                 });
@@ -166,8 +155,7 @@ namespace BaumarktSystem.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ShowOrder")
                         .HasColumnType("int");
@@ -175,6 +163,32 @@ namespace BaumarktSystem.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Category");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Bodenbeläge",
+                            ShowOrder = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Farben",
+                            ShowOrder = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Werkzeuge",
+                            ShowOrder = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Garten",
+                            ShowOrder = 4
+                        });
                 });
 
             modelBuilder.Entity("BaumarktSystem.Data.Models.Product", b =>
@@ -189,6 +203,7 @@ namespace BaumarktSystem.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<Guid?>("ApplicationUserId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("CategoryId")
@@ -196,25 +211,25 @@ namespace BaumarktSystem.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasMaxLength(10000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(10000)
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ShortProductDescription")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(10000)
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -364,37 +379,29 @@ namespace BaumarktSystem.Data.Migrations
 
             modelBuilder.Entity("BaumarktSystem.Data.Models.CartItem", b =>
                 {
-                    b.HasOne("BaumarktSystem.Data.Models.ApplicationUser", "ApplicationUser")
+                    b.HasOne("BaumarktSystem.Data.Models.ApplicationUser", null)
                         .WithMany("CartItem")
                         .HasForeignKey("ApplicationUserId");
-
-                    b.HasOne("BaumarktSystem.Data.Models.Product", "Product")
-                        .WithMany("CartItems")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ApplicationUser");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("BaumarktSystem.Data.Models.Product", b =>
                 {
                     b.HasOne("BaumarktSystem.Data.Models.ApplicationType", "ApplicationType")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("ApplicationTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BaumarktSystem.Data.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BaumarktSystem.Data.Models.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ApplicationType");
@@ -455,6 +462,11 @@ namespace BaumarktSystem.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("BaumarktSystem.Data.Models.ApplicationType", b =>
+                {
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("BaumarktSystem.Data.Models.ApplicationUser", b =>
                 {
                     b.Navigation("CartItem");
@@ -463,11 +475,6 @@ namespace BaumarktSystem.Data.Migrations
             modelBuilder.Entity("BaumarktSystem.Data.Models.Category", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("BaumarktSystem.Data.Models.Product", b =>
-                {
-                    b.Navigation("CartItems");
                 });
 #pragma warning restore 612, 618
         }

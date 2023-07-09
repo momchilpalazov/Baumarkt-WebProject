@@ -16,17 +16,17 @@ namespace BaumarktSystem.Data.Models
 
 
         [Required]
-        [MaxLength(NameMaxLength)]
-        [MinLength(NameMinLength)]
-        public string Name { get; set; }=null!;
+        [MaxLength(FullNameMaxLength)]
+        [MinLength(FullNameMinLength)]
+        public string FullName { get; set; }=null!;
 
 
-        [Required]
+
         [MaxLength(ShortProductDescriptionMaxLength)]
         [MinLength(ShortProductDescriptionMinLength)]
         public string ShortProductDescription { get; set; }=null!;
 
-        [Required]
+
         [MaxLength(DescriptionMaxLength)]
         [MinLength(DescriptionMinLength)]
         public string Description { get; set; }=null!;
@@ -35,30 +35,34 @@ namespace BaumarktSystem.Data.Models
         [Range(PriceMinValue, PriceMaxValue, ErrorMessage = "Price for product muss min 1.00")]
         public decimal Price { get; set; }
 
-        [Required]
+        
         public string ImageUrl { get; set; }=null!;
 
 
-        [Display(Name = "Category")]
+
+        [Display(Name = "Category Type")]
         public int CategoryId { get; set; }
 
         [ForeignKey(nameof(CategoryId))]
         public virtual Category Category { get; set; }=null!;
 
-        [Display(Name = "Type")]
+
+
+        [Display(Name = "Application Type")]
         public int ApplicationTypeId { get; set; }
 
         [ForeignKey(nameof(ApplicationTypeId))]
-        public virtual ApplicationType ApplicationType { get; set; }=null!;
+        public virtual ApplicationType ApplicationType { get; set; } = null!;
 
 
-        public Guid? ApplicationUserId { get; set; }
 
-        [ForeignKey(nameof(ApplicationUserId))]
-        public virtual ApplicationUser? ApplicationUser { get; set; }=null!;
+        //public Guid? ApplicationUserId { get; set; }
+
+        //[ForeignKey(nameof(ApplicationUserId))]
+        //public virtual ApplicationUser ApplicationUser { get; set; } = null!;
 
 
-        public virtual ICollection<CartItem> CartItems { get; set; }=new HashSet<CartItem>();
+        //public virtual ICollection<CartItem> CartItems { get; set; } = new HashSet<CartItem>();
 
 
 

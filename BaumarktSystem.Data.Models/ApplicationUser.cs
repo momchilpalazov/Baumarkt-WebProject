@@ -16,6 +16,7 @@ namespace BaumarktSystem.Data.Models
 
         public ApplicationUser()
         {            
+            this.Id = Guid.NewGuid();
 
             this.CartItem = new HashSet<CartItem>();
 
@@ -23,28 +24,28 @@ namespace BaumarktSystem.Data.Models
 
 
 
-            [Required]
+            
             [MaxLength(NameMaxLength)]
             [MinLength(NameMinLength)]
-            public string Name { get; set; }=null!;
+            public string? Name { get; set; }
 
 
             [MaxLength(AddressMaxLength)]
             [MinLength(AddressMinLength)]
-            public string Address { get; set; }=null!;
+            public string? Address { get; set; }
 
             [MaxLength(CityMaxLength)]
             [MinLength(CityMinLength)]
-            public string City { get; set; }=null!;
+            public string? City { get; set; }
 
             [MaxLength(PostalCodeMaxLength)]
             [MinLength(PostalCodeMinLength)]
-            public string PostalCode { get; set; }=null!;
+            public string? PostalCode { get; set; }
 
-            [Required(ErrorMessage = "The Role field is required.")]
+           
             [MaxLength(RoleMaxLength)]
             [MinLength(RoleMinLength)]
-            public string Role { get; set; } = null!;            
+            public string? Role { get; set; }           
 
             public virtual ICollection<CartItem> CartItem { get; set; } = new HashSet<CartItem>();     
 
