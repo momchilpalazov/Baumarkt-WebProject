@@ -1,5 +1,34 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using BaumarktSystem.Web.ViewModels.Home
+@model ApplicationTypeIndexViewModel
+
 @{
+    ViewData["Title"] = "Add Application Type";
+}
+
+
+
+<form method="post" asp-action="CreateApplicationType">
+    <div class="border p-3">
+        <h2 class="card-text    mb-3">ADD APPLICATION TYPE</h2>
+        <div class="form-group">
+            <label asp-for="Name">Category Name:</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        
+        <div class="row">
+            <div class="col text-left">
+                <button type="submit" class="btn btn-primary btn-block">Save</button>
+            </div>
+            <div class="col text-right">
+                <div class="d-flex justify-content-end">
+                    <a asp-action="AllApplicationType" class="btn btn-primary"><i class="fas fa-sign-out-alt"></i> Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
 }
