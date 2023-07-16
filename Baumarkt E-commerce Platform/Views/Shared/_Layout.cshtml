@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Baumarkt_E_commerce_Platform.styles.css" asp-append-version="true" />
+
+    
 </head>
 <body>
     <header>
@@ -43,18 +45,25 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+
+
+
+
+    <footer class="border-top footer text-muted" >
         <div class="container">
+
             &copy;@ReleaseYear  Baumarkt e-commerce - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
             @if (DateTime.UtcNow.Year != ReleaseYear)
             {
-                @Html.Raw($" - {DateTime.UtcNow.Year}")
-                ;
+                @Html.Raw($" - {DateTime.UtcNow.Year}");
 
             }
+           
 
         </div>
     </footer>
+
+   
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -63,4 +72,5 @@
     @await RenderSectionAsync("Scripts", required: false)
 
 </body>
+
 </html>
