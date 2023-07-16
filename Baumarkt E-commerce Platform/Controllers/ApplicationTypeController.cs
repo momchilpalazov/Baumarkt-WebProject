@@ -1,4 +1,5 @@
 ﻿using BaumarktSystem.Services.Data.Interaces;
+using BaumarktSystem.Web.ViewModels.Home;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Baumarkt_E_commerce_Platform.Controllers
@@ -24,5 +25,28 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
             
         }
+
+        [HttpGet]
+        public IActionResult CreateApplicationType()
+        {
+            return this.View();
+        }
+
+
+        [HttpPost]
+
+        public async Task<IActionResult> CreateApplicationType(ApplicationTypeIndexViewModel applicationType)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(applicationType);
+            }
+
+            await this.applicationTypeInterface.CreateApplicationTypeAsync(applicationType);
+
+            return this.RedirectToAction("AllApplicationType");
+        }
+
+
     }
 }
