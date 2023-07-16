@@ -11,5 +11,7 @@ namespace BaumarktSystem.Services.Data.Interaces
     {
         Task<IEnumerable<CategoryIndexViewModel>> GetAllCategoriesAsync();
 
+        Task<IEnumerable<CategoryIndexViewModel>> CreateCategoryAsync(CategoryIndexViewModel category);
+
     }
 }

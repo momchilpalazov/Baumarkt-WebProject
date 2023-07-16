@@ -1,0 +1,42 @@
+﻿@using BaumarktSystem.Web.ViewModels.Home
+@model CategoryIndexViewModel
+
+@{
+    ViewData["Title"] = "Create Category";
+}
+
+
+
+<form method="post" asp-action="Create">
+    <div class="border p-3">
+        <h2 class="card-text    mb-3">ADD CATEGORY</h2>
+        <div class="form-group">
+            <label asp-for="Name">Category Name:</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ShowOrder">Show Order:</label>
+            <input asp-for="ShowOrder" class="form-control" />
+            <span asp-validation-for="ShowOrder" class="text-danger"></span>
+        </div>
+        <div class="row">
+            <div class="col text-left">
+                <button type="submit" class="btn btn-primary btn-block">Save</button>
+            </div>
+            <div class="col text-right">
+                <div class="d-flex justify-content-end">
+                    <a asp-action="AllCategory" class="btn btn-primary"><i class="fas fa-sign-out-alt"></i> Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+
+

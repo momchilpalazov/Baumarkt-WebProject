@@ -20,8 +20,30 @@ namespace BaumarktSystem.Services.Data
             this.dbContext = dbContext;
         }
 
+        public Task<IEnumerable<CategoryIndexViewModel>> CreateCategoryAsync(CategoryIndexViewModel category)
+        {
 
-       
+            var newCategory = new Category
+            {
+                Name = category.Name,
+                ShowOrder = category.ShowOrder
+            };
+
+            this.dbContext.Category.Add(newCategory);
+            this.dbContext.SaveChanges();
+
+            return Task.FromResult(this.dbContext.Category.Select(x => new CategoryIndexViewModel
+            {
+                Id = x.Id,
+                Name = x.Name,
+                ShowOrder = x.ShowOrder
+            }).ToList().AsEnumerable());
+
+
+
+
+            
+        }
 
         public Task<IEnumerable<CategoryIndexViewModel>> GetAllCategoriesAsync()
         {
