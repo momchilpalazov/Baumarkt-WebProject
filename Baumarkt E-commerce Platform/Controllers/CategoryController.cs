@@ -23,7 +23,6 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
             return this.View(categories);
 
-
             
         }
 
