@@ -31,7 +31,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-           //var categories = await this.categoryInterface.GetAllCategoriesAsync();
+           
 
             return this.View();          
 
@@ -56,7 +56,63 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
             return this.RedirectToAction("AllCategory");
 
+            
+        }
 
+        [HttpGet]
+       
+        public async Task<IActionResult> EditCategory(int id)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.NotFound();
+            }
+
+            var category = await this.categoryInterface.GetCategoryByIdAsync(id);
+
+            return this.View(category);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> EditCategory(CategoryIndexViewModel category)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(category);
+            }
+
+            await this.categoryInterface.EditCategorySaveAsync(category);
+
+            return this.RedirectToAction("AllCategory");
+        }
+
+
+        [HttpGet]
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.NotFound();
+            }
+
+            var category = await this.categoryInterface.GetCategoryByIdAsync(id);
+
+            return this.View(category);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteCategoryById(int id)
+        {
+
+
+
+            await this.categoryInterface.DeleteCategoryByIdAsync(id);
+
+            return this.RedirectToAction("AllCategory");
+
+            
 
             
         }
@@ -64,6 +120,5 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
 
 
-       
     }
 }

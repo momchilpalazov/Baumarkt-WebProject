@@ -1,19 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using System.ComponentModel.DataAnnotations;
+using static BaumarktSystem.Common.ViewModelValidationConstants.Category;
 
 namespace BaumarktSystem.Web.ViewModels.Home
 {
     public class CategoryIndexViewModel
     {
 
-        public int Id { get; set; } 
+        public int Id { get; set; }
 
+
+
+        [Required]
+        [MinLength(NameMinLength)]
+        [MaxLength(NameMaxLength)]
         public string Name { get; set; }=null!;
 
-
+        [Required]
+        [Display(Name = "Show Order")]
+        [Range(1, int.MaxValue, ErrorMessage = "Order for category must be greater than 0")]
         public int ShowOrder { get; set; }  
 
 
