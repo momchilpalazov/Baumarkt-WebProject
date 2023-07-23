@@ -2,6 +2,9 @@
 using BaumarktSystem.Data.Models;
 using BaumarktSystem.Services.Data.Interaces;
 using BaumarktSystem.Web.ViewModels.Home;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,35 +18,76 @@ namespace BaumarktSystem.Services.Data
 
         private readonly BaumarktSystemDbContext dbContext;
 
-        public CategoryService(BaumarktSystemDbContext dbContext)
+        private readonly UserManager<ApplicationUser> userManager;
+
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+
+
+        public CategoryService(BaumarktSystemDbContext dbContext, UserManager<ApplicationUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
             this.dbContext = dbContext;
+            this.userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
         }
+
+
+
+
+
+
+
+
 
         public Task<IEnumerable<CategoryIndexViewModel>> CreateCategoryAsync(CategoryIndexViewModel category)
         {
 
-            var newCategory = new Category
+            try
             {
-                Name = category.Name,
-                ShowOrder = category.ShowOrder
-            };
+                var newCategory = new Category
+                {
+                    Name = category.Name,
+                    ShowOrder = category.ShowOrder,
 
-            this.dbContext.Category.Add(newCategory);
-            this.dbContext.SaveChanges();
+                    CreatedOn = DateTime.UtcNow,
+                    Creator = this.userManager.GetUserAsync(_httpContextAccessor.HttpContext.User).Result
+                };
 
-            return Task.FromResult(this.dbContext.Category.Select(x => new CategoryIndexViewModel
+                this.dbContext.Category.Add(newCategory);
+                this.dbContext.SaveChanges();
+
+
+
+
+
+                return Task.FromResult(this.dbContext.Category.Select(x => new CategoryIndexViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    ShowOrder = x.ShowOrder,
+                    CreatedOn = DateTime.UtcNow,
+                    Creator = x.Creator.UserName
+
+
+                }).ToList().AsEnumerable());
+
+            }
+            catch (Exception e)
             {
-                Id = x.Id,
-                Name = x.Name,
-                ShowOrder = x.ShowOrder
-            }).ToList().AsEnumerable());
+
+                throw new Exception(e.Message);
 
 
 
+                
+            }       
 
-            
+
         }
+
+
+
+       
 
         public Task DeleteCategoryByIdAsync(int id)
         {
@@ -100,7 +144,27 @@ namespace BaumarktSystem.Services.Data
             
         }
 
-       
+        public async Task<CategoryIndexViewModel> GetDetailsCategoryByIdAsync(int id)
+        {
+
+            var category = await this.dbContext.Category.Where(x => x.Id == id).Select(x => new CategoryIndexViewModel
+            {
+                Id = x.Id,
+                Name = x.Name,
+                ShowOrder = x.ShowOrder,
+                CreatedOn = x.CreatedOn,
+                Creator = x.Creator.UserName
+            }).FirstOrDefaultAsync();
+
+            return category;
+
+
+
+
+
+
+            
+        }
 
         Task<CategoryIndexViewModel> ICategoryInterface.GetCategoryByIdAsync(int id)
         {
@@ -120,5 +184,7 @@ namespace BaumarktSystem.Services.Data
 
 
         }
+
+       
     }
 }

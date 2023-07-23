@@ -15,6 +15,15 @@ namespace BaumarktSystem.Data.Models
         [Range(OrderMinValue, OrderMaxValue, ErrorMessage = "Order for category muss min 1")]
         public int ShowOrder { get; set; }
 
+        [Required]
+        public Guid CreatorId { get; set; } 
+        [Required]
+        public ApplicationUser Creator{ get; set; } = null!;
+
+        [Required]
+        [DataType(DataType.DateTime)]
+        public DateTime CreatedOn { get; set; }
+
         public virtual ICollection<Product> Products { get; set; } = new HashSet<Product>();
 
 

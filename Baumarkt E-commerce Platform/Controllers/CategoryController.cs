@@ -47,10 +47,10 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         {
 
             
-            if (!this.ModelState.IsValid)
-            {
-                return this.View(category);
-            }
+            //if (!this.ModelState.IsValid)
+            //{
+            //    return this.View(category);
+            //}
 
             await this.categoryInterface.CreateCategoryAsync(category);
 
@@ -110,11 +110,28 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
             await this.categoryInterface.DeleteCategoryByIdAsync(id);
 
-            return this.RedirectToAction("AllCategory");
+            return this.RedirectToAction("AllCategory");          
 
             
+        }
 
-            
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var category = await this.categoryInterface.GetDetailsCategoryByIdAsync(id);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+
+          
+            return this.View(category);
+
+
+
         }
 
 

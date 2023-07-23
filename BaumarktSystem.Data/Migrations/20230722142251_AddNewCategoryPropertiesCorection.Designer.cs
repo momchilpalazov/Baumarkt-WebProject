@@ -4,6 +4,7 @@ using Baumarkt_E_commerce_Platform.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BaumarktSystem.Data.Migrations
 {
     [DbContext(typeof(BaumarktSystemDbContext))]
-    partial class BaumarktSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230722142251_AddNewCategoryPropertiesCorection")]
+    partial class AddNewCategoryPropertiesCorection
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,7 +38,7 @@ namespace BaumarktSystem.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ApplicationType", (string)null);
+                    b.ToTable("ApplicationType");
                 });
 
             modelBuilder.Entity("BaumarktSystem.Data.Models.ApplicationUser", b =>
@@ -140,7 +142,7 @@ namespace BaumarktSystem.Data.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("CartItem", (string)null);
+                    b.ToTable("CartItem");
                 });
 
             modelBuilder.Entity("BaumarktSystem.Data.Models.Category", b =>
@@ -154,8 +156,9 @@ namespace BaumarktSystem.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CreatorId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("CreatorName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -166,9 +169,7 @@ namespace BaumarktSystem.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatorId");
-
-                    b.ToTable("Category", (string)null);
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("BaumarktSystem.Data.Models.Product", b =>
@@ -213,7 +214,7 @@ namespace BaumarktSystem.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Product", (string)null);
+                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -356,17 +357,6 @@ namespace BaumarktSystem.Data.Migrations
                     b.HasOne("BaumarktSystem.Data.Models.ApplicationUser", null)
                         .WithMany("CartItem")
                         .HasForeignKey("ApplicationUserId");
-                });
-
-            modelBuilder.Entity("BaumarktSystem.Data.Models.Category", b =>
-                {
-                    b.HasOne("BaumarktSystem.Data.Models.ApplicationUser", "Creator")
-                        .WithMany()
-                        .HasForeignKey("CreatorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Creator");
                 });
 
             modelBuilder.Entity("BaumarktSystem.Data.Models.Product", b =>
