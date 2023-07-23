@@ -37,7 +37,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         public async Task<IActionResult> CreateApplicationType(ApplicationTypeIndexViewModel applicationType)
         {
-            if (!this.ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
                 return this.View(applicationType);
             }
@@ -46,6 +46,66 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
             return this.RedirectToAction("AllApplicationType");
         }
+
+
+        [HttpGet]
+
+        public async Task<IActionResult> EditApplicationType(int id)
+        {
+            var applicationType = await this.applicationTypeInterface.GetApplicationTypeByIdAsync(id);
+
+            return this.View(applicationType);
+        }
+
+        [HttpPost]
+
+        public async Task<IActionResult> EditApplicationType(ApplicationTypeIndexViewModel applicationType)
+        {
+            if (this.ModelState.IsValid)
+            {
+                return this.View(applicationType);
+            }
+
+            await this.applicationTypeInterface.EditApplicationTypePostAsync(applicationType);
+
+            return this.RedirectToAction("AllApplicationType");
+        }
+
+
+        [HttpGet]
+
+        public async Task<IActionResult> DeleteApplicationType(int id)
+        {
+            var applicationType = await this.applicationTypeInterface.GetApplicationTypeByIdAsync(id);
+
+            return this.View(applicationType);
+        }
+
+        [HttpPost]
+
+        public async Task<IActionResult> DeleteApplicationType(ApplicationTypeIndexViewModel applicationType)
+        {
+            if (this.ModelState.IsValid)
+            {
+                return this.View(applicationType);
+            }
+
+            await this.applicationTypeInterface.DeleteApplicationTypeAsync(applicationType);
+
+            return this.RedirectToAction("AllApplicationType");
+        }
+
+
+        [HttpGet]
+
+        public async Task<IActionResult> DetailsApplicationType(int id)
+        {
+            var applicationType = await this.applicationTypeInterface.GetApplicationTypeDetailsByIdAsync(id);
+
+            return this.View(applicationType);
+        }
+
+
 
 
     }

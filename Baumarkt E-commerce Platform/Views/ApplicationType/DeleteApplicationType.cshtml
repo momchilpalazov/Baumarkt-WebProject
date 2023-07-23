@@ -1,0 +1,39 @@
+﻿@using BaumarktSystem.Web.ViewModels.Home;
+@model ApplicationTypeIndexViewModel;
+
+
+@{
+    ViewData["Title"] = "Delete Application Type";
+}  
+
+<form method="post" asp-action="DeleteApplicationType">
+    <div class="border p-3">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"  ></div>
+        <h2 class="card-text    mb-3">DELETE APPLICATION TYPE</h2>
+        <div class="form-group">
+
+            <label asp-for="Name">Application Type Name:</label>
+
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+
+        </div>
+        
+        <div class="row">
+
+            <div class="col text-left">
+
+                <button type="submit" class="btn btn-primary btn-block">Delete</button>
+
+            </div>
+            <div class="col text-right">
+                <div class="d-flex justify-content-end">
+                    <a asp-action="AllApplicationType" class="btn btn-primary"><i class="fas fa-sign-out-alt"></i> Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+

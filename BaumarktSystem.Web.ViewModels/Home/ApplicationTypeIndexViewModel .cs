@@ -13,7 +13,16 @@ namespace BaumarktSystem.Web.ViewModels.Home
         public int Id { get; set; }
 
         [Required]         
-        public string Name { get; set; }=null!;       
+        public string Name { get; set; }=null!;
+
+        [Required]
+
+        public string Creator { get; set; } = null!;
+
+        [Required]
+        public DateTime CreatedOn { get; set; }
+
+
 
 
     }

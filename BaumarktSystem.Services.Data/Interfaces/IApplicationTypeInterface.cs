@@ -4,7 +4,11 @@ namespace BaumarktSystem.Services.Data.Interaces
 {
     public interface IApplicationTypeInterface
     {
-        Task<IEnumerable<ApplicationTypeIndexViewModel>> CreateApplicationTypeAsync(ApplicationTypeIndexViewModel applicationType);
+        Task CreateApplicationTypeAsync(ApplicationTypeIndexViewModel applicationType);
+        Task DeleteApplicationTypeAsync(ApplicationTypeIndexViewModel applicationType);
+        Task EditApplicationTypePostAsync(ApplicationTypeIndexViewModel applicationType);
         Task<IEnumerable<ApplicationTypeIndexViewModel>> GetAllApplicationTypesAsync();
+        Task<ApplicationTypeIndexViewModel?> GetApplicationTypeByIdAsync(int id);
+        Task<ApplicationTypeIndexViewModel?> GetApplicationTypeDetailsByIdAsync(int id);
     }
 }
