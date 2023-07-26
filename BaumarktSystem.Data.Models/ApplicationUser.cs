@@ -43,9 +43,7 @@ namespace BaumarktSystem.Data.Models
             public string? PostalCode { get; set; }
 
            
-            [MaxLength(RoleMaxLength)]
-            [MinLength(RoleMinLength)]
-            public string? Role { get; set; }           
+           
 
             public virtual ICollection<CartItem> CartItem { get; set; } = new HashSet<CartItem>();     
 

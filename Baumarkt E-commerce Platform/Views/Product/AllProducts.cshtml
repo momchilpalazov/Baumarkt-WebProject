@@ -1,0 +1,45 @@
+﻿@using BaumarktSystem.Web.ViewModels.Home
+@model IEnumerable<ProductIndexViewModel>
+
+@{
+    ViewData["Title"] = "All Products";
+}
+
+<div class="container mt-4">
+    <h2 class="text-info mb-3">All Products</h2>
+    @if (Model != null && Model.Any())
+    {
+        <div class="row">
+            @foreach (var product in Model)
+            {
+                <div class="col-md-4">
+                    <a href="@product.ImageUrl" data-lightbox="product-images" data-title="@product.Name">
+                        <img src="@product.ImageUrl" alt="Product Image" class="img-thumbnail" />
+                    </a>
+                    <h4>@product.Name</h4>
+                    <p>@product.ShortProductDescription</p>
+                    <p>@product.Price</p>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>There are no products available.</p>
+    }
+
+    <div class="text-center">
+        <a asp-action="Create" class="btn btn-primary">Create New Product</a>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightbox2@2.11.3/dist/js/lightbox.min.js"></script>
+}
+
+
+
+
+
+    

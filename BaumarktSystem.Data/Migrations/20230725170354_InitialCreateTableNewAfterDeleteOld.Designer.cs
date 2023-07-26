@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BaumarktSystem.Data.Migrations
 {
     [DbContext(typeof(BaumarktSystemDbContext))]
-    [Migration("20230722142251_AddNewCategoryPropertiesCorection")]
-    partial class AddNewCategoryPropertiesCorection
+    [Migration("20230725170354_InitialCreateTableNewAfterDeleteOld")]
+    partial class InitialCreateTableNewAfterDeleteOld
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,17 +26,23 @@ namespace BaumarktSystem.Data.Migrations
 
             modelBuilder.Entity("BaumarktSystem.Data.Models.ApplicationType", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
 
                     b.ToTable("ApplicationType");
                 });
@@ -100,10 +106,6 @@ namespace BaumarktSystem.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Role")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -156,9 +158,8 @@ namespace BaumarktSystem.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreatorName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("CreatorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -168,6 +169,8 @@ namespace BaumarktSystem.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
 
                     b.ToTable("Category");
                 });
@@ -180,8 +183,8 @@ namespace BaumarktSystem.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ApplicationTypeId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ApplicationTypeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
@@ -352,6 +355,17 @@ namespace BaumarktSystem.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("BaumarktSystem.Data.Models.ApplicationType", b =>
+                {
+                    b.HasOne("BaumarktSystem.Data.Models.ApplicationUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
+                });
+
             modelBuilder.Entity("BaumarktSystem.Data.Models.CartItem", b =>
                 {
                     b.HasOne("BaumarktSystem.Data.Models.ApplicationUser", null)
@@ -359,18 +373,29 @@ namespace BaumarktSystem.Data.Migrations
                         .HasForeignKey("ApplicationUserId");
                 });
 
+            modelBuilder.Entity("BaumarktSystem.Data.Models.Category", b =>
+                {
+                    b.HasOne("BaumarktSystem.Data.Models.ApplicationUser", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
+                });
+
             modelBuilder.Entity("BaumarktSystem.Data.Models.Product", b =>
                 {
                     b.HasOne("BaumarktSystem.Data.Models.ApplicationType", "ApplicationType")
                         .WithMany("Products")
                         .HasForeignKey("ApplicationTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("BaumarktSystem.Data.Models.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("ApplicationType");

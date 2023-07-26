@@ -33,7 +33,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         {
            
 
-            return this.View();          
+            return  this.View();          
 
            
         }
@@ -46,7 +46,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         public async Task<IActionResult> Create(CategoryIndexViewModel category)
         {
 
-            
+
             //if (!this.ModelState.IsValid)
             //{
             //    return this.View(category);

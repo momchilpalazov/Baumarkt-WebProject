@@ -6,16 +6,19 @@ namespace BaumarktSystem.Data.Models
 {
     public class ApplicationType
     {
+       
+
         
 
         [Key]
-        public int Id { get; set; } 
+        public Guid Id { get; set; } 
 
         [Required]
        
-        public string Name { get; set; }=null!;
+        public string? Name { get; set; }
 
         [Required]
+        //USer
         public Guid CreatorId { get; set; }
 
         [ForeignKey("CreatorId")]

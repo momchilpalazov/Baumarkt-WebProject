@@ -27,10 +27,16 @@ namespace BaumarktSystem.Data.Configurations
 
     //        ApplicationType applicationType;
 
+    //        Guid guidId = new Guid("BE0238D0-D746-4B53-B196-7E0C60DFE84B");
+    //        Guid adminUserId = new Guid("3F442614-2DB4-4F9C-8C19-50BC2EE3D01E");
+
     //        applicationType = new ApplicationType()
     //        {
-    //            Id = 1,
-    //            Name = "Admin"
+    //            Id = guidId, 
+    //            Name = "Admin",
+    //            CreatedOn = DateTime.Now,
+    //            CreatorId = adminUserId
+
 
 
     //        };

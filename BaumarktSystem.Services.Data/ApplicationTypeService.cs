@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static BaumarktSystem.Common.EntityValidationConstanst;
 using ApplicationType = BaumarktSystem.Data.Models.ApplicationType;
+using BaumarktSystem.Services.Data.Interfaces;
 
 namespace BaumarktSystem.Services.Data
 {
@@ -28,7 +29,6 @@ namespace BaumarktSystem.Services.Data
         public Task CreateApplicationTypeAsync(ApplicationTypeIndexViewModel applicationType)
         {
 
-           
             
 
             var newApplicationType = new ApplicationType
@@ -97,7 +97,7 @@ namespace BaumarktSystem.Services.Data
             
         }
 
-        public Task<ApplicationTypeIndexViewModel?> GetApplicationTypeByIdAsync(int id)
+        public Task<ApplicationTypeIndexViewModel?> GetApplicationTypeByIdAsync(Guid id)
         {
 
             var applicationType = this.dbContext.ApplicationType.Where(x => x.Id == id).Select(x => new ApplicationTypeIndexViewModel
@@ -116,17 +116,41 @@ namespace BaumarktSystem.Services.Data
            
         }
 
-        public Task<ApplicationTypeIndexViewModel?> GetApplicationTypeDetailsByIdAsync(int id)
+      
+
+        //public Task<ApplicationTypeIndexViewModel?> GetApplicationTypeDetailsByIdAsync(Gu id)
+        //{
+
+        //    var applicationType = this.dbContext.ApplicationType.Where(x => x.Id. == id).Select(x => new ApplicationTypeIndexViewModel
+        //    {
+        //        Id = x.Id,
+        //        Name = x.Name,
+        //        CreatedOn = x.CreatedOn,
+        //        Creator = x.Creator.UserName
+            
+              
+        //    }).FirstOrDefault();
+
+        //    return Task.FromResult(applicationType);
+
+
+
+
+
+
+           
+        //}
+
+        public Task<ApplicationTypeIndexViewModel?> GetApplicationTypeDetailsByIdAsync(Guid id)
         {
 
             var applicationType = this.dbContext.ApplicationType.Where(x => x.Id == id).Select(x => new ApplicationTypeIndexViewModel
             {
-                Id = x.Id,
+                
                 Name = x.Name,
                 CreatedOn = x.CreatedOn,
                 Creator = x.Creator.UserName
-            
-              
+
             }).FirstOrDefault();
 
             return Task.FromResult(applicationType);

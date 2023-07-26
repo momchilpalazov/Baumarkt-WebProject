@@ -2,6 +2,7 @@ using Baumarkt_E_commerce_Platform.Data;
 using BaumarktSystem.Data.Models;
 using BaumarktSystem.Services.Data;
 using BaumarktSystem.Services.Data.Interaces;
+using BaumarktSystem.Services.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Baumarkt_E_commerce_Platform
@@ -34,6 +35,10 @@ namespace Baumarkt_E_commerce_Platform
 
             builder.Services.AddScoped<ICategoryInterface,CategoryService  >();
             builder.Services.AddScoped<IApplicationTypeInterface,ApplicationTypeService>();
+            builder.Services.AddScoped<IProductInterface,ProductService>();
+            //builder.Services.AddScoped<ICategoryInterfaceHelper, CategoryInterfaceHelper>();
+            //builder.Services.AddScoped<IApplicationTypeInterfaceHelper, ApplicationTypeInterfaceHelper>();
+         
 
             //builder.Services.AddApplicationServices(typeof(IHouseService));
 

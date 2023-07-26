@@ -12,20 +12,7 @@ namespace BaumarktSystem.Data.Models
     {
 
         [Key]
-        public int Id { get; set; }
-
-        //public int ProductId { get; set; }
-
-        //[ForeignKey(nameof(ProductId))]
-
-        //public virtual ICollection<Product> Products { get; set; } = new HashSet<Product>();
-        //public virtual Product Product { get; set; } = null!;
-
-        //public Guid? ApplicationUserId { get; set; }
-
-        //[ForeignKey(nameof(ApplicationUserId))]
-
-        //public virtual ApplicationUser? ApplicationUser { get; set; } = null!;
+        public int Id { get; set; }      
 
 
 

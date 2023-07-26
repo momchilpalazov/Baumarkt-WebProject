@@ -49,20 +49,13 @@ namespace BaumarktSystem.Data.Models
 
 
         [Display(Name = "Application Type")]
-        public int ApplicationTypeId { get; set; }
+        public Guid ApplicationTypeId { get; set; }
 
         [ForeignKey(nameof(ApplicationTypeId))]
         public virtual ApplicationType ApplicationType { get; set; } = null!;
 
 
 
-        //public Guid? ApplicationUserId { get; set; }
-
-        //[ForeignKey(nameof(ApplicationUserId))]
-        //public virtual ApplicationUser ApplicationUser { get; set; } = null!;
-
-
-        //public virtual ICollection<CartItem> CartItems { get; set; } = new HashSet<CartItem>();
 
 
 

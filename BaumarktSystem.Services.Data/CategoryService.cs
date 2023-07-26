@@ -1,6 +1,7 @@
 ﻿using Baumarkt_E_commerce_Platform.Data;
 using BaumarktSystem.Data.Models;
 using BaumarktSystem.Services.Data.Interaces;
+using BaumarktSystem.Services.Data.Interfaces;
 using BaumarktSystem.Web.ViewModels.Home;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace BaumarktSystem.Services.Data
 {
-    public class CategoryService : ICategoryInterface
+    public class CategoryService : ICategoryInterface 
     {
 
         private readonly BaumarktSystemDbContext dbContext;
@@ -30,13 +31,6 @@ namespace BaumarktSystem.Services.Data
             this.userManager = userManager;
             _httpContextAccessor = httpContextAccessor;
         }
-
-
-
-
-
-
-
 
 
         public Task<IEnumerable<CategoryIndexViewModel>> CreateCategoryAsync(CategoryIndexViewModel category)
@@ -76,11 +70,8 @@ namespace BaumarktSystem.Services.Data
             {
 
                 throw new Exception(e.Message);
-
-
-
                 
-            }       
+            }     
 
 
         }
