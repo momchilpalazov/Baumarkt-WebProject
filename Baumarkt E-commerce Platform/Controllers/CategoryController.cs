@@ -29,7 +29,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
            
 
@@ -47,10 +47,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         {
 
 
-            //if (!this.ModelState.IsValid)
-            //{
-            //    return this.View(category);
-            //}
+            
 
             await this.categoryInterface.CreateCategoryAsync(category);
 

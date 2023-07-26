@@ -1,5 +1,7 @@
 ﻿@using BaumarktSystem.Web.ViewModels.Home
-@model List<ProductIndexViewModel>
+@model ProductIndexViewModel
+
+
 
 @{
     ViewData["Title"] = "Create New Product";
@@ -7,52 +9,48 @@
 
 <div class="container mt-4">
     <h2 class="text-info mb-3">Create New Product</h2>
-    @if (Model != null && Model.Any())
-    {
-        <form asp-action="Create" method="post" enctype="multipart/form-data">
-            @foreach (var product in Model)
-            {
-                <div class="form-group">
-                    <label for="Name">Full Name:</label>
-                    <input type="text" class="form-control" id="Name" name="Name" value="@product.Name" required />
-                </div>
-                <div class="form-group">
-                    <label for="ShortProductDescription">Short Description:</label>
-                    <input type="text" class="form-control" id="ShortProductDescription" name="ShortProductDescription" value="@product.ShortProductDescription" required />
-                </div>
-                <div class="form-group">
-                    <label for="Description">Description:</label>
-                    <textarea class="form-control" id="Description" name="Description" rows="5">@product.Description</textarea>
-                </div>
-                <div class="form-group">
-                    <label for="Price">Price:</label>
-                    <input type="number" class="form-control" id="Price" name="Price" value="@product.Price" step="0.01" required />
-                </div>
-                <div class="form-group">
-                    <label for="CategoryId">Category:</label>
-                    <select class="form-control" id="CategoryId" name="CategoryId">
-                        <option value="">Select Category</option>
-                        <option value="@product.Category.Id">@product.Category.Name</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="ApplicationTypeId">Application Type:</label>
-                    <select class="form-control" id="ApplicationTypeId" name="ApplicationTypeId">
-                        <option value="">Select Application Type</option>
-                        <option value="@product.ApplicationType.Id">@product.ApplicationType.Name</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="ImageUrl">Image:</label>
-                    <input type="file" class="form-control-file" id="ImageUrl" name="ImageUrl" />
-                </div>
-            }
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="Name">Full Name:</label>
+            <input type="text" class="form-control" id="Name" name="Name" required />
+        </div>
+        <div class="form-group">
+            <label for="ShortProductDescription">Short Description:</label>
+            <input type="text" class="form-control" id="ShortProductDescription" name="ShortProductDescription" required />
+        </div>
+        <div class="form-group">
+            <label for="Description">Description:</label>
+            <textarea class="form-control" id="Description" name="Description" rows="5" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="Price">Price:</label>
+            <input type="number" class="form-control" id="Price" name="Price" step="0.01" required />
+        </div>
+        <div class="form-group">
+            <label for="CategoryId">Category:</label>
+            <select class="form-control" id="CategoryId" name="CategoryId" required>
+                <option value="">Select Category</option>
+                @foreach (var category in Model.Categories)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="ApplicationTypeId">Application Type:</label>
+            <select class="form-control" id="ApplicationTypeId" name="ApplicationTypeId" required>
+                <option value="">Select Application Type</option>
+                @foreach (var applicationType in Model.ApplicationTypes)
+                {
+                    <option value="@applicationType.Id">@applicationType.Name</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="ImageUrl">Image:</label>
+            <input type="file" class="form-control-file" id="ImageUrl" name="ImageUrl" required />
+        </div>
 
-            <button type="submit" class="btn btn-primary">Save Product</button>
-        </form>
-    }
-    else
-    {
-        <p>There are no products available.</p>
-    }
+        <button type="submit" class="btn btn-primary">Save Product</button>
+    </form>
 </div>

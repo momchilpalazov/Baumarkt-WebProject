@@ -13,7 +13,7 @@ using BaumarktSystem.Data.Models;
 
 namespace BaumarktSystem.Services.Data
 {
-    public  class ProductService: IProductInterface 
+    public class ProductService : IProductInterface
     {
 
         private readonly BaumarktSystemDbContext dbContext;
@@ -59,12 +59,37 @@ namespace BaumarktSystem.Services.Data
              }};
         }
 
+        public async Task<List<ApplicationTypeViewModel>> GetAllApplicationTypesListAsync()
+        {
+            var applicationTypesList = await this.dbContext.ApplicationType
+           .Select(x => new ApplicationTypeViewModel
+           {
+               Id = x.Id,
+               Name = x.Name
+           })
+           .ToListAsync();
+
+            return applicationTypesList;
+        }
+
+        public async Task<List<CategoryViewModel>> GetAllCategoriesListAsync()
+        {
+            var categoriesList = await this.dbContext.Category
+           .Select(x => new CategoryViewModel
+           {
+               Id = x.Id,
+               Name = x.Name
+           })
+           .ToListAsync();
+
+            return categoriesList;
+        }
 
         public async Task<IEnumerable<ProductIndexViewModel>> GetAllProductsAsync()
         {
             var products = await this.dbContext.Product
-                .Include(x => x.Category) // Load the related Category entity
-                .Include(x => x.ApplicationType) // Load the related ApplicationType entity
+                .Include(x => x.Category) 
+                .Include(x => x.ApplicationType) 
                 .Select(x => new ProductIndexViewModel
                 {
                     Id = x.Id,
@@ -88,15 +113,22 @@ namespace BaumarktSystem.Services.Data
             return products;
         }
 
+        public Task GetCategoriesAndApplicationTypeListAsync()
+        {
+            throw new NotImplementedException();
+        }
 
+        //public async Task<IEnumerable<CategoryViewModel>> GetAllCategoriesListAsync()
+        //{
+        //    var categoriesList = await this.dbContext.Category
+        //        .Select(x => new CategoryViewModel
+        //        {
+        //            Id = x.Id,
+        //            Name = x.Name
+        //        }).ToListAsync();
 
-
-
-
-
-
-
-
+        //    return categoriesList;
+        //}
 
 
     }

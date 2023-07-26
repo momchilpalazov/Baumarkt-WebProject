@@ -28,6 +28,7 @@ namespace BaumarktSystem.Web.ViewModels.Home
         [Required]
         public DateTime CreatedOn { get; set; }
 
+        public List<CategoryViewModel> Categories { get; set; }=new List<CategoryViewModel>();
 
     }
 }

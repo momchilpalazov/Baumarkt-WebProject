@@ -10,6 +10,9 @@ namespace BaumarktSystem.Services.Data.Interfaces
     public interface IProductInterface
     {
         Task <IEnumerable<ProductIndexViewModel>>  CreateProductAsync(ProductIndexViewModel product);
+        Task<List<ApplicationTypeViewModel>> GetAllApplicationTypesListAsync();
+        Task<List<CategoryViewModel>> GetAllCategoriesListAsync();
         Task <IEnumerable <ProductIndexViewModel>> GetAllProductsAsync();
+        Task GetCategoriesAndApplicationTypeListAsync();
     }
 }

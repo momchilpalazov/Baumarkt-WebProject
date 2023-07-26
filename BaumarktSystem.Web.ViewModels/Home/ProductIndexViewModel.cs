@@ -24,19 +24,21 @@ namespace BaumarktSystem.Web.ViewModels.Home
         public decimal Price { get; set; }
 
 
-        //public string? Category { get; set; }
 
-        //public string ApplicationType { get; set; } = null!;
-
-        //public List<CategoryIndexViewModel> Category { get; set; } = new List<CategoryIndexViewModel>();
-
-        //public List<ApplicationTypeIndexViewModel> ApplicationType { get; set; } = new List<ApplicationTypeIndexViewModel>();
 
         public CategoryIndexViewModel Category { get; set; } = new CategoryIndexViewModel();
 
+
+
         public ApplicationTypeIndexViewModel ApplicationType { get; set; } = new ApplicationTypeIndexViewModel();
 
+        public int CategoryId { get; set; } // Property to store the selected category ID
+        public Guid ApplicationTypeId { get; set; }
 
+
+        public List<CategoryViewModel> Categories { get; set; } = new List<CategoryViewModel>();
+
+        public List<ApplicationTypeViewModel> ApplicationTypes { get; set; } = new List<ApplicationTypeViewModel>();
 
 
 

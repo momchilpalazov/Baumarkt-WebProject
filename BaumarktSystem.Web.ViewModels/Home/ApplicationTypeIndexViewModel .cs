@@ -23,7 +23,7 @@ namespace BaumarktSystem.Web.ViewModels.Home
         public DateTime CreatedOn { get; set; }
 
 
-
+        public List<ApplicationTypeViewModel> ApplicationTypes { get; set; }=new List<ApplicationTypeViewModel>();
 
     }
 }
