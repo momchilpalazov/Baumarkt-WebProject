@@ -8,7 +8,7 @@
 }
 
 <div class="container mt-4">
-    <h2 class="text-info mb-3">Create New Product</h2>
+    <h2 class="card-text    mb-3">ADD NEW PRODUCT</h2>
     <form asp-action="Create" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="Name">Full Name:</label>
@@ -48,7 +48,7 @@
         </div>
         <div class="form-group">
             <label for="ImageUrl">Image:</label>
-            <input type="file" class="form-control-file" id="ImageUrl" name="ImageUrl" required />
+            <input type="file" class="form-control-file" id="ImageUrl" name="image" required />
         </div>
 
         <button type="submit" class="btn btn-primary">Save Product</button>

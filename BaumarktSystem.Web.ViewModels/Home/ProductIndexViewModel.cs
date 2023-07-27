@@ -32,7 +32,7 @@ namespace BaumarktSystem.Web.ViewModels.Home
 
         public ApplicationTypeIndexViewModel ApplicationType { get; set; } = new ApplicationTypeIndexViewModel();
 
-        public int CategoryId { get; set; } // Property to store the selected category ID
+        public int CategoryId { get; set; } 
         public Guid ApplicationTypeId { get; set; }
 
 

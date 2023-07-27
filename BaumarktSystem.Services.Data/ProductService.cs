@@ -16,13 +16,7 @@ namespace BaumarktSystem.Services.Data
     public class ProductService : IProductInterface
     {
 
-        private readonly BaumarktSystemDbContext dbContext;
-
-        
-
-       
-        
-
+        private readonly BaumarktSystemDbContext dbContext;   
 
 
         public ProductService(BaumarktSystemDbContext dbContext  )
@@ -32,31 +26,21 @@ namespace BaumarktSystem.Services.Data
 
         }
 
-        public async Task<IEnumerable<ProductIndexViewModel>> CreateProductAsync(ProductIndexViewModel product)
+        public async Task CreateProductAsync(ProductIndexViewModel product)
         {
-            var newProduct = new Product 
+            var newProduct = new Product
             {
-                Id = product.Id,
-                FullName = product.Name, 
+                FullName = product.Name,
                 Price = product.Price,
                 ImageUrl = product.ImageUrl,
                 ShortProductDescription = product.ShortProductDescription,
-                Description = product.Description
+                Description = product.Description,
+                CategoryId = product.CategoryId,
+                ApplicationTypeId = product.ApplicationTypeId
             };
 
-            this.dbContext.Product.Add(newProduct); 
-            await this.dbContext.SaveChangesAsync(); 
-
-            
-            return new List<ProductIndexViewModel> { new ProductIndexViewModel
-            {
-            Id = newProduct.Id,
-            Name = newProduct.FullName,
-            Price = newProduct.Price,
-            ImageUrl = newProduct.ImageUrl,
-            ShortProductDescription = newProduct.ShortProductDescription,
-             Description = newProduct.Description
-             }};
+            this.dbContext.Product.Add(newProduct);
+            await this.dbContext.SaveChangesAsync();
         }
 
         public async Task<List<ApplicationTypeViewModel>> GetAllApplicationTypesListAsync()
@@ -85,17 +69,49 @@ namespace BaumarktSystem.Services.Data
             return categoriesList;
         }
 
+        //public async Task<IEnumerable<ProductIndexViewModel>> GetAllProductsAsync()
+        //{
+        //    var products = await this.dbContext.Product
+        //        .Include(x => x.Category) 
+        //        .Include(x => x.ApplicationType) 
+        //        .Select(x => new ProductIndexViewModel
+        //        {
+        //            Id = x.Id,
+        //            Name = x.FullName,
+        //            Price = x.Price,
+        //            ImageUrl = x.ImageUrl,
+        //            ShortProductDescription = x.ShortProductDescription,
+        //            Description = x.Description,
+        //            Category = new CategoryIndexViewModel
+        //            {
+        //                Id = x.Category.Id,
+        //                Name = x.Category.Name
+        //            },
+        //            ApplicationType = new ApplicationTypeIndexViewModel
+        //            {
+        //                Id = x.ApplicationType.Id,
+        //                Name = x.ApplicationType.Name
+        //            }
+        //        }).ToListAsync();
+
+        //    return products;
+        //}
+
+
         public async Task<IEnumerable<ProductIndexViewModel>> GetAllProductsAsync()
         {
             var products = await this.dbContext.Product
-                .Include(x => x.Category) 
-                .Include(x => x.ApplicationType) 
+                .Include(x => x.Category)
+                .Include(x => x.ApplicationType)
                 .Select(x => new ProductIndexViewModel
                 {
                     Id = x.Id,
                     Name = x.FullName,
                     Price = x.Price,
-                    ImageUrl = x.ImageUrl,
+                    // Check if the ImageUrl is a valid URL (it starts with "http" or "https")
+                    ImageUrl = Uri.IsWellFormedUriString(x.ImageUrl, UriKind.Absolute)
+                        ? x.ImageUrl // If it's a URL, use it as is
+                        : $"/images/{x.ImageUrl}", // If it's not a URL, prepend it with the "images" folder path
                     ShortProductDescription = x.ShortProductDescription,
                     Description = x.Description,
                     Category = new CategoryIndexViewModel
@@ -112,23 +128,6 @@ namespace BaumarktSystem.Services.Data
 
             return products;
         }
-
-        public Task GetCategoriesAndApplicationTypeListAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        //public async Task<IEnumerable<CategoryViewModel>> GetAllCategoriesListAsync()
-        //{
-        //    var categoriesList = await this.dbContext.Category
-        //        .Select(x => new CategoryViewModel
-        //        {
-        //            Id = x.Id,
-        //            Name = x.Name
-        //        }).ToListAsync();
-
-        //    return categoriesList;
-        //}
 
 
     }
