@@ -70,6 +70,90 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         }
 
+        [HttpGet]
+        public async Task<IActionResult> EditProduct(int id)
+        {
+            var product = await this.productInterface.GetProductByIdAsync(id);
+
+            if (product == null)
+            {
+                return this.NotFound();
+            }
+
+            
+            return this.View(product);
+        }
+
+
+        [HttpPost]
+
+        public async Task<IActionResult> EditProduct(ProductIndexViewModel model, IFormFile image)
+        {
+            if (!this.ModelState.IsValid)
+            {
+
+                model.Categories = await this.productInterface.GetAllCategoriesListAsync();
+                model.ApplicationTypes = await this.productInterface.GetAllApplicationTypesListAsync();
+
+                // return this.View(model);
+
+            }
+
+            model.ImageUrl = await this.SaveImageAsync(image);
+
+            await this.productInterface.EditProductAsync(model);
+
+            return this.RedirectToAction("AllProducts");
+        }
+
+
+
+
+
+
+
+
+
+
+        [HttpGet]
+
+        public async Task<IActionResult> DeleteProduct(int id)
+        {
+            var product = await this.productInterface.GetProductByIdAsync(id);
+
+            if (product == null)
+            {
+                return this.NotFound();
+            }
+
+            return this.View(product);
+        }
+
+        [HttpPost]
+
+        public async  Task<IActionResult> DeleteProducts(int id)
+        {
+
+            await this.productInterface.DeleteProductByIdAsync(id);
+
+            return this.RedirectToAction("AllProducts");
+
+
+            
+        }
+
+
+        
+
+
+
+
+
+
+
+
+
+
         private Task<string> SaveImageAsync(IFormFile image)
         {
             string uploadsFolder = Path.Combine(this.hostingEnvironment.WebRootPath, "images");
@@ -111,5 +195,13 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
            
         }
+
+
+       
+
+
     }
+
+
+    
 }

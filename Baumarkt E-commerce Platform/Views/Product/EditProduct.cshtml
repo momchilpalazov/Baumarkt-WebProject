@@ -1,0 +1,60 @@
+﻿@using BaumarktSystem.Web.ViewModels.Home
+@model ProductIndexViewModel
+
+@{
+    ViewData["Title"] = "Edit Product";
+}
+
+<div class="container mt-4">
+    <h2 class="card-text mb-3">Edit Product</h2>
+    <form asp-action="EditProduct" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="Name">Full Name:</label>
+            <input type="text" class="form-control" id="Name" name="Name" value="@Model.Name" required />
+        </div>
+        <div class="form-group">
+            <label for="ShortProductDescription">Short Description:</label>
+            <input type="text" class="form-control" id="ShortProductDescription" name="ShortProductDescription" value="@Model.ShortProductDescription" required />
+        </div>
+        <div class="form-group">
+            <label for="Description">Description:</label>
+            <textarea class="form-control" id="Description" name="Description" rows="5">@Model.Description</textarea>
+        </div>
+        <div class="form-group">
+            <label for="Price">Price:</label>
+            <input type="number" class="form-control" id="Price" name="Price" value="@Model.Price" step="0.01" required />
+        </div>
+        <div class="form-group">
+            <label for="CategoryId">Category:</label>
+            <select class="form-control" id="CategoryId" name="CategoryId">
+                <option value="">Select Category</option>
+                @foreach (var category in Model.Categories)
+                {
+                    <option value="@category.Id" selected="@category.Id == Model.Category.Id">@category.Name</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="ApplicationTypeId">Application Type:</label>
+            <select class="form-control" id="ApplicationTypeId" name="ApplicationTypeId">
+                <option value="">Select Application Type</option>
+                @foreach (var applicationType in Model.ApplicationTypes)
+                {
+                    <option value="@applicationType.Id" selected="@applicationType.Id == Model.ApplicationType.Id">@applicationType.Name</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="ImageUrl">Image:</label>
+            <input type="file" class="form-control-file" id="ImageUrl" name="ImageUrl" />
+            <img src="@Model.ImageUrl" alt="Product Image" style="max-height: 100px;" />
+        </div>
+
+        <input type="hidden" asp-for="Id" /> 
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <div class="d-flex justify-content-end">
+            <a asp-action="AllProducts" class="btn btn-primary"><i class="fas fa-sign-out-alt"></i> Back</a>
+        </div>
+    </form>
+</div>

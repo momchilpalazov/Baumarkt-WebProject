@@ -10,7 +10,7 @@ namespace BaumarktSystem.Web.ViewModels.Home
     public class ApplicationTypeIndexViewModel
     {
 
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Required]         
         public string Name { get; set; }=null!;

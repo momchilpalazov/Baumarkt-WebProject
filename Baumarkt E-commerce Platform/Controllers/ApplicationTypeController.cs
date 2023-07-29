@@ -50,7 +50,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         [HttpGet]
 
-        public async Task<IActionResult> EditApplicationType(Guid id)
+        public async Task<IActionResult> EditApplicationType(int id)
         {
             var applicationType = await this.applicationTypeInterface.GetApplicationTypeByIdAsync(id);
 
@@ -74,7 +74,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         [HttpGet]
 
-        public async Task<IActionResult> DeleteApplicationType(Guid id)
+        public async Task<IActionResult> DeleteApplicationType(int id)
         {
             var applicationType = await this.applicationTypeInterface.GetApplicationTypeByIdAsync(id);
 
@@ -98,7 +98,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         [HttpGet]
 
-        public async Task<IActionResult> DetailsApplicationType(Guid id)
+        public async Task<IActionResult> DetailsApplicationType(int id)
         {
             var applicationType = await this.applicationTypeInterface.GetApplicationTypeDetailsByIdAsync(id);
 

@@ -11,11 +11,11 @@ namespace BaumarktSystem.Data.Models
         
 
         [Key]
-        public Guid Id { get; set; } 
+        public int Id { get; set; } 
 
         [Required]
        
-        public string? Name { get; set; }
+        public string Name { get; set; }=null!;
 
         [Required]
         //USer
@@ -29,12 +29,12 @@ namespace BaumarktSystem.Data.Models
 
         public DateTime CreatedOn { get; set; }
 
+        public ICollection<Product> Products { get; set; }=new HashSet<Product>();
 
-        public virtual ICollection<Product> Products { get; set; } = new HashSet<Product>();
 
-        
 
-       
+
+
 
     }
 }

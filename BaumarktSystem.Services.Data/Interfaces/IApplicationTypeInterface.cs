@@ -8,7 +8,7 @@ namespace BaumarktSystem.Services.Data.Interaces
         Task DeleteApplicationTypeAsync(ApplicationTypeIndexViewModel applicationType);
         Task EditApplicationTypePostAsync(ApplicationTypeIndexViewModel applicationType);
         Task<IEnumerable<ApplicationTypeIndexViewModel>> GetAllApplicationTypesAsync();
-        Task<ApplicationTypeIndexViewModel?> GetApplicationTypeByIdAsync(Guid id);
-        Task<ApplicationTypeIndexViewModel?> GetApplicationTypeDetailsByIdAsync(Guid id);
+        Task<ApplicationTypeIndexViewModel?> GetApplicationTypeByIdAsync(int id);
+        Task<ApplicationTypeIndexViewModel?> GetApplicationTypeDetailsByIdAsync(int id);
     }
 }

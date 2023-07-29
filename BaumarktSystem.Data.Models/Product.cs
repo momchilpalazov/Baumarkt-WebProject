@@ -47,12 +47,29 @@ namespace BaumarktSystem.Data.Models
         public virtual Category Category { get; set; }=null!;
 
 
+        [Required]
+        //USer
+        public Guid CreatorId { get; set; }
+
+        [ForeignKey("CreatorId")]
+        public ApplicationUser Creator { get; set; } = null!;
+
+
+        [Required]
+        public DateTime CreatedOn { get; set; }
+
+
+
+
 
         [Display(Name = "Application Type")]
-        public Guid ApplicationTypeId { get; set; }
+        public int ApplicationTypeId { get; set; }
 
         [ForeignKey(nameof(ApplicationTypeId))]
         public virtual ApplicationType ApplicationType { get; set; } = null!;
+
+
+
 
 
 

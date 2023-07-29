@@ -97,7 +97,7 @@ namespace BaumarktSystem.Services.Data
             
         }
 
-        public Task<ApplicationTypeIndexViewModel?> GetApplicationTypeByIdAsync(Guid id)
+        public Task<ApplicationTypeIndexViewModel?> GetApplicationTypeByIdAsync(int id)
         {
 
             var applicationType = this.dbContext.ApplicationType.Where(x => x.Id == id).Select(x => new ApplicationTypeIndexViewModel
@@ -141,7 +141,7 @@ namespace BaumarktSystem.Services.Data
            
         //}
 
-        public Task<ApplicationTypeIndexViewModel?> GetApplicationTypeDetailsByIdAsync(Guid id)
+        public Task<ApplicationTypeIndexViewModel?> GetApplicationTypeDetailsByIdAsync(int id)
         {
 
             var applicationType = this.dbContext.ApplicationType.Where(x => x.Id == id).Select(x => new ApplicationTypeIndexViewModel

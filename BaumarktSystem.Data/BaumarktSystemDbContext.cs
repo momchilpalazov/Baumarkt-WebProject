@@ -34,6 +34,9 @@ namespace Baumarkt_E_commerce_Platform.Data
 
             builder.ApplyConfigurationsFromAssembly (typeof(BaumarktSystemDbContext).Assembly);
 
+
+
+           
             base.OnModelCreating(builder);
            
 

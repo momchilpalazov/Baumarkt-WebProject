@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,9 @@ namespace BaumarktSystem.Web.ViewModels.Home
         public string ImageUrl { get; set; } = null!;
 
         public decimal Price { get; set; }
+
+      
+      
 
 
 

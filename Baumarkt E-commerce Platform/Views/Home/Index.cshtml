@@ -1,9 +1,54 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using BaumarktSystem.Web.ViewModels.Home
+@model FilteredProductsViewModel
+
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-4">
+    <h2 class="card-text mb-3">ТOP PRODUCTS</h2>
+    <div class="form-group">
+        <label for="CategoryId">Select Category:</label>
+        <select class="form-control" id="CategoryId" name="CategoryId">
+            <option value="0">All Categories</option>
+            @foreach (var category in Model.AllCategories)
+            {
+                <option value="@category.Id" selected="@(category.Id == Model.CategoryId)">@category.Name</option>
+            }
+        </select>
+    </div>
+
+    @if (Model.FilteredProducts != null && Model.FilteredProducts.Any())
+    {
+        <div class="row">
+            @foreach (var product in Model.FilteredProducts)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="@product.ImageUrl" alt="Product Image" class="card-img-top" style="max-height: 200px;" />
+                        <div class="card-body">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="card-text">@product.ShortProductDescription</p>
+                            <p class="card-text">Price: $@product.Price</p>
+                            <a href="@Url.Action("Details", "Product", new { id = product.Id })" class="btn btn-primary">Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>No products available for the selected category.</p>
+    }
 </div>
+
+<script>
+    
+    document.getElementById("CategoryId").addEventListener("change", function () {
+        var categoryId = this.value;
+        var url = "/Home/Index?categoryId=" + categoryId; 
+        window.location.href = url;
+    });
+</script>
 
