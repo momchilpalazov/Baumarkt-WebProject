@@ -11,14 +11,14 @@ namespace BaumarktSystem.Common
     {
         public static class Category
         {
-            //NameValidation
+           
             public const int NameMinLength = 3;
             public const int NameMaxLength = 50;
 
             public const int ShowOrderMinValue = 0;
             public const int ShowOrderMaxValue = 1000;   
             
-            //OrderValidation
+           
             public const int OrderMinValue = 1;
             public const int OrderMaxValue = 1000;
                   
@@ -27,7 +27,7 @@ namespace BaumarktSystem.Common
 
         public static class Product
         {
-            //NameValidation
+           
             public const int FullNameMinLength = 3;
             public const int FullNameMaxLength = 10000;
 
@@ -49,14 +49,14 @@ namespace BaumarktSystem.Common
 
         public static class ApplicationType
         {
-            //NameValidation
+            
             public const int NameMinLength = 3;
             public const int NameMaxLength = 50;
         }
 
         public static class ApplicationUser
         {
-            //NameValidation
+           
             public const int NameMinLength = 3;
             public const int NameMaxLength = 50; 
             
@@ -75,7 +75,19 @@ namespace BaumarktSystem.Common
             public const int RoleMinLength = 3;
             public const int RoleMaxLength = 50;
             
-        }    
+        } 
+
+        public static class CartItem
+        {
+            public const int QuantityMinValue = 1;
+            public const int QuantityMaxValue = 1000;
+        }
+
+        public static class Admin
+        {
+            public const int PhoneNumberMinLength = 6;
+            public const int PhoneNumberMaxLength = 20;
+        }
 
 
 

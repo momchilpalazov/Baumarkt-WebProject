@@ -17,7 +17,7 @@ namespace BaumarktSystem.Data.Models
 
         [Required]
         public Guid CreatorId { get; set; } 
-        [Required]
+    
         public ApplicationUser Creator{ get; set; } = null!;
 
         [Required]

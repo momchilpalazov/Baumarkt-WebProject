@@ -3,6 +3,7 @@ using BaumarktSystem.Data.Models;
 using BaumarktSystem.Services.Data;
 using BaumarktSystem.Services.Data.Interaces;
 using BaumarktSystem.Services.Data.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Baumarkt_E_commerce_Platform
@@ -72,6 +73,7 @@ namespace Baumarkt_E_commerce_Platform
 
             
             app.MapDefaultControllerRoute();
+
             app.MapRazorPages();
 
             app.Run();

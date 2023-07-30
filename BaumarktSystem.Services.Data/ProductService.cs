@@ -125,12 +125,12 @@ namespace BaumarktSystem.Services.Data
                     Description = x.Description,
                     Category = new CategoryIndexViewModel
                     {
-                        Id = x.Category.Id,
+                        Id = x.CategoryId,
                         Name = x.Category.Name
                     },
                     ApplicationType = new ApplicationTypeIndexViewModel
                     {
-                        Id = x.ApplicationType.Id,
+                        Id = x.ApplicationTypeId,
                         Name = x.ApplicationType.Name
                     }
                 }).ToListAsync();
@@ -138,14 +138,13 @@ namespace BaumarktSystem.Services.Data
             return products;
         }
 
-       
 
-        
+
+
 
 
         public async Task<ProductIndexViewModel> GetProductByIdAsync(int id)
         {
-
             var product = await this.dbContext.Product
                 .Include(x => x.Category)
                 .Include(x => x.ApplicationType)
@@ -156,30 +155,40 @@ namespace BaumarktSystem.Services.Data
                     Name = x.FullName,
                     Price = x.Price,
                     ImageUrl = Uri.IsWellFormedUriString(x.ImageUrl, UriKind.Absolute)
-                        ? x.ImageUrl 
-                        : $"/images/{x.ImageUrl}", 
+                        ? x.ImageUrl
+                        : $"/images/{x.ImageUrl}",
                     ShortProductDescription = x.ShortProductDescription,
                     Description = x.Description,
-                   
-                    
-                    
-                    Category = new CategoryIndexViewModel
+                    CategoryId = x.CategoryId,
+                    ApplicationTypeId = x.ApplicationTypeId
+                })
+                .FirstOrDefaultAsync();
+
+            if (product != null)
+            {
+                var categories = await this.dbContext.Category
+                    .Select(c => new CategoryViewModel
                     {
-                        Id = x.Category.Id,
-                        Name = x.Category.Name
-                    },
-                    ApplicationType = new ApplicationTypeIndexViewModel
+                        Id = c.Id,
+                        Name = c.Name
+                    })
+                    .ToListAsync();
+
+                var applicationTypes = await this.dbContext.ApplicationType
+                    .Select(at => new ApplicationTypeViewModel
                     {
-                        Id = x.ApplicationType.Id,
-                        Name = x.ApplicationType.Name
-                    }
-                }).ToListAsync();
+                        Id = at.Id,
+                        Name = at.Name
+                    })
+                    .ToListAsync();
 
-            return product.FirstOrDefault();
+                product.Categories = categories;
+                product.ApplicationTypes = applicationTypes;
+            }
 
-
-           
+            return product;
         }
+
 
         public async Task<List<ProductIndexViewModel>> GetFilteredProductsAsync(int categoryId)
         {
@@ -219,28 +228,32 @@ namespace BaumarktSystem.Services.Data
 
         public async Task EditProductAsync(ProductIndexViewModel model)
         {
-
-            var productToEdit = this.dbContext.Product.Where(x => x.Id == model.Id).FirstOrDefault();
+            var productToEdit = await this.dbContext.Product.FirstOrDefaultAsync(x => x.Id == model.Id);
 
             if (productToEdit != null)
             {
                 productToEdit.FullName = model.Name;
                 productToEdit.Price = model.Price;
-                productToEdit.ImageUrl = model.ImageUrl;
                 productToEdit.ShortProductDescription = model.ShortProductDescription;
                 productToEdit.Description = model.Description;
                 productToEdit.CategoryId = model.CategoryId;
-                productToEdit.ApplicationTypeId = model.ApplicationType.Id;
+                productToEdit.ApplicationTypeId = model.ApplicationTypeId;
+
+                // Check if the ImageUrl is an absolute URL or a local path
+                if (Uri.IsWellFormedUriString(model.ImageUrl, UriKind.Absolute))
+                {
+                    productToEdit.ImageUrl = model.ImageUrl;
+                }
+                else if (!string.IsNullOrEmpty(model.ImageUrl))
+                {
+                    // If the ImageUrl is not an absolute URL, it is a local path, so we save the filename only
+                    string fileName = Path.GetFileName(model.ImageUrl);
+                    productToEdit.ImageUrl = $"/images/{fileName}";
+                }
 
                 await this.dbContext.SaveChangesAsync();
             }
-
-
-
-
-
-
-            
         }
+
     }
 }

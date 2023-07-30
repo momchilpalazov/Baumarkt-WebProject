@@ -18,34 +18,24 @@ namespace BaumarktSystem.Data.Models
         {            
             this.Id = Guid.NewGuid();
 
-            this.CartItem = new HashSet<CartItem>();
+            this.Products = new HashSet<Product>();
 
-        }      
+        }
 
-      
 
-            
+
+
+         
             [MaxLength(NameMaxLength)]
             [MinLength(NameMinLength)]
-            public string? Name { get; set; }
-
-
-            [MaxLength(AddressMaxLength)]
-            [MinLength(AddressMinLength)]
-            public string? Address { get; set; }
-
-            [MaxLength(CityMaxLength)]
-            [MinLength(CityMinLength)]
-            public string? City { get; set; }
-
-            [MaxLength(PostalCodeMaxLength)]
-            [MinLength(PostalCodeMinLength)]
-            public string? PostalCode { get; set; }
+            public string?Name { get; set; } 
 
            
            
 
-            public virtual ICollection<CartItem> CartItem { get; set; } = new HashSet<CartItem>();     
+            public virtual ICollection<Product> Products { get; set; } = new HashSet<Product>();    
+        
+            
 
 
 

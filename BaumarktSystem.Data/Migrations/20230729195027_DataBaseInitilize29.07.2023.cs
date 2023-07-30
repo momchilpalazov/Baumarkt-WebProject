@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BaumarktSystem.Data.Migrations
 {
-    public partial class InitialCreateTableNewAfterDeleteOld : Migration
+    public partial class DataBaseInitilize29072023 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,9 +29,6 @@ namespace BaumarktSystem.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    PostalCode = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -53,6 +50,18 @@ namespace BaumarktSystem.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CartItem",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CartItem", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -69,6 +78,25 @@ namespace BaumarktSystem.Data.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Admin",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Admin", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Admin_AspNetUsers_CreatorId",
+                        column: x => x.CreatorId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -180,24 +208,6 @@ namespace BaumarktSystem.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CartItem",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ApplicationUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CartItem", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CartItem_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Category",
                 columns: table => new
                 {
@@ -231,9 +241,10 @@ namespace BaumarktSystem.Data.Migrations
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
-                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ApplicationTypeId = table.Column<int>(type: "int", nullable: false)
+                    ApplicationTypeId = table.Column<int>(type: "int", nullable: false),
+                    ApplicationUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CartItemId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -245,11 +256,15 @@ namespace BaumarktSystem.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Product_AspNetUsers_CreatorId",
-                        column: x => x.CreatorId,
+                        name: "FK_Product_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Product_CartItem_CartItemId",
+                        column: x => x.CartItemId,
+                        principalTable: "CartItem",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Product_Category_CategoryId",
                         column: x => x.CategoryId,
@@ -257,6 +272,11 @@ namespace BaumarktSystem.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Admin_CreatorId",
+                table: "Admin",
+                column: "CreatorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ApplicationType_CreatorId",
@@ -303,11 +323,6 @@ namespace BaumarktSystem.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartItem_ApplicationUserId",
-                table: "CartItem",
-                column: "ApplicationUserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Category_CreatorId",
                 table: "Category",
                 column: "CreatorId");
@@ -318,18 +333,26 @@ namespace BaumarktSystem.Data.Migrations
                 column: "ApplicationTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Product_ApplicationUserId",
+                table: "Product",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Product_CartItemId",
+                table: "Product",
+                column: "CartItemId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Product_CategoryId",
                 table: "Product",
                 column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Product_CreatorId",
-                table: "Product",
-                column: "CreatorId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Admin");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -346,9 +369,6 @@ namespace BaumarktSystem.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CartItem");
-
-            migrationBuilder.DropTable(
                 name: "Product");
 
             migrationBuilder.DropTable(
@@ -356,6 +376,9 @@ namespace BaumarktSystem.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "ApplicationType");
+
+            migrationBuilder.DropTable(
+                name: "CartItem");
 
             migrationBuilder.DropTable(
                 name: "Category");
