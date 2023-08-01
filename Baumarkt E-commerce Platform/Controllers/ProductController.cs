@@ -1,6 +1,9 @@
-﻿using BaumarktSystem.Data.Models;
+﻿using BaumarktSystem.Common;
+using BaumarktSystem.Data.Models;
 using BaumarktSystem.Services.Data.Interfaces;
+using BaumarktSystem.Web.Utility;
 using BaumarktSystem.Web.ViewModels.Home;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Drawing;
@@ -15,11 +18,22 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         private readonly IWebHostEnvironment hostingEnvironment;
 
+        
 
-        public ProductController(IProductInterface productInterface, IWebHostEnvironment hostingEnvironment)
+        private readonly UserSession userSession;
+
+        
+
+       
+
+
+        public ProductController(IProductInterface productInterface, IWebHostEnvironment hostingEnvironment,  UserSession userSession)
         {
             this.productInterface = productInterface;
             this.hostingEnvironment = hostingEnvironment;
+           
+            this.userSession = userSession;
+            
         }
 
         [HttpGet]
@@ -107,14 +121,6 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         }
 
 
-
-
-
-
-
-
-
-
         [HttpGet]
 
         public async Task<IActionResult> DeleteProduct(int id)
@@ -143,7 +149,44 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         }
 
 
-        
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var product = await productInterface.GetProductDetailsByIdAsync(id);
+
+
+            if (product == null)
+            {
+                return this.NotFound();
+            }
+
+
+            return this.View(product);
+        }
+
+        [HttpPost,ActionName("AddTocart")]
+
+        public async Task<IActionResult> DetailsPost(int Id)
+        {
+
+            List<CartItemIndexView> cartItemList=new List<CartItemIndexView>();
+
+            if (userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey) != null 
+                && userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey).Count()>0  )
+            {
+                cartItemList = userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey).ToList();
+
+
+            }
+
+            cartItemList.Add(new CartItemIndexView { Id = Id });
+            userSession.Set<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey, cartItemList);
+            return RedirectToAction("Index", "Home");
+
+
+
+
+        }
 
 
 
@@ -151,9 +194,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
 
 
-
-
-
+        //Image Upload Method
         private Task<string> SaveImageAsync(IFormFile image)
         {
             string uploadsFolder = Path.Combine(this.hostingEnvironment.WebRootPath, "images");
@@ -183,10 +224,6 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
                     throw;
                 }
-
-
-
-
 
                
             }

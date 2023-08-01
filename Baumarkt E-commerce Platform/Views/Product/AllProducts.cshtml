@@ -1,15 +1,19 @@
 ﻿@using BaumarktSystem.Web.ViewModels.Home
+@using System.Globalization
 @model IEnumerable<ProductIndexViewModel>
-
 
 @{
     ViewData["Title"] = "All Products";
-}  
+}
 
-
+<style>
+    td.currency {
+        white-space: nowrap;
+    }
+</style>
 
 <div class="container mt-4">
-    <h2 class="card-text    mb-3">ALL PRODUCT</h2>
+    <h2 class="card-text mb-3">ALL PRODUCT</h2>
     @if (Model != null && Model.Any())
     {
         <table class="table">
@@ -34,13 +38,13 @@
                         <td>@product.ShortProductDescription</td>
                         <td>@product.Description</td>
                         <td><img src="@product.ImageUrl" alt="Product Image" style="max-height: 100px;" /></td>
-                        <td>@product.Price</td>
+                        <td class="currency">@product.Price.ToString("C", new CultureInfo("eu-EU"))</td>
                         <td>@product.Category.Name</td>
                         <td>@product.ApplicationType.Name</td>
                         <td>
-                            <a asp-action="EditProduct" asp-route-id="@product.Id" class="btn btn-link ">Edit</a>
-                           @* <a asp-action="DetailsProduct" asp-route-id="@product.Id" class="btn btn-link ">Details</a> *@                           
-                            <a asp-action="DeleteProduct" asp-route-id="@product.Id" class="btn btn-link  ">Delete</a>
+                            <a asp-action="EditProduct" asp-route-id="@product.Id" class="btn btn-link">Edit</a>
+                            @* <a asp-action="DetailsProduct" asp-route-id="@product.Id" class="btn btn-link">Details</a> *@
+                            <a asp-action="DeleteProduct" asp-route-id="@product.Id" class="btn btn-link">Delete</a>
                         </td>
                     </tr>
                 }
@@ -50,14 +54,13 @@
     else
     {
         <p>There are no products available.</p>
-
-       
     }
 
     <div class="text-center">
-        <a  asp-action="Create" class="btn btn-primary">Create New Product</a>
+        <a asp-action="Create" class="btn btn-primary">Create New Product</a>
     </div>
 </div>
+
 
 
 

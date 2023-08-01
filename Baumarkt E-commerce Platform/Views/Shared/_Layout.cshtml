@@ -1,4 +1,16 @@
 ﻿@using static BaumarktSystem.Common.GeneralApplicationConstants;
+@using BaumarktSystem.Web.ViewModels.Home;
+@using Microsoft.AspNetCore.Http
+@using BaumarktSystem.Common
+
+@using System.Text;
+@using Newtonsoft.Json;
+@using BaumarktSystem.Data.Models
+
+
+@inject IHttpContextAccessor HttpContextAccessor
+@inject BaumarktSystem.Web.Utility.UserSession UserSession
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,13 +20,13 @@
     <title>@ViewData["Title"] - Baumarkt Deutschland e-commerce Platform</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">    
+    <link rel="stylesheet" href="~/fontawesome/css/all.css" />
     <link rel="stylesheet" href="~/Baumarkt_E_commerce_Platform.styles.css" asp-append-version="true" />
-  
 
 
-    
+   
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -51,25 +63,46 @@
                                     </li>
 
                                 </ul>
-                            </li>
-                           
+                            </li>                          
 
-                            @*<li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="AllCategory">Category</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="ApplicationType" asp-action="AllApplicationType">ApplicationType</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="AllProducts">Product</a>
-                            </li>*@
+                            
                         }
 
                        
+                       <li>
+
+                        
+                            @{
+                                var count = 0;
+                                var cartItems = UserSession.Get<List<CartItemIndexView>>(UserSessionConstantsKey.SessionKey);
+                                if (cartItems != null)
+                                {
+                                    count = cartItems.Count;
+                                }
+                            }
+
+                            @if (cartItems != null)
+                            {
+                                <a asp-action="Index" asp-controller="Cart" class="nav-link">
+                                    <i class="fas fa-shopping-cart"></i> &nbsp; (@count)
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="#" class="nav-link">
+                                    <i class="fas fa-shopping-cart"></i> &nbsp; (0)
+                                </a>
+                            }
+
+                            
+
+
+                        </li>
+
                       
 
                     </ul>
-                    <partial name="_LoginPartial" />
+                   
                 </div>
             </div>
         </nav>

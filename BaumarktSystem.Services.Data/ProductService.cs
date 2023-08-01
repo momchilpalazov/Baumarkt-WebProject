@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BaumarktSystem.Services.Data;
 using BaumarktSystem.Data.Models;
+using BaumarktSystem.Common;
 
 namespace BaumarktSystem.Services.Data
 {
@@ -17,6 +18,11 @@ namespace BaumarktSystem.Services.Data
     {
 
         private readonly BaumarktSystemDbContext dbContext;   
+
+        
+
+
+
 
 
         public ProductService(BaumarktSystemDbContext dbContext  )
@@ -140,6 +146,10 @@ namespace BaumarktSystem.Services.Data
 
 
 
+      
+
+
+
 
 
 
@@ -188,6 +198,55 @@ namespace BaumarktSystem.Services.Data
 
             return product;
         }
+
+        public async Task<ProductDetailsViewModel> GetProductDetailsByIdAsync(int id)
+        {
+            var product = await this.dbContext.Product
+                .Include(x => x.Category)
+                .Include(x => x.ApplicationType)
+                .Where(x => x.Id == id)
+                .Select(x => new ProductDetailsViewModel
+                {
+                    Id = x.Id,
+                    Name = x.FullName,
+                    Price = x.Price,
+                    ImageUrl = Uri.IsWellFormedUriString(x.ImageUrl, UriKind.Absolute)
+                        ? x.ImageUrl
+                        : $"/images/{x.ImageUrl}",
+                    ShortProductDescription = x.ShortProductDescription,
+                    Description = x.Description,
+                    CategoryId = x.CategoryId,
+                    ApplicationTypeId = x.ApplicationTypeId
+                })
+                .FirstOrDefaultAsync();
+
+            if (product != null)
+            {
+                var categories = await this.dbContext.Category
+                    .Select(c => new CategoryViewModel
+                    {
+                        Id = c.Id,
+                        Name = c.Name
+                    })
+                    .ToListAsync();
+
+                var applicationTypes = await this.dbContext.ApplicationType
+                    .Select(at => new ApplicationTypeViewModel
+                    {
+                        Id = at.Id,
+                        Name = at.Name
+                    })
+                    .ToListAsync();
+
+                //product.Categories = categories;
+                //product.ApplicationTypes = applicationTypes;
+
+               
+            }
+
+            return product;
+        }
+
 
 
         public async Task<List<ProductIndexViewModel>> GetFilteredProductsAsync(int categoryId)
@@ -255,5 +314,56 @@ namespace BaumarktSystem.Services.Data
             }
         }
 
+        public async Task<ProductIndexViewModel> GetProductFromDatabase(int productId)
+        {
+
+            var product = await this.dbContext.Product
+           .Include(x => x.Category)
+           .Include(x => x.ApplicationType)
+           .Where(x => x.Id == productId)
+           .Select(x => new ProductIndexViewModel
+           {
+               Id = x.Id,
+               Name = x.FullName,
+               Price = x.Price,
+               ImageUrl = Uri.IsWellFormedUriString(x.ImageUrl, UriKind.Absolute)
+                   ? x.ImageUrl
+                   : $"/images/{x.ImageUrl}",
+               ShortProductDescription = x.ShortProductDescription,
+               Description = x.Description,
+               CategoryId = x.CategoryId,
+               ApplicationTypeId = x.ApplicationTypeId
+           })
+           .FirstOrDefaultAsync();
+
+            if (product != null)
+            {
+                var categories = await this.dbContext.Category
+                    .Select(c => new CategoryViewModel
+                    {
+                        Id = c.Id,
+                        Name = c.Name
+                    })
+                    .ToListAsync();
+
+                var applicationTypes = await this.dbContext.ApplicationType
+                    .Select(at => new ApplicationTypeViewModel
+                    {
+                        Id = at.Id,
+                        Name = at.Name
+                    })
+                    .ToListAsync();
+
+                product.Categories = categories;
+                product.ApplicationTypes = applicationTypes;
+            }
+
+            return product;
+        }
+
+
+
+
     }
+    
 }

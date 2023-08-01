@@ -3,6 +3,7 @@ using BaumarktSystem.Data.Models;
 using BaumarktSystem.Services.Data;
 using BaumarktSystem.Services.Data.Interaces;
 using BaumarktSystem.Services.Data.Interfaces;
+using BaumarktSystem.Web.Utility;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,14 +33,27 @@ namespace Baumarkt_E_commerce_Platform
 
             }).AddEntityFrameworkStores<BaumarktSystemDbContext>();
 
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+
+            });
+
+            //builder.Services.AddSingleton<SessionExtensions>();
+
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddScoped<ICategoryInterface,CategoryService  >();
             builder.Services.AddScoped<IApplicationTypeInterface,ApplicationTypeService>();
             builder.Services.AddScoped<IProductInterface,ProductService>();
-           
 
-            //builder.Services.AddApplicationServices(typeof(IHouseService));
+            builder.Services.AddScoped<UserSession>();
+
+
+            //builder.Services.AddApplicationServices(typeof());
 
 
             builder.Services.AddControllersWithViews();
@@ -68,10 +82,15 @@ namespace Baumarkt_E_commerce_Platform
 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseSession();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
 
 
 
-            
             app.MapDefaultControllerRoute();
 
             app.MapRazorPages();

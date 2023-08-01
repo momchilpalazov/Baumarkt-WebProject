@@ -18,7 +18,11 @@ namespace BaumarktSystem.Services.Data.Interfaces
         Task <IEnumerable <ProductIndexViewModel>> GetAllProductsAsync();
       
         Task <ProductIndexViewModel> GetProductByIdAsync(int id);
+
+        Task<ProductDetailsViewModel> GetProductDetailsByIdAsync(int id);
+
         Task<List<ProductIndexViewModel>> GetFilteredProductsAsync(int categoryId);
         Task  EditProductAsync(ProductIndexViewModel model);
+        Task<ProductIndexViewModel> GetProductFromDatabase(int productId);
     }
 }

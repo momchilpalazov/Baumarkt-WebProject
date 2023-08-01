@@ -1,0 +1,35 @@
+﻿@using BaumarktSystem.Web.ViewModels.Home
+@model List<ProductIndexViewModel>  
+
+<h2>Your Cart</h2>
+
+@if (Model != null && Model.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Price.ToString("C")</td>
+                    <td>1</td>  
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <p>Total Price: @Model.Sum(p => p.Price).ToString("C")</p>
+
+    <button class="btn btn-primary">Checkout</button>
+}
+else
+{
+    <p>Your cart is empty.</p>
+}

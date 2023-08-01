@@ -1,0 +1,8 @@
+﻿@using BaumarktSystem.Web.ViewModels.Home
+@model List<CartItemIndexView>  
+
+<div class="cart">
+    <a href="@Url.Action("Index", "Cart")" class="btn btn-primary">
+        <i class="fas fa-shopping-cart"></i> Cart (@Model.Count)
+    </a>
+</div>

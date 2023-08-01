@@ -1,0 +1,44 @@
+﻿@using BaumarktSystem.Web.ViewModels.Home
+@using System.Globalization
+@model ProductDetailsViewModel
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6">
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="@Model.ImageUrl" alt="Product Image" style="max-height: 300px;" />
+            }
+            else
+            {
+                <p>No image available</p>
+            }
+        </div>
+        <div class="col-md-6">
+            <h2>@Model.Name</h2>
+            <p class="lead">@Model.ShortProductDescription</p>
+            <p>@Model.Description</p>
+            <p>Price: @Model.Price.ToString("C", new CultureInfo("eu-EU"))</p>
+            <p>Category: @Model.Category.Name</p>
+            <p>Application Type: @Model.ApplicationType.Name</p>
+
+            <div class="d-flex justify-content-between">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-primary"><i class="fas fa-sign-out-alt"></i> Back to List</a>
+                <form asp-controller="Product" asp-action="AddToCart" method="post">
+                    <input type="hidden" name="Id" value="@Model.Id" />
+                    <button type="submit" class="btn btn-success"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

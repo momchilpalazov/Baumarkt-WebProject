@@ -20,39 +20,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         }
 
 
-        //public async Task<IActionResult> Index(int? categoryId)
-        //{
-        //    if (categoryId.HasValue)
-        //    {
-        //        var filteredProducts = await productInterface.GetFilteredProductsAsync(categoryId.Value);
-        //        var allCategories = await productInterface.GetAllFilteredCategoriesAsync();
-
-        //        var viewModel = new FilteredProductsViewModel
-        //        {
-        //            CategoryId = categoryId.Value,
-        //            FilteredProducts = filteredProducts,
-        //            AllCategories = allCategories
-        //        };
-
-        //        return View(viewModel);
-        //    }
-        //    else
-        //    {
-        //        // If categoryId is null, display all products without filtering
-        //        var allProducts = await productInterface.GetAllProductsAsync();
-        //        var allCategories = await productInterface.GetAllFilteredCategoriesAsync();
-
-        //        var viewModel = new FilteredProductsViewModel
-        //        {
-        //            CategoryId = 0, // 0 represents "All Categories"
-        //            FilteredProducts = allProducts.ToList(),
-        //            AllCategories = allCategories
-        //        };
-
-        //        return View(viewModel);
-        //    }
-        //}
-
+        
         public async Task<IActionResult> Index(int? categoryId)
         {
             IEnumerable<ProductIndexViewModel> filteredProducts;
@@ -78,6 +46,8 @@ namespace Baumarkt_E_commerce_Platform.Controllers
             return View(viewModel);
         }
 
+
+       
 
 
 
