@@ -10,21 +10,22 @@ using System.Drawing;
 
 namespace Baumarkt_E_commerce_Platform.Controllers
 {
+    
     public class ProductController : Controller
     {
 
 
         private readonly IProductInterface productInterface;
 
-        private readonly IWebHostEnvironment hostingEnvironment;
-
-        
+        private readonly IWebHostEnvironment hostingEnvironment;        
 
         private readonly UserSession userSession;
 
-        
 
-       
+        private  bool IsInCart = false;
+
+
+
 
 
         public ProductController(IProductInterface productInterface, IWebHostEnvironment hostingEnvironment,  UserSession userSession)
@@ -152,6 +153,19 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
+
+
+            List<CartItemIndexView> cartItemList = new List<CartItemIndexView>();
+
+            if (userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey) != null
+                && userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey).Count() > 0)
+            {
+                cartItemList = userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey).ToList();
+
+
+            }
+
+
             var product = await productInterface.GetProductDetailsByIdAsync(id);
 
 
@@ -161,11 +175,26 @@ namespace Baumarkt_E_commerce_Platform.Controllers
             }
 
 
+            if (cartItemList.Count() > 0)
+            {
+                foreach (var item in cartItemList)
+                {
+                    if (item.Id == id)
+                    {
+                        product.IsInCart = true;
+                    }
+                }
+            }
+
+
+
             return this.View(product);
         }
 
-        [HttpPost,ActionName("AddTocart")]
 
+
+
+        [HttpPost,ActionName("AddTocart")]
         public async Task<IActionResult> DetailsPost(int Id)
         {
 
@@ -180,6 +209,41 @@ namespace Baumarkt_E_commerce_Platform.Controllers
             }
 
             cartItemList.Add(new CartItemIndexView { Id = Id });
+            userSession.Set<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey, cartItemList);
+            return RedirectToAction("Index", "Home");
+
+
+
+
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromCart(int Id)
+        {
+
+            List<CartItemIndexView> cartItemList = new List<CartItemIndexView>();
+
+            if (userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey) != null
+                && userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey).Count() > 0)
+            {
+                cartItemList = userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey).ToList();
+
+
+            }
+
+
+            var removeItem= cartItemList.SingleOrDefault(x => x.Id == Id);
+
+            if (removeItem != null)
+            {
+                cartItemList.Remove(removeItem);
+            }
+
+
+
+
+           
             userSession.Set<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey, cartItemList);
             return RedirectToAction("Index", "Home");
 

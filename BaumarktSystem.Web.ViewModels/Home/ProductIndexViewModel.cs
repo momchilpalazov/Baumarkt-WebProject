@@ -24,6 +24,8 @@ namespace BaumarktSystem.Web.ViewModels.Home
 
         public decimal Price { get; set; }
 
+        
+
 
 
 

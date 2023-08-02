@@ -216,8 +216,11 @@ namespace BaumarktSystem.Services.Data
                     ShortProductDescription = x.ShortProductDescription,
                     Description = x.Description,
                     CategoryId = x.CategoryId,
-                    ApplicationTypeId = x.ApplicationTypeId
-                })
+                    ApplicationTypeId = x.ApplicationTypeId,
+                    
+                    
+
+        })
                 .FirstOrDefaultAsync();
 
             if (product != null)

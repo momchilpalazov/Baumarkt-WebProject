@@ -26,6 +26,8 @@ namespace BaumarktSystem.Web.ViewModels.Home
 
         public int ApplicationTypeId { get; set; }
 
+        public bool IsInCart { get; set; }=false;
+
         public Category Category { get; set; } = new Category();
 
         public ApplicationType ApplicationType { get; set; } = new ApplicationType();

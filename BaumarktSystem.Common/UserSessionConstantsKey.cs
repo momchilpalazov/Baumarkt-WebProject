@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BaumarktSystem.Common
 {
-    public class UserSessionConstantsKey
+    public static class UserSessionConstantsKey
     {
         public static string SessionKey = "ShopingCartSession";
 

@@ -1,6 +1,12 @@
-﻿@using BaumarktSystem.Web.ViewModels.Home
+﻿
+@using BaumarktSystem.Web.ViewModels.Home
 @using System.Globalization
+@using BaumarktSystem.Web.Utility
+@using BaumarktSystem.Common
 @model ProductDetailsViewModel
+
+@inject IHttpContextAccessor HttpContextAccessor
+@inject BaumarktSystem.Web.Utility.UserSession UserSession
 
 @{
     ViewData["Title"] = "Product Details";
@@ -28,16 +34,51 @@
 
             <div class="d-flex justify-content-between">
                 <a asp-controller="Home" asp-action="Index" class="btn btn-primary"><i class="fas fa-sign-out-alt"></i> Back to List</a>
-                <form asp-controller="Product" asp-action="AddToCart" method="post">
-                    <input type="hidden" name="Id" value="@Model.Id" />
-                    <button type="submit" class="btn btn-success"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
-                </form>
+                @{
+                    //var cartItems = UserSession.Get<List<CartItemIndexView>>(UserSessionConstantsKey.SessionKey);
+                    //if (cartItems != null && cartItems.Any(x => x.Id == Model.Id))
+                    //{
+                    //// The product is in the cart, show the "Remove from Cart" button
+                    //    <form asp-controller="Product" asp-action="RemoveFromCart" method="post">
+                    //        <input type="hidden" name="Id" value="@Model.Id" />
+                    //        <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Remove from Cart</button>
+                    //    </form>
+                    //}
+                    //else
+                    //{
+                    //// The product is not in the cart, show the "Add to Cart" button
+                    //    <form asp-controller="Product" asp-action="AddToCart" method="post">
+                    //        <input type="hidden" name="Id" value="@Model.Id" />
+                    //        <button type="submit" class="btn btn-success"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                    //    </form>
+                    //}
+
+
+                    
+                    if (Model.IsInCart)
+                    {
+                    
+                        <form asp-controller="Product" asp-action="RemoveFromCart" method="post">
+                            <input type="hidden" name="Id" value="@Model.Id" />
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Remove from Cart</button>
+                        </form>
+                    }
+                    else
+                    {
+                    
+                        <form asp-controller="Product" asp-action="AddToCart" method="post">
+                            <input type="hidden" name="Id" value="@Model.Id" />
+                            <button type="submit" class="btn btn-success"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                        </form>
+                    }
+
+
+
+                }
             </div>
         </div>
     </div>
 </div>
-
-
 
 
 

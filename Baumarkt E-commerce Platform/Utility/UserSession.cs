@@ -22,19 +22,7 @@ namespace BaumarktSystem.Web.Utility
         private ISession Session => _httpContextAccessor.HttpContext.Session;
 
 
-        private static class SessionKeys
-        {
-            public const string Cart = "Cart";
-        }
-
-
-        //public void AddProductToCart(int productId)
-        //{
-        //    var cart = this.Get<List<int>>(SessionKeys.Cart) ?? new List<int>();
-        //    cart.Add(productId);
-        //    this.Set(SessionKeys.Cart, cart);
-        //}
-
+       
 
 
 
