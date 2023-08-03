@@ -1,0 +1,33 @@
+﻿@using BaumarktSystem.Web.ViewModels.Home
+@model SupplierIndexViewModel
+
+@{
+    ViewBag.Title = "Be A Supplier";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+@if (!ViewData.ModelState.IsValid && ViewData.ModelState["Error"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewData.ModelState["Error"].Errors.First().ErrorMessage
+    </div>
+}
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form method="post" asp-controller="Supplier" asp-action="CreateSupplier">
+            <div class="form-group">
+                <label asp-for="PhoneNumber">Phone Number:</label>
+                <input asp-for="PhoneNumber" class="form-control" placeholder="+359888888888">
+                <span asp-validation-for="PhoneNumber" class="small text-danger"></span>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary mt-3">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

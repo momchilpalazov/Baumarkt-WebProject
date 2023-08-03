@@ -9,13 +9,13 @@ using static BaumarktSystem.Common.EntityValidationConstanst.Admin;
 
 namespace BaumarktSystem.Data.Models
 {
-    public class Admin 
+    [Table("Supplier")]
+    public class Supplier 
     {
-        public Admin()
+        public Supplier()
         {
             Id = Guid.NewGuid();
 
-           
         }
 
 

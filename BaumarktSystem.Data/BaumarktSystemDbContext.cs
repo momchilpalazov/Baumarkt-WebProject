@@ -25,7 +25,7 @@ namespace Baumarkt_E_commerce_Platform.Data
 
         public DbSet<CartItem> CartItem { get; set; } = null!;
 
-        public DbSet<Admin> Admin { get; set; } = null!;
+        public DbSet<Supplier> Dealer { get; set; } = null!;
 
 
        

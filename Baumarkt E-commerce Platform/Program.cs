@@ -49,6 +49,7 @@ namespace Baumarkt_E_commerce_Platform
             builder.Services.AddScoped<ICategoryInterface,CategoryService  >();
             builder.Services.AddScoped<IApplicationTypeInterface,ApplicationTypeService>();
             builder.Services.AddScoped<IProductInterface,ProductService>();
+            builder.Services.AddScoped<ISupplierInterface,SupplierServices>();
 
             builder.Services.AddScoped<UserSession>();
 

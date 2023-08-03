@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaumarktSystem.Web.ViewMode
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{3BF8A187-4029-46BB-BF92-9BEA75AAF907}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaumarktSystem.Services.Data", "BaumarktSystem.Services.Data\BaumarktSystem.Services.Data.csproj", "{8441A0ED-68D3-4E01-A80C-BE6802D07E40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaumarktSystem.Services.Data", "BaumarktSystem.Services.Data\BaumarktSystem.Services.Data.csproj", "{8441A0ED-68D3-4E01-A80C-BE6802D07E40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaumarktSystem.Web.Infrastructure", "Baumarkt.System.Web.Infrastructure\BaumarktSystem.Web.Infrastructure.csproj", "{4B51D1E0-BB09-48F6-8E69-F576C2E83AC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{8441A0ED-68D3-4E01-A80C-BE6802D07E40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8441A0ED-68D3-4E01-A80C-BE6802D07E40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8441A0ED-68D3-4E01-A80C-BE6802D07E40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B51D1E0-BB09-48F6-8E69-F576C2E83AC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B51D1E0-BB09-48F6-8E69-F576C2E83AC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B51D1E0-BB09-48F6-8E69-F576C2E83AC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B51D1E0-BB09-48F6-8E69-F576C2E83AC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
