@@ -12,8 +12,8 @@ namespace BaumarktSystem.Web.ViewModels.Home
 
         public int Id { get; set; }
 
-        [Required]         
-        public string Name { get; set; }=null!;
+        [Required]
+        public string Name { get; set; } = null!;
 
         [Required]
 
@@ -23,7 +23,7 @@ namespace BaumarktSystem.Web.ViewModels.Home
         public DateTime CreatedOn { get; set; }
 
 
-        public List<ApplicationTypeViewModel> ApplicationTypes { get; set; }=new List<ApplicationTypeViewModel>();
+        public List<ApplicationTypeViewModel> ApplicationTypes { get; set; } = new List<ApplicationTypeViewModel>();
 
     }
 }

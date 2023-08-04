@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using BaumarktSystem.Data.Models;
 
-
 namespace BaumarktSystem.Web.ViewModels.Home
 {
     public class ProductIndexViewModel

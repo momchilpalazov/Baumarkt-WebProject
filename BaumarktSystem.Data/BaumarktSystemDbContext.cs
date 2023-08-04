@@ -25,7 +25,7 @@ namespace Baumarkt_E_commerce_Platform.Data
 
         public DbSet<CartItem> CartItem { get; set; } = null!;
 
-        public DbSet<Supplier> Dealer { get; set; } = null!;
+        public DbSet<Supplier> Suppliers { get; set; } = null!;
 
 
        
@@ -35,8 +35,6 @@ namespace Baumarkt_E_commerce_Platform.Data
         {
 
             builder.ApplyConfigurationsFromAssembly (typeof(BaumarktSystemDbContext).Assembly);
-
-
 
            
             base.OnModelCreating(builder);

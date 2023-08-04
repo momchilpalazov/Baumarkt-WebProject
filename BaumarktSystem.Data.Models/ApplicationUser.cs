@@ -25,10 +25,10 @@ namespace BaumarktSystem.Data.Models
 
 
 
-         
-            [MaxLength(NameMaxLength)]
-            [MinLength(NameMinLength)]
-            public string?Name { get; set; } 
+
+        [MaxLength(NameMaxLength)]
+        [MinLength(NameMinLength)]
+        public string? Name { get; set; } 
 
            
            

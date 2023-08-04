@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using BaumarktSystem.Services.Data;
 using BaumarktSystem.Data.Models;
 using BaumarktSystem.Common;
+using BaumarktSystem.Web.ViewModels;
 
 namespace BaumarktSystem.Services.Data
 {

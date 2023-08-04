@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace BaumarktSystem.Web.ViewModels.Home
 {
     public class ProductDetailsViewModel

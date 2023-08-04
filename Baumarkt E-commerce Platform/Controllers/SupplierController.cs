@@ -56,7 +56,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
             if (existDealer)
             {
                 this.ModelState.AddModelError(nameof(supplier.PhoneNumber), "This phone number is already exist");
-                //return this.View(supplier);
+                return this.View(supplier);
             }
 
             //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);

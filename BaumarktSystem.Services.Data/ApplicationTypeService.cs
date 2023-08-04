@@ -1,7 +1,6 @@
 ﻿using Baumarkt_E_commerce_Platform.Data;
 using BaumarktSystem.Services.Data.Interaces;
 using BaumarktSystem.Data.Models;
-using BaumarktSystem.Web.ViewModels.Home;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,6 +10,7 @@ using System.Threading.Tasks;
 using static BaumarktSystem.Common.EntityValidationConstanst;
 using ApplicationType = BaumarktSystem.Data.Models.ApplicationType;
 using BaumarktSystem.Services.Data.Interfaces;
+using BaumarktSystem.Web.ViewModels.Home;
 
 namespace BaumarktSystem.Services.Data
 {

@@ -23,7 +23,7 @@ namespace BaumarktSystem.Services.Data
         public async Task<bool> BeASupplierAsync(Guid userId)
         {
 
-            bool isDealer = await this.dbContext.Dealer.AnyAsync(x => x.CreatorId == userId);
+            bool isDealer = await this.dbContext.Suppliers.AnyAsync(x => x.CreatorId == userId);
 
             return isDealer;
 
@@ -41,7 +41,7 @@ namespace BaumarktSystem.Services.Data
                 
             }; 
             
-           await this.dbContext.Dealer.AddAsync(suppliers);
+           await this.dbContext.Suppliers.AddAsync(suppliers);
             await this.dbContext.SaveChangesAsync();      
 
 
@@ -52,7 +52,7 @@ namespace BaumarktSystem.Services.Data
         public async Task<bool> ExistSupplierByPhoneNumber(string phoneNumber)
         {
 
-            bool existDealer = await  this.dbContext.Dealer.AnyAsync(x => x.PhoneNumber == phoneNumber);
+            bool existDealer = await  this.dbContext.Suppliers.AnyAsync(x => x.PhoneNumber == phoneNumber);
 
             return existDealer;
 

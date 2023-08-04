@@ -13,7 +13,7 @@ namespace BaumarktSystem.Web.ViewModels.Home
 
         public string Name { get; set; } = null!;
 
-        
+
 
 
     }

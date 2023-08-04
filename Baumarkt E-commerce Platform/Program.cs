@@ -87,6 +87,7 @@ namespace Baumarkt_E_commerce_Platform
 
             app.UseEndpoints(endpoints =>
             {
+               
                 endpoints.MapControllers();
             });
 
