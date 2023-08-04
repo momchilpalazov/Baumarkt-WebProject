@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using static BaumarktSystem.Common.GeneralApplicationConstants;
 
 namespace Baumarkt_E_commerce_Platform.Areas.Identity.Pages.Account
 {
@@ -30,13 +31,15 @@ namespace Baumarkt_E_commerce_Platform.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole<Guid>> _roleManager;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole<Guid>> roleManager)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +47,7 @@ namespace Baumarkt_E_commerce_Platform.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -98,11 +102,32 @@ namespace Baumarkt_E_commerce_Platform.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+
+            [Required]
+            [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Use letters only please")]
+            public string FullName { get; set; }
+
+
+            [Required]
+
+            public string PhoneNumber { get; set; }
+
+
+
         }
 
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            //if (!await _roleManager.RoleExistsAsync(roleAdmin)  )
+            //{
+            //    await _roleManager.CreateAsync(new IdentityRole<Guid>(roleAdmin));
+            //    await _roleManager.CreateAsync(new IdentityRole<Guid>(roleCustomer));
+
+            //}
+
+
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -114,6 +139,8 @@ namespace Baumarkt_E_commerce_Platform.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+                user.FullName = Input.FullName;
+                user.PhoneNumber = Input.PhoneNumber;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -121,6 +148,20 @@ namespace Baumarkt_E_commerce_Platform.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+
+                    if (User.IsInRole(roleAdmin))
+                    {
+                        await _userManager.AddToRoleAsync(user, roleCustomer);
+
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user,roleCustomer);
+
+                    }
+
+
+                    //await _userManager.AddToRoleAsync(user, roleCustomer);
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);

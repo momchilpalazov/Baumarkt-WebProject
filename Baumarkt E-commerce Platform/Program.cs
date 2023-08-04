@@ -3,9 +3,11 @@ using BaumarktSystem.Data.Models;
 using BaumarktSystem.Services.Data;
 using BaumarktSystem.Services.Data.Interaces;
 using BaumarktSystem.Services.Data.Interfaces;
+using BaumarktSystem.Web.Infrastructure.Extensions;
 using BaumarktSystem.Web.Utility;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using static BaumarktSystem.Common.GeneralApplicationConstants;
 
 namespace Baumarkt_E_commerce_Platform
 {
@@ -31,7 +33,8 @@ namespace Baumarkt_E_commerce_Platform
                 options.Password.RequireNonAlphanumeric = builder.Configuration.GetValue<bool>("Identity:Password:RequireNonAlphanumeric");
                 options.Password.RequiredLength = builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
 
-            }).AddEntityFrameworkStores<BaumarktSystemDbContext>();
+            }).AddRoles<IdentityRole<Guid>>().
+            AddEntityFrameworkStores<BaumarktSystemDbContext>();
 
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddSession(options =>
@@ -50,6 +53,7 @@ namespace Baumarkt_E_commerce_Platform
             builder.Services.AddScoped<IApplicationTypeInterface,ApplicationTypeService>();
             builder.Services.AddScoped<IProductInterface,ProductService>();
             builder.Services.AddScoped<ISupplierInterface,SupplierServices>();
+            builder.Services.AddScoped<IUserInterface,UserService>();   
 
             builder.Services.AddScoped<UserSession>();
 
@@ -83,6 +87,13 @@ namespace Baumarkt_E_commerce_Platform
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.SeedAdministrator(EmeilDevelopment);
+
+            }
+           
             app.UseSession();
 
             app.UseEndpoints(endpoints =>

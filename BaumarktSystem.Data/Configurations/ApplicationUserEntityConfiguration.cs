@@ -42,7 +42,7 @@ namespace BaumarktSystem.Data.Configurations
             applicationUser = new ApplicationUser()
             {
                 //Id = adminUserId,
-                Name = "UserUserov",
+                FullName = "UserUserov",
               
             };
 

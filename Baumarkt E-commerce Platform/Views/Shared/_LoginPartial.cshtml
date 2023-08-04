@@ -1,8 +1,14 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using BaumarktSystem.Data.Models
+@using BaumarktSystem.Services.Data.Interfaces
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@inject IUserInterface UserInterface
 
+@{
+
+    string nickName = await this.UserInterface.GetFullNameByEmail(@User.Identity?.Name!);
+}
 
 
 <ul class="navbar-nav">
@@ -11,7 +17,7 @@
       
 
     <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello, @User.Identity?.Name!</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello, @nickName</a>
     </li>
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="" asp-controller="Supplier" asp-action="Supplier">Be Supplier @*@User.Identity?.Name!*@</a>
