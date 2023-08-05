@@ -1,0 +1,54 @@
+﻿@using BaumarktSystem.Web.ViewModels.ShoppingCart
+@using System.Globalization
+@model ShoppingCartSummaryView
+
+<h2 class="card-text mb-3">YOUR SHOPPING BAG</h2>
+
+<h3>User Information</h3>
+<p><strong>Full Name:</strong> @Model.ApplicationUser.FullName</p>
+<p><strong>Phone Number:</strong> @Model.ApplicationUser.PhoneNumber</p>
+<p><strong>Email:</strong> @Model.ApplicationUser.Email</p>
+
+<h3>Cart Items</h3>
+
+@if (Model.ProductsList != null && Model.ProductsList.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Short Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.ProductsList)
+            {
+                <tr>
+                    <td>@product.FullName</td>
+                    <td>@product.Price.ToString("C", new CultureInfo("eu-EU"))</td>
+                    <td>@product.ShortProductDescription</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <p>Total Price: @Model.ProductsList.Sum(p => p.Price).ToString("C", new CultureInfo("eu-EU"))</p>
+
+    <button class="btn btn-primary" onclick="checkout()">Proceed to Checkout</button>
+    <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Continue Shopping</a>
+}
+else
+{
+    <p>Your cart is empty.</p>
+    <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Continue Shopping</a>
+}
+
+@section Scripts {
+    <script>
+        function checkout() {
+           /////
+            alert("Proceeding to checkout...");
+        }
+    </script>
+}

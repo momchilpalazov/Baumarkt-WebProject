@@ -36,8 +36,8 @@
 
     <p>Total Price: @Model.Sum(p => p.Price).ToString("C", new CultureInfo("eu-EU"))</p>
 
-    <button class="btn btn-primary" onclick="checkout()">Checkout</button>
-    <a href="@Url.Action("AllProducts", "ControllerName")" class="btn btn-secondary">Continue Shopping</a>
+    <button  class="btn btn-primary" onclick="checkout()">Checkout</button>
+    <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Continue Shopping</a>
 }
 else
 {
@@ -50,7 +50,7 @@ else
         // Create a hidden form and add the product ID as a parameter
         var form = document.createElement('form');
         form.method = 'post';
-        form.action = '@Url.Action("RemoveCartProducts", "ShoppingCart")'; // Replace 'ControllerName' with your actual controller name
+        form.action = '@Url.Action("RemoveCartProducts", "ShoppingCart")'; 
 
         var input = document.createElement('input');
         input.type = 'hidden';
@@ -65,9 +65,9 @@ else
     }
 
     function checkout() {
-        // Perform the logic for checkout
-        // For demonstration purposes, I'm just displaying an alert here.
+       
         alert("Proceeding to checkout...");
+        window.location.href = '@Url.Action("ShoppingCartSummary","ShoppingCart")';
     }
 </script>
 

@@ -7,21 +7,28 @@ using BaumarktSystem.Web.ViewModels.Home;
 using Microsoft.AspNetCore.Mvc;
 using Baumarkt_E_commerce_Platform.Controllers;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using BaumarktSystem.Web.ViewModels.ShoppingCart;
 
 namespace Baumarkt_E_commerce_Platform.Controllers
 {
+    [Authorize]
     public class ShoppingCartController : Controller
     {
 
-        private readonly IShoppingCartInterface shoppingCartInterface;  
+         
 
         private readonly BaumarktSystemDbContext dbContext;
 
+        [BindProperty]
+        public ShoppingCartSummaryView ShoppingCartSummaryView { get; private set; }
+
         private readonly UserSession userSession;
 
-        public ShoppingCartController(IShoppingCartInterface shoppingCartInterface,UserSession userSession,BaumarktSystemDbContext dbContext)
+        public ShoppingCartController(UserSession userSession,BaumarktSystemDbContext dbContext)
         {
-            this.shoppingCartInterface = shoppingCartInterface;
+            
             this.userSession = userSession;
             this.dbContext = dbContext;
         }
@@ -56,6 +63,67 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
 
         }
+
+
+        [HttpPost]
+        public IActionResult GetCartProductsPost()
+        {
+
+
+
+
+
+            return RedirectToAction(nameof(ShoppingCartSummary));
+
+
+        }
+
+
+        [HttpGet]
+        public IActionResult ShoppingCartSummary()
+        {
+
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+           // var userId= User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            List<CartItemIndexView> cartItemList = new List<CartItemIndexView>();
+
+            if (claim != null) 
+            {
+                if (userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey) != null
+                                   && userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey).Count() > 0)
+                {
+                    cartItemList = userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey).ToList();
+                }
+            
+            
+            }
+
+
+            ShoppingCartSummaryView = new ShoppingCartSummaryView()
+            {
+                ApplicationUser = dbContext.ApplicationUser.FirstOrDefault(p => p.Id ==Guid.Parse (claim.Value)),
+                ProductsList = dbContext.Product.Where(p => cartItemList.Select(p => p.Id).Contains(p.Id)).ToList()
+            };
+
+
+            return View(ShoppingCartSummaryView);
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
 
 
         [HttpPost]
