@@ -1,9 +1,11 @@
 ﻿using BaumarktSystem.Services.Data.Interaces;
 using BaumarktSystem.Web.ViewModels.Home;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using static BaumarktSystem.Common.GeneralApplicationConstants;
 namespace Baumarkt_E_commerce_Platform.Controllers
 {
+    [Authorize(Roles = roleAdmin)]
     public class ApplicationTypeController : Controller
     {
 

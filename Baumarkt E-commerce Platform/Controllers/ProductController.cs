@@ -1,16 +1,16 @@
 ﻿using BaumarktSystem.Common;
-using BaumarktSystem.Data.Models;
+
 using BaumarktSystem.Services.Data.Interfaces;
 using BaumarktSystem.Web.Utility;
 using BaumarktSystem.Web.ViewModels.Home;
-using Microsoft.AspNetCore.Http;
+using static BaumarktSystem.Common.GeneralApplicationConstants;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Drawing;
+using System.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Baumarkt_E_commerce_Platform.Controllers
 {
-    
+    [Authorize(Roles = roleAdmin)]
     public class ProductController : Controller
     {
 
