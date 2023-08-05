@@ -13,7 +13,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         private readonly  IProductInterface productInterface;
 
-        public HomeController(ILogger<HomeController> logger, IProductInterface productInterface       )
+        public HomeController(ILogger<HomeController> logger, IProductInterface productInterface)
         {
             _logger = logger;
            this. productInterface = productInterface;
