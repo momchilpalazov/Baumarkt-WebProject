@@ -10,6 +10,7 @@
 <p><strong>Email:</strong> @Model.ApplicationUser.Email</p>
 
 <h3>Cart Items</h3>
+<a href="@Url.Action("GetCartProducts", "ShoppingCart")" class="btn btn-secondary">Back to Cart</a>
 
 @if (Model.ProductsList != null && Model.ProductsList.Any())
 {
