@@ -18,13 +18,8 @@ namespace BaumarktSystem.Services.Data
     public class ProductService : IProductInterface
     {
 
-        private readonly BaumarktSystemDbContext dbContext;   
-
-        
-
-
-
-
+        private readonly BaumarktSystemDbContext dbContext;
+       
 
         public ProductService(BaumarktSystemDbContext dbContext  )
         {
@@ -32,6 +27,8 @@ namespace BaumarktSystem.Services.Data
            
 
         }
+
+      
 
         public async Task CreateProductAsync(ProductIndexViewModel product)
         {
