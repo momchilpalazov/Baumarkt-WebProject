@@ -25,5 +25,6 @@ namespace BaumarktSystem.Web.ViewModels.Home
 
         public List<ApplicationTypeViewModel> ApplicationTypes { get; set; } = new List<ApplicationTypeViewModel>();
 
+      
     }
 }

@@ -1,75 +1,4 @@
-﻿//using BaumarktSystem.Data;
-//using BaumarktSystem.Data.Models;
-//using BaumarktSystem.Services.Data;
-//using BaumarktSystem.Services.Data.Interfaces;
-//using BaumarktSystem.Web.ViewModels.Home;
-//using Microsoft.EntityFrameworkCore;
-//using Moq;
-//using NUnit.Framework;
-//using System.Threading.Tasks;
-//using System.Collections.Generic;
-
-//namespace BaumarktSystems.Services.Tests
-//{
-//    [TestFixture]
-//    public class ProductServiceTests
-//    {
-//        private Mock<IProductInterface> _mockProductRepository;
-//        private ProductService _productService;
-
-//        private DbContextOptions<BaumarktSystemDbContext> _options;
-
-
-
-
-
-
-
-//        [SetUp]
-//        public void Setup()
-//        {
-//            var options = new DbContextOptionsBuilder<BaumarktSystemDbContext>()
-//                .UseInMemoryDatabase(databaseName: "TestDatabase")
-//                .Options;
-
-//            var dbContext = new BaumarktSystemDbContext(options);
-
-//            _mockProductRepository = new Mock<IProductInterface>();
-//            _productService = new ProductService(dbContext);
-//        }
-
-//        [Test]
-//        public async Task GetProductById_ShouldReturnProduct()
-//        {
-//            // Arrange
-//            var expectedProduct = new ProductIndexViewModel { Id = 1, FullName = "Test Product" };
-
-//            // Използвайте ин-мемори база данни
-//            var options = new DbContextOptionsBuilder<BaumarktSystemDbContext>()
-//                .UseInMemoryDatabase(databaseName: "TestDatabase")
-//                .Options;
-
-//            // Използвайте контекст с ин-мемори база данни
-//            using (var dbContext = new BaumarktSystemDbContext(options))
-//            {
-//                // Инициализирайте репозиториите, ако са нужни
-//                // Не създавайте ProductService тук, тъй като той вече се инициализира със създаването на dbContext
-
-//                // Arrange the mock repository behavior
-//                _mockProductRepository.Setup(repo => repo.GetProductByIdAsync(1)).ReturnsAsync(expectedProduct);
-
-//                // Act
-//                var result = await _productService.GetProductByIdAsync(1);
-
-//                // Assert
-//                Assert.AreEqual(expectedProduct.Id, result.Id);
-//                Assert.AreEqual(expectedProduct.FullName, result.FullName);
-//            }
-//        }
-
-
-//    }
-//}
+﻿
 
 using NUnit.Framework;
 using Moq;
@@ -122,8 +51,8 @@ namespace BaumarktSystems.Services.Tests
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(expectedProduct.Id, result.Id);
-            Assert.AreEqual(expectedProduct.FullName, result.FullName);
+            Assert.That(result.Id, Is.EqualTo(expectedProduct.Id));
+            Assert.That(result.FullName, Is.EqualTo(expectedProduct.FullName));
         }
 
 
@@ -147,13 +76,13 @@ namespace BaumarktSystems.Services.Tests
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(expectedProducts.Count, result.Count());
-            Assert.AreEqual(expectedProducts[0].Id, result.ElementAt(0).Id);
-            Assert.AreEqual(expectedProducts[0].FullName, result.ElementAt(0).FullName);
-            Assert.AreEqual(expectedProducts[1].Id, result.ElementAt(1).Id);
-            Assert.AreEqual(expectedProducts[1].FullName, result.ElementAt(1).FullName);
-            Assert.AreEqual(expectedProducts[2].Id, result.ElementAt(2).Id);
-            Assert.AreEqual(expectedProducts[2].FullName, result.ElementAt(2).FullName);
+            Assert.That(result.Count(), Is.EqualTo(expectedProducts.Count));
+            Assert.That(result.ElementAt(0).Id, Is.EqualTo(expectedProducts[0].Id));
+            Assert.That(result.ElementAt(0).FullName, Is.EqualTo(expectedProducts[0].FullName));
+            Assert.That(result.ElementAt(1).Id, Is.EqualTo(expectedProducts[1].Id));
+            Assert.That(result.ElementAt(1).FullName, Is.EqualTo(expectedProducts[1].FullName));
+            Assert.That(result.ElementAt(2).Id, Is.EqualTo(expectedProducts[2].Id));
+            Assert.That(result.ElementAt(2).FullName, Is.EqualTo(expectedProducts[2].FullName));
         }
 
         [Test]
@@ -170,7 +99,7 @@ namespace BaumarktSystems.Services.Tests
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(expectedProducts.Count, result.Count());
+            Assert.That(result.Count(), Is.EqualTo(expectedProducts.Count));
         }
 
         //[Test]
@@ -229,6 +158,46 @@ namespace BaumarktSystems.Services.Tests
         //    Assert.AreEqual(product.Id, result.Id);
         //    Assert.AreEqual(product.FullName, result.FullName);
         //}
+
+
+        [Test]
+
+        public async Task GetProductById_ShouldReturnNull()
+        {
+            // Arrange
+            int productId = 1;
+            ProductIndexViewModel expectedProduct = null;
+
+            // Setup the mock repository behavior
+            _mockProductRepository.Setup(repo => repo.GetProductByIdAsync(productId)).ReturnsAsync(expectedProduct);
+
+            // Act
+            var result = await _productService.GetProductByIdAsync(productId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+
+        public async Task GetAllProducts_ShouldReturnNull()
+        {
+            // Arrange
+            List<ProductIndexViewModel> expectedProducts = null;
+
+            // Setup the mock repository behavior
+            _mockProductRepository.Setup(repo => repo.GetAllProductsAsync()).ReturnsAsync(expectedProducts);
+
+            // Act
+            var result = await _productService.GetAllProductsAsync();
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        
+       
+
     }
 }
 

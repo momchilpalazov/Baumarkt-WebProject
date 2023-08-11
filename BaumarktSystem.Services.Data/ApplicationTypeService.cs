@@ -45,9 +45,6 @@ namespace BaumarktSystem.Services.Data
 
 
 
-
-
-
         }
 
         public async Task DeleteApplicationTypeAsync(ApplicationTypeIndexViewModel applicationType)
@@ -118,28 +115,7 @@ namespace BaumarktSystem.Services.Data
 
       
 
-        //public Task<ApplicationTypeIndexViewModel?> GetApplicationTypeDetailsByIdAsync(Gu id)
-        //{
-
-        //    var applicationType = this.dbContext.ApplicationType.Where(x => x.Id. == id).Select(x => new ApplicationTypeIndexViewModel
-        //    {
-        //        Id = x.Id,
-        //        Name = x.Name,
-        //        CreatedOn = x.CreatedOn,
-        //        Creator = x.Creator.UserName
-            
-              
-        //    }).FirstOrDefault();
-
-        //    return Task.FromResult(applicationType);
-
-
-
-
-
-
-           
-        //}
+     
 
         public Task<ApplicationTypeIndexViewModel?> GetApplicationTypeDetailsByIdAsync(int id)
         {
