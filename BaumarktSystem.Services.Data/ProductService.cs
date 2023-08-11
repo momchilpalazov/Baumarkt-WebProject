@@ -1,4 +1,4 @@
-﻿using Baumarkt_E_commerce_Platform.Data;
+﻿using BaumarktSystem.Data;
 using BaumarktSystem.Services.Data.Interfaces;
 using BaumarktSystem.Web.ViewModels.Home;
 using Microsoft.AspNetCore.Identity;
@@ -38,7 +38,7 @@ namespace BaumarktSystem.Services.Data
 
             var newProduct = new Product
             {
-                FullName = product.Name,
+                FullName = product.FullName,
                 Price = product.Price,
                 ImageUrl = product.ImageUrl,
                 ShortProductDescription = product.ShortProductDescription,
@@ -120,7 +120,7 @@ namespace BaumarktSystem.Services.Data
                 .Select(x => new ProductIndexViewModel
                 {
                     Id = x.Id,
-                    Name = x.FullName,
+                    FullName = x.FullName,
                     Price = x.Price,                    
                     ImageUrl = Uri.IsWellFormedUriString(x.ImageUrl, UriKind.Absolute)// Check if the ImageUrl is it starts with http or https
                         ? x.ImageUrl // If it's a URL, use it 
@@ -151,8 +151,11 @@ namespace BaumarktSystem.Services.Data
 
 
 
-        public async Task<ProductIndexViewModel> GetProductByIdAsync(int id)
+        public async Task<ProductIndexViewModel?> GetProductByIdAsync(int id)
         {
+            
+
+
             var product = await this.dbContext.Product
                 .Include(x => x.Category)
                 .Include(x => x.ApplicationType)
@@ -160,7 +163,7 @@ namespace BaumarktSystem.Services.Data
                 .Select(x => new ProductIndexViewModel
                 {
                     Id = x.Id,
-                    Name = x.FullName,
+                    FullName = x.FullName,
                     Price = x.Price,
                     ImageUrl = Uri.IsWellFormedUriString(x.ImageUrl, UriKind.Absolute)
                         ? x.ImageUrl
@@ -197,7 +200,7 @@ namespace BaumarktSystem.Services.Data
             return product;
         }
 
-        public async Task<ProductDetailsViewModel> GetProductDetailsByIdAsync(int id)
+        public async Task<ProductDetailsViewModel?> GetProductDetailsByIdAsync(int id)
         {
             var product = await this.dbContext.Product
                 .Include(x => x.Category)
@@ -259,7 +262,7 @@ namespace BaumarktSystem.Services.Data
        .Select(x => new ProductIndexViewModel
        {
            Id = x.Id,
-           Name = x.FullName,
+           FullName = x.FullName,
            Price = x.Price,
            ImageUrl = Uri.IsWellFormedUriString(x.ImageUrl, UriKind.Absolute)
                ? x.ImageUrl
@@ -292,7 +295,7 @@ namespace BaumarktSystem.Services.Data
 
             if (productToEdit != null)
             {
-                productToEdit.FullName = model.Name;
+                productToEdit.FullName = model.FullName;
                 productToEdit.Price = model.Price;
                 productToEdit.ShortProductDescription = model.ShortProductDescription;
                 productToEdit.Description = model.Description;
@@ -315,7 +318,7 @@ namespace BaumarktSystem.Services.Data
             }
         }
 
-        public async Task<ProductIndexViewModel> GetProductFromDatabase(int productId)
+        public async Task<ProductIndexViewModel?> GetProductFromDatabase(int productId)
         {
 
             var product = await this.dbContext.Product
@@ -325,7 +328,7 @@ namespace BaumarktSystem.Services.Data
            .Select(x => new ProductIndexViewModel
            {
                Id = x.Id,
-               Name = x.FullName,
+               FullName = x.FullName,
                Price = x.Price,
                ImageUrl = Uri.IsWellFormedUriString(x.ImageUrl, UriKind.Absolute)
                    ? x.ImageUrl

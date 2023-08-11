@@ -150,7 +150,10 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         }
 
 
+
         [HttpGet]
+        [AllowAnonymous]
+        [Authorize(Roles = roleCustomer)]
         public async Task<IActionResult> Details(int id)
         {
 
@@ -195,6 +198,8 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
 
         [HttpPost,ActionName("AddTocart")]
+        [AllowAnonymous]
+        [Authorize(Roles = roleCustomer)]
         public async Task<IActionResult> DetailsPost(int Id)
         {
 

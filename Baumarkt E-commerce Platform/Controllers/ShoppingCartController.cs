@@ -1,4 +1,4 @@
-﻿using Baumarkt_E_commerce_Platform.Data;
+﻿using BaumarktSystem.Data;
 using BaumarktSystem.Common;
 using BaumarktSystem.Data.Models;
 using BaumarktSystem.Services.Data.Interfaces;
@@ -26,7 +26,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         private readonly UserSession userSession;
 
-        public ShoppingCartController(UserSession userSession,BaumarktSystemDbContext dbContext)
+        public ShoppingCartController(UserSession userSession,BaumarktSystemDbContext dbContext )
         {
             
             this.userSession = userSession;

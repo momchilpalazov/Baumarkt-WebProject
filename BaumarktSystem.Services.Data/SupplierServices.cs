@@ -1,4 +1,4 @@
-﻿using Baumarkt_E_commerce_Platform.Data;
+﻿using BaumarktSystem.Data;
 using BaumarktSystem.Data.Models;
 using BaumarktSystem.Services.Data.Interfaces;
 using BaumarktSystem.Web.ViewModels.Home;

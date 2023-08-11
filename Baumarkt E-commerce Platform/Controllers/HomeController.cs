@@ -1,7 +1,11 @@
-﻿using BaumarktSystem.Services.Data;
+﻿using BaumarktSystem.Common;
+using BaumarktSystem.Services.Data;
 using BaumarktSystem.Services.Data.Interfaces;
+using BaumarktSystem.Web.Utility;
 using BaumarktSystem.Web.ViewModels.Home;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Diagnostics;
 
 namespace Baumarkt_E_commerce_Platform.Controllers
@@ -13,14 +17,17 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         private readonly  IProductInterface productInterface;
 
-        public HomeController(ILogger<HomeController> logger, IProductInterface productInterface)
+        private readonly UserSession userSession;
+
+        public HomeController(ILogger<HomeController> logger, IProductInterface productInterface, UserSession userSession)
         {
             _logger = logger;
-           this. productInterface = productInterface;
+            this.productInterface = productInterface;
+            this.userSession = userSession;
         }
 
 
-        
+
         public async Task<IActionResult> Index(int? categoryId)
         {
             IEnumerable<ProductIndexViewModel> filteredProducts;
@@ -47,7 +54,6 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         }
 
 
-       
 
 
 

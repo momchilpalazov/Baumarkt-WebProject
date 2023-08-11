@@ -1,4 +1,4 @@
-﻿using Baumarkt_E_commerce_Platform.Data;
+﻿using BaumarktSystem.Data;
 using BaumarktSystem.Services.Data.Interaces;
 using BaumarktSystem.Data.Models;
 using Microsoft.EntityFrameworkCore;

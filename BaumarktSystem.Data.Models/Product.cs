@@ -59,6 +59,13 @@ namespace BaumarktSystem.Data.Models
         public virtual ApplicationType ApplicationType { get; set; } = null!;
 
 
+        //public virtual ICollection<Product> Products { get; set; } = new HashSet<Product>();
+
+        //public virtual ICollection<Category> Categories { get; set; } = new HashSet<Category>();
+
+        //public virtual ICollection<ApplicationType> ApplicationTypes { get; set; } = new HashSet<ApplicationType>();
+
+
 
 
 

@@ -26,6 +26,8 @@ namespace BaumarktSystem.Data.Models
 
         public virtual ICollection<Product> Products { get; set; } = new HashSet<Product>();
 
+        public virtual ICollection<Category> Categories { get; set; } = new HashSet<Category>();
+
 
 
 
