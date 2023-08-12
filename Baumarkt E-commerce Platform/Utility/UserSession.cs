@@ -22,18 +22,18 @@ namespace BaumarktSystem.Web.Utility
         private ISession Session => _httpContextAccessor.HttpContext.Session;
 
 
-       
 
 
 
-        // Метод за запис на данни в сесията
+
+        //  Method for recording data in the session
         public void Set<T>(string key, T value)
         {
             string serializedValue = JsonConvert.SerializeObject(value);
             Session.SetString(key, serializedValue);
         }
 
-        // Метод за четене на данни от сесията
+        // Method for reading session data
         public T Get<T>(string key)
         {
             string serializedValue = Session.GetString(key);
@@ -45,13 +45,13 @@ namespace BaumarktSystem.Web.Utility
             return default(T);
         }
 
-        // Метод за премахване на данни от сесията
+        // Method to remove data from the session
         public void Remove(string key)
         {
             Session.Remove(key);
         }
 
-        // Метод за изчистване на цялата сесия
+        // Method for clearing the entire session
         public void Clear()
         {
             Session.Clear();

@@ -68,7 +68,7 @@ namespace BaumarktSystems.Services.Tests
 
             _mockCategoryRepository.Setup(repo => repo.GetCategoryByIdAsync(1)).ReturnsAsync(expectedCategory);
 
-            // Act
+            
            
 
 

@@ -43,7 +43,7 @@ namespace BaumarktSystems.Services.Tests
             int productId = 1;
             var expectedProduct = new ProductIndexViewModel { Id = productId, FullName = "Test Product" };
 
-            // Setup the mock repository behavior
+            // Setup 
             _mockProductRepository.Setup(repo => repo.GetProductByIdAsync(productId)).ReturnsAsync(expectedProduct);
 
             // Act
@@ -68,7 +68,7 @@ namespace BaumarktSystems.Services.Tests
                 new ProductIndexViewModel { Id = 3, FullName = "Test Product 3" },
             };
 
-            // Setup the mock repository behavior
+            // Setup 
             _mockProductRepository.Setup(repo => repo.GetAllProductsAsync()).ReturnsAsync(expectedProducts);
 
             // Act
@@ -91,7 +91,7 @@ namespace BaumarktSystems.Services.Tests
             // Arrange
             var expectedProducts = new List<ProductIndexViewModel>();
 
-            // Setup the mock repository behavior
+            // Setup the mock 
             _mockProductRepository.Setup(repo => repo.GetAllProductsAsync()).ReturnsAsync(expectedProducts);
 
             // Act
@@ -128,7 +128,7 @@ namespace BaumarktSystems.Services.Tests
         //    // Arrange
         //    var product = new ProductIndexViewModel { Id = 1, FullName = "Test Product" };
 
-        //    // Setup the mock repository behavior
+        //    // Setup the 
         //    _mockProductRepository.Setup(repo => repo.EditProductAsync(product)).ReturnsAsync(product);
 
         //    // Act
@@ -147,7 +147,7 @@ namespace BaumarktSystems.Services.Tests
         //    // Arrange
         //    var product = new ProductIndexViewModel { Id = 1, FullName = "Test Product" };
 
-        //    // Setup the mock repository behavior
+        //    
         //    _mockProductRepository.Setup(repo => repo.DeleteProductByIdAsync(product.Id)).ReturnsAsync(product);
 
         //    // Act
@@ -168,7 +168,7 @@ namespace BaumarktSystems.Services.Tests
             int productId = 1;
             ProductIndexViewModel expectedProduct = null;
 
-            // Setup the mock repository behavior
+            // Setup the mock 
             _mockProductRepository.Setup(repo => repo.GetProductByIdAsync(productId)).ReturnsAsync(expectedProduct);
 
             // Act
@@ -185,7 +185,7 @@ namespace BaumarktSystems.Services.Tests
             // Arrange
             List<ProductIndexViewModel> expectedProducts = null;
 
-            // Setup the mock repository behavior
+            // Setup the 
             _mockProductRepository.Setup(repo => repo.GetAllProductsAsync()).ReturnsAsync(expectedProducts);
 
             // Act
