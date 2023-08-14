@@ -1,11 +1,14 @@
+using Baumarkt_E_commerce_Platform.Utility;
 using BaumarktSystem.Data;
 using BaumarktSystem.Data.Models;
 using BaumarktSystem.Services.Data;
+
 using BaumarktSystem.Services.Data.Interaces;
 using BaumarktSystem.Services.Data.Interfaces;
 using BaumarktSystem.Web.Infrastructure.Extensions;
 using BaumarktSystem.Web.Utility;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using static BaumarktSystem.Common.GeneralApplicationConstants;
 
@@ -36,6 +39,10 @@ namespace Baumarkt_E_commerce_Platform
             }).AddRoles<IdentityRole<Guid>>().
             AddEntityFrameworkStores<BaumarktSystemDbContext>();
 
+            //Emeil Sender registrations
+            builder.Services.AddScoped<MailJetSettings>();
+            builder.Services.AddTransient<IEmailSender, EmailSender>(); 
+
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddSession(options =>
             {
@@ -53,10 +60,13 @@ namespace Baumarkt_E_commerce_Platform
             builder.Services.AddScoped<IApplicationTypeInterface,ApplicationTypeService>();
             builder.Services.AddScoped<IProductInterface,ProductService>();
             builder.Services.AddScoped<ISupplierInterface,SupplierServices>();
-            builder.Services.AddScoped<IUserInterface,UserService>();  
+            builder.Services.AddScoped<IUserInterface,UserService>();
+            builder.Services.AddScoped<IInquiryHeaderInterface, InquiryHeaderService>();
+            builder.Services.AddScoped<IInquiryDetailsInterface, InquiryDetailsService>();
            
 
             builder.Services.AddScoped<UserSession>();
+           
 
 
             //builder.Services.AddApplicationServices(typeof());

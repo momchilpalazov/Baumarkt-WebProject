@@ -21,6 +21,10 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         private readonly BaumarktSystemDbContext dbContext;
 
+
+
+
+
         [BindProperty]
         public ShoppingCartSummaryView ShoppingCartSummaryView { get; private set; }
 
