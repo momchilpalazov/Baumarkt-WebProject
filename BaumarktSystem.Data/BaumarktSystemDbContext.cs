@@ -27,6 +27,10 @@ namespace BaumarktSystem.Data
 
         public DbSet<Supplier> Suppliers { get; set; } = null!;
 
+        public DbSet<InquiryHedaer> InquiryHedaer { get; set; } = null!;
+
+        public DbSet<InquiryDetails> InquiryDetails { get; set; } = null!;
+
 
        
 
