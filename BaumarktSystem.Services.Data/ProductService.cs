@@ -44,7 +44,7 @@ namespace BaumarktSystem.Services.Data
                 ShortProductDescription = product.ShortProductDescription,
                 Description = product.Description,
                 CategoryId = product.CategoryId,
-                ApplicationTypeId = product.ApplicationType.Id
+                ApplicationTypeId = product.ApplicationTypeId
             };
 
             this.dbContext.Product.Add(newProduct);

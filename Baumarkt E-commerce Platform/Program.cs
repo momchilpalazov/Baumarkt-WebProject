@@ -47,7 +47,7 @@ namespace Baumarkt_E_commerce_Platform
 
             //builder.Services.AddSingleton<SessionExtensions>();
 
-            builder.Services.AddControllersWithViews();
+            
 
             builder.Services.AddScoped<ICategoryInterface,CategoryService  >();
             builder.Services.AddScoped<IApplicationTypeInterface,ApplicationTypeService>();

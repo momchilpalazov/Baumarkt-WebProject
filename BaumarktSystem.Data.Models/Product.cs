@@ -18,7 +18,7 @@ namespace BaumarktSystem.Data.Models
         [Required]
         [MaxLength(FullNameMaxLength)]
         [MinLength(FullNameMinLength)]
-        public string FullName { get; set; }=null!;
+        public string? FullName { get; set; }
 
 
 

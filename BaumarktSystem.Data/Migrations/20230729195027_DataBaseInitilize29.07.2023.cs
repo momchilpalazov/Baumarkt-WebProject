@@ -235,7 +235,7 @@ namespace BaumarktSystem.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FullName = table.Column<string>(type: "nvarchar(max)", maxLength: 10000, nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(max)", maxLength: 10000, nullable: true),
                     ShortProductDescription = table.Column<string>(type: "nvarchar(max)", maxLength: 10000, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", maxLength: 10000, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),

@@ -30,7 +30,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
             var isSupplier = await this.dealerInterface.BeASupplierAsync(Guid.Parse(userId));
 
-            if (isSupplier)
+            if (!isSupplier)
             {
                 return View("DealerError", "There was an error processing your request as a dealer.");
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Dynamic;
 using System.Linq;
 using System.Text;
@@ -11,10 +12,12 @@ namespace BaumarktSystem.Web.ViewModels.Home
     public class ProductIndexViewModel
     {
 
-        public int Id { get; set; } 
+        public int Id { get; set; }
 
+        [Required]
         public string FullName { get; set; } = null!;
 
+        
         public string ShortProductDescription { get; set; } = null!;
 
         public string Description { get; set; } = null!;
