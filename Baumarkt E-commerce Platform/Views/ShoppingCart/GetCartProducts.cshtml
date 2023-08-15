@@ -17,20 +17,7 @@
             </tr>
         </thead>
         <tbody>
-            @*@foreach (var product in Model)
-            {
-                <tr>
-                    <td>@product.FullName</td>
-                    <td>@product.Price.ToString("C", new CultureInfo("eu-EU"))</td>
-                    <td>@product.ShortProductDescription</td>
-                    <td>1</td>
-                    <td>
-                        <a  href="#" class="btn btn-danger btn-sm" onclick="deleteProduct('@product.Id')">
-                            <i class="fas fa-trash-alt"></i> Delete
-                        </a>
-                    </td>
-                </tr>
-            }*@
+           
 
             @for (int i = 0; i < Model.Count(); i++)
             {

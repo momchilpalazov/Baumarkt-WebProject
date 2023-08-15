@@ -14,7 +14,7 @@ namespace BaumarktSystem.Web.ViewModels.ShoppingCart
         {
             ProductsList = new List<Product>();
 
-            //ApplicationUser = new ApplicationUser();
+            ApplicationUser = new ApplicationUser();
 
         }
 

@@ -1,15 +1,17 @@
 ﻿using BaumarktSystem.Data;
 using BaumarktSystem.Common;
 using BaumarktSystem.Data.Models;
-using BaumarktSystem.Services.Data.Interfaces;
+using static BaumarktSystem.Common.GeneralApplicationConstants;
 using BaumarktSystem.Web.Utility;
 using BaumarktSystem.Web.ViewModels.Home;
 using Microsoft.AspNetCore.Mvc;
-using Baumarkt_E_commerce_Platform.Controllers;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using BaumarktSystem.Web.ViewModels.ShoppingCart;
+using System.Text;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Baumarkt_E_commerce_Platform.Utility;
 
 namespace Baumarkt_E_commerce_Platform.Controllers
 {
@@ -21,6 +23,11 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         private readonly BaumarktSystemDbContext dbContext;
 
+        private readonly IWebHostEnvironment  webHostEnvironment;
+
+        private readonly IEmailSender emailSender;
+
+
 
 
 
@@ -30,11 +37,13 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         private readonly UserSession userSession;
 
-        public ShoppingCartController(UserSession userSession,BaumarktSystemDbContext dbContext  )
+        public ShoppingCartController(UserSession userSession,BaumarktSystemDbContext dbContext,IWebHostEnvironment webHostEnvironment,IEmailSender emailSender  )
         {
             
             this.userSession = userSession;
             this.dbContext = dbContext;
+            this.webHostEnvironment = webHostEnvironment;
+            this.emailSender = emailSender;
         }
 
 
@@ -128,10 +137,43 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         [HttpPost]
        // [ActionName("ShoppingCartSummaryPost")]
 
-        public IActionResult ShoppingCartSummaryPost(ShoppingCartSummaryView ShoppingCartSummaryView)
+        public async Task< IActionResult> ShoppingCartSummaryPost(ShoppingCartSummaryView ShoppingCartSummaryView)
         {
 
+            var roothToTemplate = webHostEnvironment.WebRootPath + Path.DirectorySeparatorChar.ToString()
+                + "templates" + Path.DirectorySeparatorChar.ToString() + "inquiry.html";
 
+
+            var subject = "New Inquiry";
+            string HtmlBody = "";
+            using (StreamReader sr = System.IO.File.OpenText(roothToTemplate))
+            {
+                HtmlBody = sr.ReadToEnd();
+            }
+
+            StringBuilder productListSB = new StringBuilder();
+            foreach (var item in ShoppingCartSummaryView.ProductsList)
+            {
+                productListSB.Append($" - Name: {item.FullName} <span style='font-size:14px;'> (ID: {item.Id})</span><br />");
+            }
+
+            //string messageBody = string.Format(HtmlBody,
+            //                    ShoppingCartSummaryView.ApplicationUser.FullName,
+            //                    ShoppingCartSummaryView.ApplicationUser.Email,
+            //                    ShoppingCartSummaryView.ApplicationUser.PhoneNumber,
+            //                    productListSB.ToString());
+
+            string messageBody = $@"
+            {HtmlBody}
+            <p>FullName: {ShoppingCartSummaryView.ApplicationUser.FullName}</p>
+            <p>Email: {ShoppingCartSummaryView.ApplicationUser.Email}</p>
+            <p>PhoneNumber: {ShoppingCartSummaryView.ApplicationUser.PhoneNumber}</p>
+            <hr>
+            <h3>Products Interested:</h3>
+            <p>{productListSB.ToString()}</p>";
+
+
+            await emailSender.SendEmailAsync(EmeilSender, subject, messageBody);
 
 
             return RedirectToAction(nameof(InquiryConfirm));

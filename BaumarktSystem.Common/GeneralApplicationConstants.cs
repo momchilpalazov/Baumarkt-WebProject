@@ -11,6 +11,8 @@
 
         public static string EmeilDevelopment = "admin@admin.bg";
 
+        public static string EmeilSender = "momchil.palazov@gmail.com";  
+
 
     }
 }
