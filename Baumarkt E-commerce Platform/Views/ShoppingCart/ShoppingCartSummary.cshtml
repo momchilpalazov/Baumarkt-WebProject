@@ -1,6 +1,7 @@
 ﻿@using BaumarktSystem.Web.ViewModels.ShoppingCart
 @using System.Globalization
 @model ShoppingCartSummaryView
+@*
 
 <h2 class="card-text mb-3">YOUR SHOPPING BAG</h2>
 
@@ -22,22 +23,149 @@
                 <th>Short Description</th>
             </tr>
         </thead>
-        <tbody>
-            @foreach (var product in Model.ProductsList)
+        <tbody>*@
+            @*@foreach (var product in Model.ProductsList)
             {
+                <input type="hidden" asp-for="@product.FullName" />
+                <input type="hidden" asp-for="@product.Id" />
+
                 <tr>
                     <td>@product.FullName</td>
                     <td>@product.Price.ToString("C", new CultureInfo("eu-EU"))</td>
                     <td>@product.ShortProductDescription</td>
                 </tr>
-            }
-        </tbody>
+            }*@
+
+
+            @*@for (int i = 0; i < Model.ProductsList.Count(); i++)
+            {
+
+                <input type="hidden" asp-for="@Model.ProductsList[i].FullName" />
+                <input type="hidden" asp-for="@Model.ProductsList[i].Id" />
+
+                <tr>
+                    <td>@Model.ProductsList[i].FullName</td>
+                    <td>@Model.ProductsList[i].Price.ToString("C", new CultureInfo("eu-EU"))</td>
+                    <td>@Model.ProductsList[i].ShortProductDescription</td>
+                </tr>
+
+
+
+                
+            }*@
+
+            @*@for (int i = 0; i < Model.ProductsList.Count(); i++)
+            {
+                <input type="hidden" asp-for="@Model.ProductsList[i].Id" name="ProductId" />
+
+                <tr>
+                    <td>@Model.ProductsList[i].FullName</td>
+                    <td>@Model.ProductsList[i].Price.ToString("C", new CultureInfo("eu-EU"))</td>
+                    <td>@Model.ProductsList[i].ShortProductDescription</td>
+                </tr>
+            }*@
+
+
+
+
+        @*</tbody>
     </table>
 
     <p>Total Price: @Model.ProductsList.Sum(p => p.Price).ToString("C", new CultureInfo("eu-EU"))</p>
 
     <button class="btn btn-primary" onclick="checkout()">Proceed to Checkout</button>
-    <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Continue Shopping</a>
+   @* <a href="@Url.Action("SummaryPost", "ShoppingCart")" class="btn btn-primary">Proceed to Checkout</a>*@
+    @*<a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Continue Shopping</a>
+}
+else
+{
+    <p>Your cart is empty.</p>
+    <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Continue Shopping</a>
+}*@
+
+@*@section Scripts {
+    <script>
+        function checkout() {
+            var form = document.createElement("form");
+            form.method = "POST";
+            form.action = '@Url.Action("ShoppingCartSummary", "ShoppingCart")';
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+    </script>
+}*@
+
+@*@section Scripts {
+    <script>
+        function checkout() {
+            var productIdList = [];
+            var productList = document.querySelectorAll('input[name="ProductId"]');
+
+            productList.forEach(function (product) {
+                productIdList.push(product.value);
+            });
+
+            var url = '@Url.Action("ShoppingCartSummaryPost", "ShoppingCart")' + '?productIds=' + productIdList.join(',');
+            window.location.href = url;
+        }
+    </script>
+}*@
+
+
+
+
+
+
+
+<h2 class="card-text mb-3">YOUR SHOPPING BAG</h2>
+
+<h3>User Information</h3>
+<p><strong>Full Name:</strong> @Model.ApplicationUser.FullName</p>
+<p><strong>Phone Number:</strong> @Model.ApplicationUser.PhoneNumber</p>
+<p><strong>Email:</strong> @Model.ApplicationUser.Email</p>
+
+<h3>Cart Items</h3>
+<a href="@Url.Action("GetCartProducts", "ShoppingCart")" class="btn btn-secondary">Back to Cart</a>
+
+@if (Model.ProductsList != null && Model.ProductsList.Any())
+{
+    <form method="post" asp-action="ShoppingCartSummaryPost">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Short Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.ProductsList.Count(); i++)
+                {
+                    <input type="hidden" name="ShoppingCartSummaryView.ProductsList[@i].Id" value="@Model.ProductsList[i].Id" />
+                    <input type="hidden" name="ShoppingCartSummaryView.ProductsList[@i].FullName" value="@Model.ProductsList[i].FullName" />
+
+                    <tr>
+                        <td>@Model.ProductsList[i].FullName</td>
+                        <td>@Model.ProductsList[i].Price.ToString("C", new CultureInfo("eu-EU"))</td>
+                        <td>@Model.ProductsList[i].ShortProductDescription</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <!-- Hidden fields for ApplicationUser properties -->
+        <input type="hidden" name="ShoppingCartSummaryView.ApplicationUser.FullName" value="@Model.ApplicationUser.FullName" />
+        <input type="hidden" name="ShoppingCartSummaryView.ApplicationUser.PhoneNumber" value="@Model.ApplicationUser.PhoneNumber" />
+        <input type="hidden" name="ShoppingCartSummaryView.ApplicationUser.Email" value="@Model.ApplicationUser.Email" />
+
+        <p>Total Price: @Model.ProductsList.Sum(p => p.Price).ToString("C", new CultureInfo("eu-EU"))</p>
+
+        <div class="button-group">
+            <button type="submit" class="btn btn-primary">Proceed to Checkout</button>
+            <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Continue Shopping</a>
+        </div>
+    </form>
 }
 else
 {
@@ -47,9 +175,7 @@ else
 
 @section Scripts {
     <script>
-        function checkout() {
-           /////
-            alert("Proceeding to checkout...");
-        }
+        // ...
     </script>
 }
+

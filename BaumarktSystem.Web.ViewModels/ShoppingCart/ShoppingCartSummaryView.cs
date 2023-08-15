@@ -14,15 +14,16 @@ namespace BaumarktSystem.Web.ViewModels.ShoppingCart
         {
             ProductsList = new List<Product>();
 
-            ApplicationUser = new ApplicationUser();
+            //ApplicationUser = new ApplicationUser();
 
         }
 
+       
 
 
-        public ApplicationUser ApplicationUser { get; set; }=new ApplicationUser();
+        public ApplicationUser ApplicationUser { get; set; }
 
-        public IEnumerable<Product> ProductsList { get; set; }=new List<Product>();
+        public IList<Product> ProductsList { get; set; }
 
 
 

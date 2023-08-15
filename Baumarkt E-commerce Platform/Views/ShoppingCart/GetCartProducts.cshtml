@@ -17,7 +17,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var product in Model)
+            @*@foreach (var product in Model)
             {
                 <tr>
                     <td>@product.FullName</td>
@@ -30,7 +30,32 @@
                         </a>
                     </td>
                 </tr>
+            }*@
+
+            @for (int i = 0; i < Model.Count(); i++)
+            {
+                <input type="hidden" asp-for="@Model[i].FullName" />
+                <input type="hidden" asp-for="@Model[i].Id" />
+                
+
+
+                 <tr>
+                    <td>@Model[i].FullName</td>
+                    <td>@Model[i].Price.ToString("C", new CultureInfo("eu-EU"))</td>
+                    <td>@Model[i].ShortProductDescription</td>
+                    <td>1</td>
+                    <td>
+                        <a href="#" class="btn btn-danger btn-sm" onclick="deleteProduct('@Model[i].Id')">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </a>
+                    </td>
+                </tr>
+
+
+                
             }
+
+
         </tbody>
     </table>
 

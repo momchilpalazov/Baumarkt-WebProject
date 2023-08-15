@@ -26,11 +26,11 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
 
         [BindProperty]
-        public ShoppingCartSummaryView ShoppingCartSummaryView { get; private set; }
+        public ShoppingCartSummaryView ShoppingCartSummaryView { get; set; }
 
         private readonly UserSession userSession;
 
-        public ShoppingCartController(UserSession userSession,BaumarktSystemDbContext dbContext )
+        public ShoppingCartController(UserSession userSession,BaumarktSystemDbContext dbContext  )
         {
             
             this.userSession = userSession;
@@ -42,18 +42,18 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
 
 
-
+        //Your Shoping Cart Check 
         [HttpGet]
         public IActionResult GetCartProducts()
         {
 
 
-            List<CartItemIndexView> cartItemList = new List<CartItemIndexView>();
+            List<CartItem> cartItemList = new List<CartItem>();
 
-            if (userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey) != null
-                && userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey).Count() > 0)
+            if (userSession.Get<IEnumerable<CartItem>>(UserSessionConstantsKey.SessionKey) != null
+                && userSession.Get<IEnumerable<CartItem>>(UserSessionConstantsKey.SessionKey).Count() > 0)
             {
-                cartItemList = userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey).ToList();
+                cartItemList = userSession.Get<IEnumerable<CartItem>>(UserSessionConstantsKey.SessionKey).ToList();
 
 
             }
@@ -70,6 +70,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
 
         [HttpPost]
+        //[ValidateAntiForgeryToken]
         public IActionResult GetCartProductsPost()
         {
 
@@ -82,7 +83,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         }
 
-
+        //Checkout
         [HttpGet]
         public IActionResult ShoppingCartSummary()
         {
@@ -91,39 +92,63 @@ namespace Baumarkt_E_commerce_Platform.Controllers
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
            // var userId= User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            List<CartItemIndexView> cartItemList = new List<CartItemIndexView>();
+            List<CartItem> cartItemList = new List<CartItem>();
 
             if (claim != null) 
             {
-                if (userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey) != null
+                if (userSession.Get<IEnumerable<CartItem>>(UserSessionConstantsKey.SessionKey) != null
                                    && userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey).Count() > 0)
                 {
-                    cartItemList = userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey).ToList();
+                    cartItemList = userSession.Get<IEnumerable<CartItem>>(UserSessionConstantsKey.SessionKey).ToList();
                 }
             
             
             }
 
+            List<int> productInCart = cartItemList.Select(p => p.Id).ToList();
+            IEnumerable<Product> productsList = dbContext.Product.Where(p => productInCart.Contains(p.Id)).ToList();
+
 
             ShoppingCartSummaryView = new ShoppingCartSummaryView()
             {
                 ApplicationUser = dbContext.ApplicationUser.FirstOrDefault(p => p.Id ==Guid.Parse (claim.Value)),
-                ProductsList = dbContext.Product.Where(p => cartItemList.Select(p => p.Id).Contains(p.Id)).ToList()
+                ProductsList = productsList.ToList()
             };
 
 
             return View(ShoppingCartSummaryView);
 
 
+        }
 
 
+        //checkout
+
+
+        [HttpPost]
+       // [ActionName("ShoppingCartSummaryPost")]
+
+        public IActionResult ShoppingCartSummaryPost(ShoppingCartSummaryView ShoppingCartSummaryView)
+        {
+
+
+
+
+            return RedirectToAction(nameof(InquiryConfirm));
 
 
         }
 
+        public IActionResult InquiryConfirm()
+        {
+
+            userSession.Clear();
+
+           return View();
 
 
 
+        }
 
 
 

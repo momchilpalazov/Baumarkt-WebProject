@@ -44,7 +44,7 @@ namespace Baumarkt_E_commerce_Platform.Utility
                .Property(Send.Messages, new JArray {
                 new JObject {
                  {"From", new JObject {
-                  {"Email", "momchil.palazov@protonmail.com"},
+                  {"Email", "momchil.palazov@gmail.com"},
                   {"Name", "SenderProton"}
                   }},
                  {"To", new JArray {
