@@ -29,29 +29,29 @@
             <p class="lead">@Model.ShortProductDescription</p>
             <p>@Model.Description</p>
             <p>Price: @Model.Price.ToString("C", new CultureInfo("eu-EU"))</p>
-            <p>Category: @Model.Category.Name</p>
-            <p>Application Type: @Model.ApplicationType.Name</p>
+           @* <p>Category: @Model.Category.Name</p>*@
+            <p>
+                Category:
+                @foreach (var category in Model.Categories.Where(c => c.Id == Model.CategoryId))
+                {
+                    <span>@category.Name</span>
+                }
+            </p>
+            <p>
+                Application Type:
+                @foreach (var appType in Model.ApplicationTypes.Where(at => at.Id == Model.ApplicationTypeId))
+                {
+                    <span>@appType.Name</span>
+                }
+            </p>
+
+
+           @* <p>Application Type: @Model.ApplicationType.Name</p>*@
 
             <div class="d-flex justify-content-between">
                 <a asp-controller="Home" asp-action="Index" class="btn btn-primary"><i class="fas fa-sign-out-alt"></i> Back to List</a>
                 @{
-                    //var cartItems = UserSession.Get<List<CartItemIndexView>>(UserSessionConstantsKey.SessionKey);
-                    //if (cartItems != null && cartItems.Any(x => x.Id == Model.Id))
-                    //{
-                    //// The product is in the cart, show the "Remove from Cart" button
-                    //    <form asp-controller="Product" asp-action="RemoveFromCart" method="post">
-                    //        <input type="hidden" name="Id" value="@Model.Id" />
-                    //        <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Remove from Cart</button>
-                    //    </form>
-                    //}
-                    //else
-                    //{
-                    //// The product is not in the cart, show the "Add to Cart" button
-                    //    <form asp-controller="Product" asp-action="AddToCart" method="post">
-                    //        <input type="hidden" name="Id" value="@Model.Id" />
-                    //        <button type="submit" class="btn btn-success"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
-                    //    </form>
-                    //}
+                    
 
 
                     

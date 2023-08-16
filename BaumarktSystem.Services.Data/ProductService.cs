@@ -216,7 +216,7 @@ namespace BaumarktSystem.Services.Data
                         : $"/images/{x.ImageUrl}",
                     ShortProductDescription = x.ShortProductDescription,
                     Description = x.Description,
-                    CategoryId = x.CategoryId,
+                    CategoryId = x.CategoryId,                    
                     ApplicationTypeId = x.ApplicationTypeId,
                     
                     
@@ -242,10 +242,10 @@ namespace BaumarktSystem.Services.Data
                     })
                     .ToListAsync();
 
-                //product.Categories = categories;
-                //product.ApplicationTypes = applicationTypes;
+                product.Categories = categories;
+                product.ApplicationTypes= applicationTypes;
 
-               
+
             }
 
             return product;

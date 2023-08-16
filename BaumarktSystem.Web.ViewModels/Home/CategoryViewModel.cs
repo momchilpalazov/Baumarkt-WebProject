@@ -13,7 +13,8 @@ namespace BaumarktSystem.Web.ViewModels.Home
 
         public string Name { get; set; } = null!;
 
-        
+        public List<CategoryViewModel> CategoryList { get; set; } = new List<CategoryViewModel>();
+
 
 
     }

@@ -15,7 +15,7 @@ namespace BaumarktSystem.Web.ViewModels.Home
         public int Id { get; set; }
 
         [Required]
-        public string FullName { get; set; } = null!;
+        public string? FullName { get; set; } 
 
         
         public string ShortProductDescription { get; set; } = null!;
@@ -26,7 +26,9 @@ namespace BaumarktSystem.Web.ViewModels.Home
 
         public decimal Price { get; set; }
 
-        
+        public bool IsInCart { get; set; } = false;
+
+
 
 
 

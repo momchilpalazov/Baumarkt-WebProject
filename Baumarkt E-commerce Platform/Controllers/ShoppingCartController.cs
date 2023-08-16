@@ -12,6 +12,7 @@ using BaumarktSystem.Web.ViewModels.ShoppingCart;
 using System.Text;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Baumarkt_E_commerce_Platform.Utility;
+using Microsoft.EntityFrameworkCore;
 
 namespace Baumarkt_E_commerce_Platform.Controllers
 {
@@ -33,7 +34,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
 
         [BindProperty]
-        public ShoppingCartSummaryView ShoppingCartSummaryView { get; set; }
+        public ShoppingCartSummaryView? ShoppingCartSummaryView { get; set; }
 
         private readonly UserSession userSession;
 
@@ -140,6 +141,10 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         public async Task< IActionResult> ShoppingCartSummaryPost(ShoppingCartSummaryView ShoppingCartSummaryView)
         {
 
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+
             var roothToTemplate = webHostEnvironment.WebRootPath + Path.DirectorySeparatorChar.ToString()
                 + "templates" + Path.DirectorySeparatorChar.ToString() + "inquiry.html";
 
@@ -174,6 +179,58 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
 
             await emailSender.SendEmailAsync(EmeilSender, subject, messageBody);
+
+            //Record User date in the database
+            InquiryHedaer inquiryHedaer = new InquiryHedaer()
+            {
+                ApplicationUserId = Guid.Parse(claim.Value),
+                FullName = ShoppingCartSummaryView.ApplicationUser.FullName,
+                Email = ShoppingCartSummaryView.ApplicationUser.Email,
+                PhoneNumber = ShoppingCartSummaryView.ApplicationUser.PhoneNumber,
+                InquiryDate = DateTime.Now,
+                
+                
+            };
+
+
+            dbContext.InquiryHedaer.Add(inquiryHedaer);
+            dbContext.SaveChanges();
+
+
+            // records for more items in the cart
+            //foreach (var item in ShoppingCartSummaryView.ProductsList)
+            //{
+            //    InquiryDetails inquiryDetails = new InquiryDetails()
+            //    {
+            //        InquiryHeaderId = inquiryHedaer.Id,
+            //        ProductId = item.Id,
+
+            //    };
+
+            //    dbContext.InquiryDetails.Add(inquiryDetails);
+
+            //}
+
+            //dbContext.SaveChanges();
+
+            foreach (var item in ShoppingCartSummaryView.ProductsList)
+            {
+                var product = await dbContext.Product.FirstOrDefaultAsync(p => p.Id == item.Id);
+
+                if (product != null)
+                {
+                    InquiryDetails inquiryDetails = new InquiryDetails()
+                    {
+                        InquiryHeaderId = inquiryHedaer.Id,
+                        ProductId = item.Id,
+                    };
+
+                    dbContext.InquiryDetails.Add(inquiryDetails);
+                }
+            }
+
+            dbContext.SaveChanges();
+
 
 
             return RedirectToAction(nameof(InquiryConfirm));

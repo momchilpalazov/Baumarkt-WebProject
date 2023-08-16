@@ -4,6 +4,7 @@ using BaumarktSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BaumarktSystem.Data.Migrations
 {
     [DbContext(typeof(BaumarktSystemDbContext))]
-    partial class BaumarktSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230816075510_ProductTableRequiredChange")]
+    partial class ProductTableRequiredChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,14 +52,14 @@ namespace BaumarktSystem.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2023, 8, 16, 17, 42, 10, 122, DateTimeKind.Local).AddTicks(7874),
+                            CreatedOn = new DateTime(2023, 8, 16, 9, 55, 9, 977, DateTimeKind.Local).AddTicks(1195),
                             CreatorId = new Guid("ae6cebee-8421-4d00-8213-35b95ab97239"),
                             Name = "Haus"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2023, 8, 16, 17, 42, 10, 122, DateTimeKind.Local).AddTicks(7944),
+                            CreatedOn = new DateTime(2023, 8, 16, 9, 55, 9, 977, DateTimeKind.Local).AddTicks(1269),
                             CreatorId = new Guid("ae6cebee-8421-4d00-8213-35b95ab97239"),
                             Name = "Werkstatt"
                         });
@@ -135,9 +137,9 @@ namespace BaumarktSystem.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0cd9ad89-9a9b-4892-b77a-bc1215861865"),
+                            Id = new Guid("0a2b1fa3-04d8-42eb-81b9-743ed86012f1"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9716c2a5-bcd7-4c57-bde5-f7ea18fde3ec",
+                            ConcurrencyStamp = "43ba9d12-f504-4fa4-ad14-ee455a64ca86",
                             EmailConfirmed = false,
                             FullName = "UserUserov",
                             LockoutEnabled = false,
@@ -195,7 +197,7 @@ namespace BaumarktSystem.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2023, 8, 16, 17, 42, 10, 122, DateTimeKind.Local).AddTicks(8500),
+                            CreatedOn = new DateTime(2023, 8, 16, 9, 55, 9, 977, DateTimeKind.Local).AddTicks(1908),
                             CreatorId = new Guid("ae6cebee-8421-4d00-8213-35b95ab97239"),
                             Name = "Bodenbeläge",
                             ShowOrder = 1
@@ -203,7 +205,7 @@ namespace BaumarktSystem.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2023, 8, 16, 17, 42, 10, 122, DateTimeKind.Local).AddTicks(8520),
+                            CreatedOn = new DateTime(2023, 8, 16, 9, 55, 9, 977, DateTimeKind.Local).AddTicks(2025),
                             CreatorId = new Guid("ae6cebee-8421-4d00-8213-35b95ab97239"),
                             Name = "Farben",
                             ShowOrder = 2
@@ -211,7 +213,7 @@ namespace BaumarktSystem.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedOn = new DateTime(2023, 8, 16, 17, 42, 10, 122, DateTimeKind.Local).AddTicks(8525),
+                            CreatedOn = new DateTime(2023, 8, 16, 9, 55, 9, 977, DateTimeKind.Local).AddTicks(2029),
                             CreatorId = new Guid("ae6cebee-8421-4d00-8213-35b95ab97239"),
                             Name = "Werkzeuge",
                             ShowOrder = 3
@@ -219,7 +221,7 @@ namespace BaumarktSystem.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedOn = new DateTime(2023, 8, 16, 17, 42, 10, 122, DateTimeKind.Local).AddTicks(8529),
+                            CreatedOn = new DateTime(2023, 8, 16, 9, 55, 9, 977, DateTimeKind.Local).AddTicks(2032),
                             CreatorId = new Guid("ae6cebee-8421-4d00-8213-35b95ab97239"),
                             Name = "Garten",
                             ShowOrder = 4
@@ -238,6 +240,9 @@ namespace BaumarktSystem.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -296,6 +301,9 @@ namespace BaumarktSystem.Data.Migrations
                     b.Property<Guid?>("ApplicationUserId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int?>("CartItemId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
@@ -317,6 +325,7 @@ namespace BaumarktSystem.Data.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ShortProductDescription")
+                        .IsRequired()
                         .HasMaxLength(10000)
                         .HasColumnType("nvarchar(max)");
 
@@ -325,6 +334,8 @@ namespace BaumarktSystem.Data.Migrations
                     b.HasIndex("ApplicationTypeId");
 
                     b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("CartItemId");
 
                     b.HasIndex("CategoryId");
 
@@ -336,7 +347,7 @@ namespace BaumarktSystem.Data.Migrations
                             Id = 1,
                             ApplicationTypeId = 1,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(2023, 8, 16, 17, 42, 10, 123, DateTimeKind.Local).AddTicks(1566),
+                            CreatedOn = new DateTime(2023, 8, 16, 9, 55, 9, 977, DateTimeKind.Local).AddTicks(5698),
                             Description = "Parkettmuster Eiche",
                             FullName = "Laminat",
                             ImageUrl = "https://media.cdn.bauhaus/m/736748-1/15.webp",
@@ -348,7 +359,7 @@ namespace BaumarktSystem.Data.Migrations
                             Id = 2,
                             ApplicationTypeId = 1,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(2023, 8, 16, 17, 42, 10, 123, DateTimeKind.Local).AddTicks(1584),
+                            CreatedOn = new DateTime(2023, 8, 16, 9, 55, 9, 977, DateTimeKind.Local).AddTicks(5726),
                             Description = "Mit dem Handmuster dieses Fertigparketts können Sie zu Hause ganz in Ruhe über die Gestaltung Ihrer Wohnräume entscheiden.",
                             FullName = "Parkett",
                             ImageUrl = "https://media.cdn.bauhaus/m/1103405-1/12.webp",
@@ -360,7 +371,7 @@ namespace BaumarktSystem.Data.Migrations
                             Id = 3,
                             ApplicationTypeId = 1,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(2023, 8, 16, 17, 42, 10, 123, DateTimeKind.Local).AddTicks(1586),
+                            CreatedOn = new DateTime(2023, 8, 16, 9, 55, 9, 977, DateTimeKind.Local).AddTicks(5729),
                             Description = "Der Kayoom Teppich Cocktail 400 fasziniert mit seiner weichen Haptik in jederlei Hinsicht. Durch die schöne Struktur, die herrlichen Farben und dem natürlichen Material ist dieser handgewebte Teppich eine ideale Bereicherung für ein gemütliches Wohnambiente.",
                             FullName = "Teppich",
                             ImageUrl = "https://media.cdn.bauhaus/m/425344/12.webp",
@@ -372,7 +383,7 @@ namespace BaumarktSystem.Data.Migrations
                             Id = 4,
                             ApplicationTypeId = 1,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(2023, 8, 16, 17, 42, 10, 123, DateTimeKind.Local).AddTicks(1589),
+                            CreatedOn = new DateTime(2023, 8, 16, 9, 55, 9, 977, DateTimeKind.Local).AddTicks(5732),
                             Description = "Die SCHÖNER WOHNEN-Farbe Wandfarbe Universalweiß ist eine waschbeständige Dispersionsfarbe für wasserdampfdurchlässige Neu- und Renovierungsanstriche mit normaler Beanspruchung im Innenbereich. Die Farbe zeichnet sich durch gutes Deckvermögen, leichte Verarbeitung und einer matten Oberfläche aus.",
                             FullName = "Farbe",
                             ImageUrl = "https://media.cdn.bauhaus/m/730803/12.webp",
@@ -384,7 +395,7 @@ namespace BaumarktSystem.Data.Migrations
                             Id = 5,
                             ApplicationTypeId = 2,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(2023, 8, 16, 17, 42, 10, 123, DateTimeKind.Local).AddTicks(1595),
+                            CreatedOn = new DateTime(2023, 8, 16, 9, 55, 9, 977, DateTimeKind.Local).AddTicks(5738),
                             Description = "Das Pinsel-Set ist ein umfangreiches, 10-teiliges Set. Enthalten sind neben verschiedenen Schulmalpinseln bzw.",
                             FullName = "Pinsel",
                             ImageUrl = "https://media.cdn.bauhaus/m/502545/12.webp",
@@ -396,7 +407,7 @@ namespace BaumarktSystem.Data.Migrations
                             Id = 6,
                             ApplicationTypeId = 2,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(2023, 8, 16, 17, 42, 10, 123, DateTimeKind.Local).AddTicks(1598),
+                            CreatedOn = new DateTime(2023, 8, 16, 9, 55, 9, 977, DateTimeKind.Local).AddTicks(5741),
                             Description = "Der swingcolor Lammfell-Roller überzeugt durch seine gute Farbaufnahme sowie -abgabe und sorgt für ein strukturarmes Streichergebnis",
                             FullName = "Rolle",
                             ImageUrl = "https://media.cdn.bauhaus/m/575332/12.webp",
@@ -408,7 +419,7 @@ namespace BaumarktSystem.Data.Migrations
                             Id = 7,
                             ApplicationTypeId = 2,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2023, 8, 16, 17, 42, 10, 123, DateTimeKind.Local).AddTicks(1600),
+                            CreatedOn = new DateTime(2023, 8, 16, 9, 55, 9, 977, DateTimeKind.Local).AddTicks(5744),
                             Description = "Der Schlosserhammer von Wisent ist der ideale Hammer für jeden Heim- und Handwerker.",
                             FullName = "Hammer",
                             ImageUrl = "https://media.cdn.bauhaus/m/493758/12.webp",
@@ -420,7 +431,7 @@ namespace BaumarktSystem.Data.Migrations
                             Id = 8,
                             ApplicationTypeId = 2,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2023, 8, 16, 17, 42, 10, 123, DateTimeKind.Local).AddTicks(1603),
+                            CreatedOn = new DateTime(2023, 8, 16, 9, 55, 9, 977, DateTimeKind.Local).AddTicks(5747),
                             Description = "Das Schraubendreher- und Bit-Set von Alpha Tools ist ein praktisches 70-teiliges Set für anspruchsvolle Heim- und Handwerker. Mit ihm kann nahezu jede Schraubenart problemlos gelöst und festgedreht werden.",
                             FullName = "Schraubenzieher",
                             ImageUrl = "https://media.cdn.bauhaus/m/1211103/12.webp",
@@ -432,7 +443,7 @@ namespace BaumarktSystem.Data.Migrations
                             Id = 9,
                             ApplicationTypeId = 2,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2023, 8, 16, 17, 42, 10, 123, DateTimeKind.Local).AddTicks(1607),
+                            CreatedOn = new DateTime(2023, 8, 16, 9, 55, 9, 977, DateTimeKind.Local).AddTicks(5752),
                             Description = "Die Mehrzweckschraube Turbo Drill ist für verschiedenste Holzverbindungen geeignet. Der TX-Kopf für TORX-Antriebe sorgt für eine gute Kraftübertragung vom Eindrehwerkzeug auf die Schraube.",
                             FullName = "Schrauben",
                             ImageUrl = "https://media.cdn.bauhaus/m/338101/12.webp",
@@ -444,7 +455,7 @@ namespace BaumarktSystem.Data.Migrations
                             Id = 10,
                             ApplicationTypeId = 1,
                             CategoryId = 4,
-                            CreatedOn = new DateTime(2023, 8, 16, 17, 42, 10, 123, DateTimeKind.Local).AddTicks(1610),
+                            CreatedOn = new DateTime(2023, 8, 16, 9, 55, 9, 977, DateTimeKind.Local).AddTicks(5755),
                             Description = "Der Beistelltisch kommt mit einem urbanen, an dem Minimalismus angelehnten, Design daher. Das Trendmaterial Mangoholz kommt hier sehr gut zur Geltung und ergänzt das schlichte Gestell aus Metall ideal.",
                             FullName = "Tisch",
                             ImageUrl = "https://media.cdn.bauhaus/m/136478-1/12.webp",
@@ -456,7 +467,7 @@ namespace BaumarktSystem.Data.Migrations
                             Id = 11,
                             ApplicationTypeId = 1,
                             CategoryId = 4,
-                            CreatedOn = new DateTime(2023, 8, 16, 17, 42, 10, 123, DateTimeKind.Local).AddTicks(1612),
+                            CreatedOn = new DateTime(2023, 8, 16, 9, 55, 9, 977, DateTimeKind.Local).AddTicks(5758),
                             Description = "Der Diningsessel Sonja aus strapazierfähigem Kunststoff zeichnet sich durch seine ergonomisch geformte Sitzschale mit Regenwasserablauf-Spalten aus.",
                             FullName = "Stuhl",
                             ImageUrl = "https://media.cdn.bauhaus/m/632456/12.webp",
@@ -468,7 +479,7 @@ namespace BaumarktSystem.Data.Migrations
                             Id = 12,
                             ApplicationTypeId = 1,
                             CategoryId = 4,
-                            CreatedOn = new DateTime(2023, 8, 16, 17, 42, 10, 123, DateTimeKind.Local).AddTicks(1615),
+                            CreatedOn = new DateTime(2023, 8, 16, 9, 55, 9, 977, DateTimeKind.Local).AddTicks(5761),
                             Description = "Das Melina Loungesofa von Sunfun verfügt über ein robustes Aluminiumgestell, welches stabil aber zugleich angenehm leicht ist. So kann das Sofa bei Bedarf ohne große Anstrengungen umgestellt werden.",
                             FullName = "Sofa",
                             ImageUrl = "https://media.cdn.bauhaus/m/1114013/12.webp",
@@ -662,7 +673,7 @@ namespace BaumarktSystem.Data.Migrations
             modelBuilder.Entity("BaumarktSystem.Data.Models.InquiryDetails", b =>
                 {
                     b.HasOne("BaumarktSystem.Data.Models.InquiryHedaer", "InquiryHedaer")
-                        .WithMany()
+                        .WithMany("InquiryDetails")
                         .HasForeignKey("InquiryHeaderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -700,6 +711,10 @@ namespace BaumarktSystem.Data.Migrations
                     b.HasOne("BaumarktSystem.Data.Models.ApplicationUser", null)
                         .WithMany("Products")
                         .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("BaumarktSystem.Data.Models.CartItem", null)
+                        .WithMany("Products")
+                        .HasForeignKey("CartItemId");
 
                     b.HasOne("BaumarktSystem.Data.Models.Category", "Category")
                         .WithMany("Products")
@@ -784,11 +799,21 @@ namespace BaumarktSystem.Data.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("BaumarktSystem.Data.Models.CartItem", b =>
+                {
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("BaumarktSystem.Data.Models.Category", b =>
                 {
                     b.Navigation("Categories");
 
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("BaumarktSystem.Data.Models.InquiryHedaer", b =>
+                {
+                    b.Navigation("InquiryDetails");
                 });
 #pragma warning restore 612, 618
         }

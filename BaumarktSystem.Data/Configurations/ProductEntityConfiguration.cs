@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using BaumarktSystem.Data.Models;
@@ -24,6 +25,8 @@ namespace BaumarktSystem.Data.Configurations
              .WithMany(c => c.Products)
              .HasForeignKey(p => p.CategoryId)
              .OnDelete(DeleteBehavior.Restrict);
+
+
 
             builder.HasOne(p => p.ApplicationType)
                 .WithMany(at => at.Products)
@@ -250,4 +253,5 @@ namespace BaumarktSystem.Data.Configurations
 
 
     }
+    
 }

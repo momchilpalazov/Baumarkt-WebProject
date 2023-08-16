@@ -13,24 +13,21 @@ namespace BaumarktSystem.Data.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public string? FullName { get; set; }
-
+        public string FullName { get; set; }=null!;
         [Required]
-        public string? PhoneNumber { get; set; }
-
+        public string  PhoneNumber { get; set; }=null!;
         [Required]
-        public string? Email { get; set; }
-
+        public string  Email { get; set; }=null!;
         public DateTime InquiryDate { get; set; }
 
 
         public Guid ApplicationUserId { get; set; }
 
         [ForeignKey(nameof(ApplicationUserId))]
-        public virtual ApplicationUser ApplicationUser { get; set; }=new ApplicationUser();
+        public virtual ApplicationUser ApplicationUser { get; set; }
 
 
-        public virtual IEnumerable<InquiryDetails> InquiryDetails { get; set; }=new List<InquiryDetails>();
+        
 
 
     }

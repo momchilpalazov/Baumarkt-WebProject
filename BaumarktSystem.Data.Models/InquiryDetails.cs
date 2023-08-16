@@ -16,18 +16,18 @@ namespace BaumarktSystem.Data.Models
         [Required]
         public int InquiryHeaderId { get; set; }
 
-        [Required]
+       
         [ForeignKey(nameof(InquiryHeaderId))]
-        public virtual InquiryHedaer InquiryHedaer { get; set; }=new InquiryHedaer();
+        public virtual InquiryHedaer InquiryHedaer { get; set; }
 
         [Required]
         public int ProductId { get; set; }
 
-        [Required]
+        
         [ForeignKey(nameof(ProductId))]
-        public virtual Product Product { get; set; }=   new Product();
+        public virtual Product Product { get; set; }
 
-        public int Quantity { get; set; }
+      
 
 
 

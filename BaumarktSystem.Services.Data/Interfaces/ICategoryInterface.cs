@@ -12,7 +12,7 @@ namespace BaumarktSystem.Services.Data.Interaces
         Task<IEnumerable<CategoryIndexViewModel>> GetAllCategoriesAsync();
 
         Task<IEnumerable<CategoryIndexViewModel>> CreateCategoryAsync(CategoryIndexViewModel category);
-        Task<CategoryIndexViewModel> GetCategoryByIdAsync(int id);
+        Task<CategoryIndexViewModel?> GetCategoryByIdAsync(int id);
         Task EditCategorySaveAsync(CategoryIndexViewModel category);
         Task DeleteCategoryByIdAsync(int id);
         Task<CategoryIndexViewModel> GetDetailsCategoryByIdAsync(int id);

@@ -15,7 +15,8 @@ namespace BaumarktSystem.Data.Models
         public int Id { get; set; }
 
 
-        [Required]
+       /// [Required]
+       
         [MaxLength(FullNameMaxLength)]
         [MinLength(FullNameMinLength)]
         public string? FullName { get; set; }
@@ -24,19 +25,19 @@ namespace BaumarktSystem.Data.Models
 
         [MaxLength(ShortProductDescriptionMaxLength)]
         [MinLength(ShortProductDescriptionMinLength)]
-        public string ShortProductDescription { get; set; }=null!;
+        public string? ShortProductDescription { get; set; }
 
 
         [MaxLength(DescriptionMaxLength)]
         [MinLength(DescriptionMinLength)]
-        public string Description { get; set; }=null!;
+        public string? Description { get; set; }
 
-        [Required]
+        
         [Range(PriceMinValue, PriceMaxValue, ErrorMessage = "Price for product muss min 1.00")]
         public decimal Price { get; set; }
 
         
-        public string ImageUrl { get; set; }=null!;
+        public string? ImageUrl { get; set; }
 
 
 
@@ -48,7 +49,7 @@ namespace BaumarktSystem.Data.Models
 
         
 
-        [Required]
+    
         public DateTime CreatedOn { get; set; }
 
 

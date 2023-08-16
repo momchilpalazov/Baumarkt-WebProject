@@ -25,11 +25,12 @@ namespace BaumarktSystem.Data.Models
         public ApplicationUser Creator { get; set; } = null!;
 
 
-        [Required]
+       
 
         public DateTime CreatedOn { get; set; }
 
-        public ICollection<Product> Products { get; set; }=new HashSet<Product>();
+
+        public ICollection<Product> Products { get; set; } = new HashSet<Product>();
 
 
 

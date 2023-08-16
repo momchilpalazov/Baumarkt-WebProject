@@ -29,9 +29,12 @@ namespace BaumarktSystem.Web.ViewModels.Home
 
         public bool IsInCart { get; set; }=false;
 
-        public Category Category { get; set; } = new Category();
+        public CategoryViewModel Category { get; set; } = new CategoryViewModel();
 
-        public ApplicationType ApplicationType { get; set; } = new ApplicationType();
+        public ApplicationTypeViewModel ApplicationType { get; set; } = new ApplicationTypeViewModel();
+
+        public List<CategoryViewModel> Categories { get; set; } = new List<CategoryViewModel>();
+        public List<ApplicationTypeViewModel> ApplicationTypes { get; set; } = new List<ApplicationTypeViewModel>();
 
 
 

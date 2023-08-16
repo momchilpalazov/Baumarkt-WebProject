@@ -15,7 +15,7 @@ namespace BaumarktSystem.Data.Models
         public int Id { get; set; }     
         
 
-        public ICollection<Product> Products { get; set; } = new HashSet<Product>();
+        //public ICollection<Product> Products { get; set; } = new HashSet<Product>();
 
 
 

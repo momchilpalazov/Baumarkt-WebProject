@@ -157,7 +157,7 @@ namespace BaumarktSystem.Services.Data
             
         }
 
-        Task<CategoryIndexViewModel> ICategoryInterface.GetCategoryByIdAsync(int id)
+        Task<CategoryIndexViewModel?> ICategoryInterface.GetCategoryByIdAsync(int id)
         {
 
             

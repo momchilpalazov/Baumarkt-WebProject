@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using static BaumarktSystem.Common.EntityValidationConstanst.Category;
 
 namespace BaumarktSystem.Data.Models
@@ -16,11 +17,12 @@ namespace BaumarktSystem.Data.Models
         public int ShowOrder { get; set; }
 
         [Required]
-        public Guid CreatorId { get; set; } 
-    
+        public Guid CreatorId { get; set; }
+
+        [ForeignKey(nameof(CreatorId))]
         public ApplicationUser Creator{ get; set; } = null!;
 
-        [Required]
+       
         [DataType(DataType.DateTime)]
         public DateTime CreatedOn { get; set; }
 
