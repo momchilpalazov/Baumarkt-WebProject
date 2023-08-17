@@ -1,7 +1,7 @@
 ﻿using BaumarktSystem.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Baumarkt_E_commerce_Platform.Controllers
+namespace Baumarkt_E_commerce_Platform.Controllers.Admin
 {
     public class InquiryController : Controller
     {
@@ -22,8 +22,18 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         }
 
 
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetInquiryLIst()
+        {
+            return Json(new { data = inquiryHeaderInterface.GetAll() });
+        }
+
+        #endregion
 
 
-        
+
+
+
     }
 }

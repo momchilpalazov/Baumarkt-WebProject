@@ -1,5 +1,6 @@
 ﻿using BaumarktSystem.Data;
 using BaumarktSystem.Services.Data.Interfaces;
+using BaumarktSystem.Web.ViewModels.Inquiry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +14,54 @@ namespace BaumarktSystem.Services.Data
 
         private readonly BaumarktSystemDbContext dbContext; 
 
+       
+
         public InquiryHeaderService(BaumarktSystemDbContext dbContext)
-        {
-            this.dbContext = dbContext;
+        {   this.dbContext = dbContext;
+            
         }
 
+        //public IEnumerable<InquiryViewModel> GetAll()
+        //{
+        //    var inquiryHeaders = _inquiryHeaderRepository.GetAll(); // Методът GetAll() трябва да се имплементира в репозиторито
+        //    var inquiryViewModels = new List<InquiryViewModel>();
+
+        //    foreach (var header in inquiryHeaders)
+        //    {
+        //        var details = _inquiryDetailsRepository.GetDetailsByHeaderId(header.Id); // Предполагам, че ще имате метод за вземане на детайлите за даден хедър
+        //        var inquiryViewModel = new InquiryViewModel
+        //        {
+        //            InquiryHedaer = header,
+        //            InquiryDetails = details.ToList() // Тук може да добавите логика за вземане на подходящите детайли
+        //        };
+        //        inquiryViewModels.Add(inquiryViewModel);
+        //    }
+
+        //    return inquiryViewModels;
+        //}
+
+
+
+
+
+        public IEnumerable<InquiryViewModel> GetAll()
+        {
+            var inquiryHeaders = dbContext.InquiryHedaer;
+            var inquiryViewModels = new List<InquiryViewModel>();
+
+            foreach (var header in inquiryHeaders)
+            {
+                var details = dbContext.InquiryDetails.Where(x => x.InquiryHeaderId == header.Id);
+                var inquiryViewModel = new InquiryViewModel
+                {
+                    InquiryHedaer = header,
+                    InquiryDetails = details.ToList()
+                };
+                inquiryViewModels.Add(inquiryViewModel);
+            }
+
+            return inquiryViewModels;
+        }
 
     }
 }
