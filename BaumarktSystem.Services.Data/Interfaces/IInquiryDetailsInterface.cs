@@ -13,7 +13,7 @@ namespace BaumarktSystem.Services.Data.Interfaces
         IEnumerable<InquiryViewModel> GetInquiryDetails(int id);
 
         IEnumerable<InquiryDetails> GetDetailsByHeaderId(int headerId);
-
-
+        void Delete(int id);
     }
 }
+

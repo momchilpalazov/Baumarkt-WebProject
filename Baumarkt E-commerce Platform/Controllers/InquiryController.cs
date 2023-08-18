@@ -100,19 +100,16 @@ namespace Baumarkt_E_commerce_Platform.Controllers.Admin
 
 
 
-        //public IActionResult Delete(int id)
-        //{
-        //    var inquiryDetails = inquiryDetailsInterface.GetInquiryDetails(id);
-        //    return View(inquiryDetails);
-        //}
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult Delete(InquiryDetails inquiryDetails)
-        //{
-        //    inquiryDetailsInterface.Delete(inquiryDetails);
-        //    return RedirectToAction(nameof(Index));
-        //}
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            // Извикване на метода от сервиза за изтриване
+            inquiryDetailsInterface.Delete(id);
+
+            // Редирект към списъка със заявките или друга страница по ваш избор
+            return RedirectToAction("Index");
+        }
 
 
 

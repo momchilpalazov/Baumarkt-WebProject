@@ -21,6 +21,16 @@ namespace BaumarktSystem.Services.Data
             this.dbContext = dbContext;
         }
 
+        public void Delete(int id)
+        {
+            var inquiry = dbContext.InquiryHedaer.Find(id);
+            if (inquiry != null)
+            {
+                dbContext.InquiryHedaer.Remove(inquiry);
+                dbContext.SaveChanges();
+            }
+        }
+
         public IEnumerable<InquiryDetails> GetDetailsByHeaderId(int headerId)
         {
 
