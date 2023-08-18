@@ -13,7 +13,9 @@
                 <th>Price</th>
                 <th>Short Description</th>
                 <th>Quantity</th>
+                <th>Image</th>
                 <th></th>
+                
             </tr>
         </thead>
         <tbody>
@@ -31,6 +33,8 @@
                     <td>@Model[i].Price.ToString("C", new CultureInfo("eu-EU"))</td>
                     <td>@Model[i].ShortProductDescription</td>
                     <td>1</td>
+                    <td><img src="@Model[i].ImageUrl" width="100" /></td>
+
                     <td>
                         <a href="#" class="btn btn-danger btn-sm" onclick="deleteProduct('@Model[i].Id')">
                             <i class="fas fa-trash-alt"></i> Delete

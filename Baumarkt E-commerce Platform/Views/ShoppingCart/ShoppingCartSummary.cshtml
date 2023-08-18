@@ -137,6 +137,7 @@ else
                     <th>FullName</th>
                     <th>Price</th>
                     <th>Short Description</th>
+                    <th>Image</th>
                 </tr>
             </thead>
             <tbody>
@@ -149,6 +150,7 @@ else
                         <td>@Model.ProductsList[i].FullName</td>
                         <td>@Model.ProductsList[i].Price.ToString("C", new CultureInfo("eu-EU"))</td>
                         <td>@Model.ProductsList[i].ShortProductDescription</td>
+                        <td><img src="@Model.ProductsList[i].ImageUrl" width="100" /></td>
                     </tr>
                 }
             </tbody>

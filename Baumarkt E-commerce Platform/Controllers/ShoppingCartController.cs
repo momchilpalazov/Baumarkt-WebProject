@@ -11,7 +11,7 @@ using System.Security.Claims;
 using BaumarktSystem.Web.ViewModels.ShoppingCart;
 using System.Text;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Baumarkt_E_commerce_Platform.Utility;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace Baumarkt_E_commerce_Platform.Controllers

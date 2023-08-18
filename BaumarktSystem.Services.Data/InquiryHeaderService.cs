@@ -23,16 +23,16 @@ namespace BaumarktSystem.Services.Data
 
         //public IEnumerable<InquiryViewModel> GetAll()
         //{
-        //    var inquiryHeaders = _inquiryHeaderRepository.GetAll(); // Методът GetAll() трябва да се имплементира в репозиторито
+        //    var inquiryHeaders = _inquiryHeaderRepository.GetAll(); 
         //    var inquiryViewModels = new List<InquiryViewModel>();
 
         //    foreach (var header in inquiryHeaders)
         //    {
-        //        var details = _inquiryDetailsRepository.GetDetailsByHeaderId(header.Id); // Предполагам, че ще имате метод за вземане на детайлите за даден хедър
+        //        var details = _inquiryDetailsRepository.GetDetailsByHeaderId(header.Id); 
         //        var inquiryViewModel = new InquiryViewModel
         //        {
         //            InquiryHedaer = header,
-        //            InquiryDetails = details.ToList() // Тук може да добавите логика за вземане на подходящите детайли
+        //            InquiryDetails = details.ToList() 
         //        };
         //        inquiryViewModels.Add(inquiryViewModel);
         //    }

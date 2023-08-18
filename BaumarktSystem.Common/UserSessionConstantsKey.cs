@@ -10,5 +10,7 @@ namespace BaumarktSystem.Common
     {
         public static string SessionKey = "ShopingCartSession";
 
+        public static string SessionKeyForInquiry = "InquirySession";
+
     }
 }
