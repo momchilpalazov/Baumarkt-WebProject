@@ -2,11 +2,14 @@
 using BaumarktSystem.Services.Data.Interfaces;
 using BaumarktSystem.Web.Utility;
 using BaumarktSystem.Web.ViewModels.Inquiry;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static BaumarktSystem.Common.GeneralApplicationConstants;
 using static BaumarktSystem.Common.UserSessionConstantsKey;
 
 namespace Baumarkt_E_commerce_Platform.Controllers.Admin
 {
+    [Authorize(Roles = roleAdmin)]
     public class InquiryController : Controller
     {
 
@@ -104,10 +107,9 @@ namespace Baumarkt_E_commerce_Platform.Controllers.Admin
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            // Извикване на метода от сервиза за изтриване
+           
             inquiryDetailsInterface.Delete(id);
 
-            // Редирект към списъка със заявките или друга страница по ваш избор
             return RedirectToAction("Index");
         }
 

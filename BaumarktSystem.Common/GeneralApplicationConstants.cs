@@ -6,8 +6,9 @@
 
         public const string roleAdmin = "Admin";
 
-
         public const string  roleCustomer = "Customer";
+
+        public const string AdminAreaName = "Admin";
 
         public static string EmeilDevelopment = "admin@admin.bg";
 

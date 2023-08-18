@@ -107,11 +107,33 @@ namespace Baumarkt_E_commerce_Platform
            
             app.UseSession();
 
+            //app.UseEndpoints(endpoints =>
+            //{
+
+            //    endpoints.MapControllerRoute(
+            //     name: "areas",
+            //     pattern: "/{area:exists}/{controller=Home}/{action=Index}/{id?}"
+            //   );
+
+            //    endpoints.MapControllers();
+
+
+
+            //});
+
             app.UseEndpoints(endpoints =>
             {
-               
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}"
+                );
             });
+
 
 
 

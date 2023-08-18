@@ -3,12 +3,12 @@ using BaumarktSystem.Services.Data;
 using BaumarktSystem.Services.Data.Interfaces;
 using BaumarktSystem.Web.Utility;
 using BaumarktSystem.Web.ViewModels.Home;
-using Microsoft.AspNetCore.Authorization;
+using static BaumarktSystem.Common.GeneralApplicationConstants;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
+
 using System.Diagnostics;
 
-namespace Baumarkt_E_commerce_Platform.Controllers
+namespace BaumarktSystem.Controllers
 {
     public class HomeController : Controller
     {
@@ -30,6 +30,17 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         public async Task<IActionResult> Index(int? categoryId)
         {
+
+            if (this.User.IsInRole(AdminAreaName))             
+            {
+
+                return RedirectToAction("Index", "Home", new { area = AdminAreaName });          
+            
+            
+            }
+
+
+
             IEnumerable<ProductIndexViewModel> filteredProducts;
 
             if (categoryId.HasValue && categoryId != 0)

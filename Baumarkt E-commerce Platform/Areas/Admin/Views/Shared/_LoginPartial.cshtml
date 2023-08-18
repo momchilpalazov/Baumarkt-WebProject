@@ -1,0 +1,40 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using BaumarktSystem.Data.Models
+@using BaumarktSystem.Services.Data.Interfaces
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject IUserInterface UserInterface
+
+@{
+
+    string nickName = await this.UserInterface.GetFullNameByEmail(@User.Identity?.Name!);
+}
+
+
+<ul class="navbar-nav">
+@if (SignInManager.IsSignedIn(User))
+{
+      
+
+    <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello, @nickName</a>
+    </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Supplier" asp-action="Supplier">Be Supplier @*@User.Identity?.Name!*@</a>
+        </li>
+    <li class="nav-item">
+        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+        </form>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+    </li>
+}
+</ul>
