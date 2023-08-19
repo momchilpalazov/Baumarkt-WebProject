@@ -1,0 +1,96 @@
+﻿@using BaumarktSystem.Areas.Admin.ViewModels.Baumarkt
+@using System.Globalization
+@model MyBaumarktViewModel
+
+
+@{
+    ViewData["Title"] = "Create New Admin Product";
+}
+
+<div class="container mt-4">
+    <h2 class="card-text    mb-3">ADD NEW PRODUCT</h2>
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label for="Name">Full Name:</label>
+            <input type="text" class="form-control" id="FullName" name="FullName" required />
+        </div>
+        <div class="form-group">
+            <label for="ShortProductDescription">Short Description:</label>
+            <input type="text" class="form-control" id="ShortProductDescription" name="ShortProductDescription" required />
+        </div>
+        <div class="form-group">
+            <label for="Description">Description:</label>
+            <textarea class="form-control summernote" id="Description" name="Description" rows="5" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="Price">Price:</label>
+            <input type="number" class="form-control" id="Price" name="Price" step="0.01" required />
+        </div>
+        <div class="form-group">
+            <label for="CategoryId">Category:</label>
+            <select class="form-control" id="CategoryId" name="CategoryId" required>
+                <option value="">Select Category</option>
+                @foreach (var category in Model.ListCategories)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="ApplicationTypeId">Application Type:</label>
+            <select class="form-control" id="ApplicationTypeId" name="ApplicationTypeId" required>
+                <option value="">Select Application Type</option>
+                @foreach (var applicationType in Model.ListApplicationTypes)
+                {
+                    <option value="@applicationType.Id">@applicationType.Name</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="ImageUrl">Image:</label>
+            <input type="file" class="form-control-file" id="ImageUrl" name="image" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Product</button>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<script>
+
+    $(document).ready(function () {
+        $('.summernote').summernote();
+    });
+
+    function validateInputImage() {
+        //var file = document.getElementById("ImageUrl").files[0];
+        //if (file.size > 1024 * 1024 * 2) {
+        //    alert("File size must be less than 2MB");
+        //    return false;
+        //}
+        //return true;
+
+
+        var file = document.getElementById("ImageUrl").files.value == "";
+        if (file == null) {
+            Swal.fire(
+                'Error!',
+                'Please upload Image!',
+                'error'
+            )
+            return false;
+        }
+        return true;
+
+    }
+
+
+
+
+</script>

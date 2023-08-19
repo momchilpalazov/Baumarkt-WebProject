@@ -24,7 +24,7 @@
                     <h5>@Model.FilteredProducts[i].FullName</h5>
                     <p>@Model.FilteredProducts[i].ShortProductDescription</p>
                     <p>Price: @Model.FilteredProducts[i].Price.ToString("C", new CultureInfo("eu-EU"))</p>
-                    <a href="@Url.Action("Details", "Product", new { id = Model.FilteredProducts[i].Id })" class="btn btn-primary">Details</a>
+                   
                 </div>
             </div>
         }
@@ -66,7 +66,7 @@
                             <h5 class="card-title">@product.FullName</h5>
                             <p class="card-text">@product.ShortProductDescription</p>
                             <p class="card-text">Price: @product.Price.ToString("C", new CultureInfo("eu-EU"))</p>
-                            <a  href="@Url.Action("Details", "Product", new { id = product.Id })" class="btn btn-primary">Details</a>
+                            <a href="@Url.Action("Details", "Product", new { id = product.Id,area = "" })" class="btn btn-primary">Details</a>
                         </div>
                     </div>
                 </div>
@@ -80,10 +80,10 @@
 </div>
 
 <script>
-    
+
     document.getElementById("CategoryId").addEventListener("change", function () {
         var categoryId = this.value;
-        var url = "/Home/Index?categoryId=" + categoryId; 
+        var url = "/Home/Index?categoryId=" + categoryId;
         window.location.href = url;
     });
 </script>

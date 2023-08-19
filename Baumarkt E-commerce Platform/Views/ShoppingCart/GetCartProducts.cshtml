@@ -15,20 +15,20 @@
                 <th>Quantity</th>
                 <th>Image</th>
                 <th></th>
-                
+
             </tr>
         </thead>
         <tbody>
-           
+
 
             @for (int i = 0; i < Model.Count(); i++)
             {
                 <input type="hidden" asp-for="@Model[i].FullName" />
                 <input type="hidden" asp-for="@Model[i].Id" />
-                
 
 
-                 <tr>
+
+                <tr>
                     <td>@Model[i].FullName</td>
                     <td>@Model[i].Price.ToString("C", new CultureInfo("eu-EU"))</td>
                     <td>@Model[i].ShortProductDescription</td>
@@ -43,7 +43,7 @@
                 </tr>
 
 
-                
+
             }
 
 
@@ -52,13 +52,13 @@
 
     <p>Total Price: @Model.Sum(p => p.Price).ToString("C", new CultureInfo("eu-EU"))</p>
 
-    <button  class="btn btn-primary" onclick="checkout()">Checkout</button>
-    <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Continue Shopping</a>
+    <button class="btn btn-primary" onclick="checkout()">Checkout</button>
+    <a href="@Url.Action("Index", "Home", new { area = "" })" class="btn btn-secondary">Continue Shopping</a>
 }
 else
 {
     <p>Your cart is empty.</p>
-    <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Continue Shopping</a>
+    <a href="@Url.Action("Index", "Home", new { area = "" })" class="btn btn-primary">Continue Shopping</a>
 }
 
 <script>
@@ -66,7 +66,7 @@ else
         // Create a hidden form and add the product ID as a parameter
         var form = document.createElement('form');
         form.method = 'post';
-        form.action = '@Url.Action("RemoveCartProducts", "ShoppingCart")'; 
+        form.action = '@Url.Action("RemoveCartProducts", "ShoppingCart")';
 
         var input = document.createElement('input');
         input.type = 'hidden';
@@ -81,9 +81,10 @@ else
     }
 
     function checkout() {
-       
+
         alert("Proceeding to checkout...");
-        window.location.href = '@Url.Action("ShoppingCartSummary","ShoppingCart")';
+        window.location.href = '@Url.Action("ShoppingCartSummary", "ShoppingCart", new { area = "" })';
     }
 </script>
+
 

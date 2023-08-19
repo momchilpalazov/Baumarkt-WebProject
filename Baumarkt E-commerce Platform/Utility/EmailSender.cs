@@ -32,10 +32,10 @@ namespace Baumarkt_E_commerce_Platform.Utility
 
             MailjetClient client = new MailjetClient(mailJetSettings.AppKey,mailJetSettings.AppSecret)
             {
-                // Version = ApiVersion.V3_1,
+                //Version = ApiVersion.V3_1,
 
-                //BaseAdress = "api.mailjet.com"
-                
+
+
             };
             MailjetRequest request = new MailjetRequest
             {

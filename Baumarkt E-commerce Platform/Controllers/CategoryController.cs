@@ -78,7 +78,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         [HttpPost]
         public async Task<IActionResult> EditCategory(CategoryIndexViewModel category)
         {
-            if (!this.ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
                 return this.View(category);
             }
