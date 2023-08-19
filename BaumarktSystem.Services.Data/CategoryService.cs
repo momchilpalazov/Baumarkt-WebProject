@@ -77,9 +77,6 @@ namespace BaumarktSystem.Services.Data
         }
 
 
-
-       
-
         public Task DeleteCategoryByIdAsync(int id)
         {
 
@@ -148,10 +145,6 @@ namespace BaumarktSystem.Services.Data
             }).FirstOrDefaultAsync();
 
             return category;
-
-
-
-
 
 
             

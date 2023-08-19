@@ -1,9 +1,10 @@
-﻿using Mailjet.Client;
+﻿
+using Mailjet.Client;
 using Mailjet.Client.Resources;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Newtonsoft.Json.Linq;
 
-namespace Baumarkt_E_commerce_Platform.Utility
+namespace BaumarktSystem.Utility
 {
     public class EmailSender : IEmailSender
     {
@@ -24,41 +25,85 @@ namespace Baumarkt_E_commerce_Platform.Utility
         }
 
 
-        public async Task Execute(string subject, string email, string body)
+        public async Task Execute(string email, string subject, string body)
         {
 
             mailJetSettings= configuration.GetSection("MailJet").Get<MailJetSettings>();
 
 
-            MailjetClient client = new MailjetClient(mailJetSettings.AppKey,mailJetSettings.AppSecret)
+            MailjetClient client = new MailjetClient(mailJetSettings.ApiKey,mailJetSettings.SecretKey)
             {
                 //Version = ApiVersion.V3_1,
 
-
+                BaseAdress = "https://api.mailjet.com"
 
             };
             MailjetRequest request = new MailjetRequest
             {
                 Resource = Send.Resource,
             }
-               .Property(Send.Messages, new JArray {
+            .Property(Send.Messages, new JArray {
                 new JObject {
-                 {"From", new JObject {
-                  {"Email", "momchil.palazov@gmail.com"},
-                  {"Name", "SenderProton"}
-                  }},
-                 {"To", new JArray {
-                  new JObject {
-                   {"Email", email},
-                   {"Name", "passenger 1"}
-                   }
-                  }},
-                 {"Subject", subject},
-                 {"TextPart", "Dear passenger 1, welcome to Mailjet! May the delivery force be with you!"},
-                 {"HTMLPart", body}
-                 }
-                   });
+                    {
+                        "From", new JObject {
+                            {"Email", "momchil.palazov@protonmailcom"},
+                            {"Name", "SenderProton"}
+                        }
+                    },
+                    {
+                        "To", new JArray {
+                            new JObject {
+                                {"Email", email},
+                                {"Name", "passenger 1"}
+                            }
+                        }
+                    },
+                    {"Subject", subject},
+                    {"TextPart", "Dear passenger 1, welcome to Mailjet! May the delivery force be with you!"},
+                    {"HTMLPart", body}
+                }
+             });
+
+
             MailjetResponse response = await client.PostAsync(request);
+
+
+            //MailjetRequest request = new MailjetRequest
+            //{
+            //    Resource = Send.Resource,
+            //}
+            //.Property(Send.Messages, new JArray {
+            //     new JObject {
+            //      {
+            //       "From",
+            //       new JObject {
+            //        {"Email", email},
+            //        {"Name", "Momchil"}
+            //       }
+            //      }, {
+            //       "To",
+            //       new JArray {
+            //        new JObject {
+            //         {
+            //          "Email",
+            //          email
+            //         }, {
+            //          "Name",
+            //          "Baumarkt"
+            //         }
+            //        }
+            //       }
+            //      }, {
+            //       "Subject",
+            //       subject
+            //      }, {
+            //       "HTMLPart",
+            //       body
+            //      }
+            //     }
+            //            });
+            //MailjetResponse response  = await client.PostAsync(request);
+
 
         }
     }

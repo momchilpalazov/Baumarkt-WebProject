@@ -1,11 +1,11 @@
-﻿namespace Baumarkt_E_commerce_Platform.Utility
+﻿namespace BaumarktSystem.Utility
 {
     public class MailJetSettings
     {
 
-        public string AppKey { get; set; }
+        public string ApiKey { get; set; }
 
-        public string AppSecret { get; set; }
+        public string SecretKey { get; set; }
 
 
     }

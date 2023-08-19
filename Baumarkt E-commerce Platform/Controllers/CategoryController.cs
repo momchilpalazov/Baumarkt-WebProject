@@ -43,9 +43,6 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         }
 
 
-
-
-
         [HttpPost]
         public async Task<IActionResult> Create(CategoryIndexViewModel category)
         {

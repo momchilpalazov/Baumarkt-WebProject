@@ -49,9 +49,6 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
 
 
-
-
-
         //Your Shoping Cart Check 
         [HttpGet]
         public IActionResult GetCartProducts()
@@ -83,9 +80,6 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         //[ValidateAntiForgeryToken]
         public IActionResult GetCartProductsPost()
         {
-
-
-
 
 
             return RedirectToAction(nameof(ShoppingCartSummary));
@@ -162,11 +156,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
                 productListSB.Append($" - Name: {item.FullName} <span style='font-size:14px;'> (ID: {item.Id})</span><br />");
             }
 
-            //string messageBody = string.Format(HtmlBody,
-            //                    ShoppingCartSummaryView.ApplicationUser.FullName,
-            //                    ShoppingCartSummaryView.ApplicationUser.Email,
-            //                    ShoppingCartSummaryView.ApplicationUser.PhoneNumber,
-            //                    productListSB.ToString());
+           
 
             string messageBody = $@"
             {HtmlBody}
@@ -197,21 +187,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
             dbContext.SaveChanges();
 
 
-            // records for more items in the cart
-            //foreach (var item in ShoppingCartSummaryView.ProductsList)
-            //{
-            //    InquiryDetails inquiryDetails = new InquiryDetails()
-            //    {
-            //        InquiryHeaderId = inquiryHedaer.Id,
-            //        ProductId = item.Id,
-
-            //    };
-
-            //    dbContext.InquiryDetails.Add(inquiryDetails);
-
-            //}
-
-            //dbContext.SaveChanges();
+           
 
             foreach (var item in ShoppingCartSummaryView.ProductsList)
             {
@@ -248,10 +224,6 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
 
         }
-
-
-
-
 
 
         [HttpPost]

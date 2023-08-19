@@ -8,7 +8,7 @@
 }
 
 
-<div id="topProductsCarousel" class="carousel slide" data-ride="carousel">
+@*<div id="topProductsCarousel" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
         @for (int i = 0; i < Model.FilteredProducts.Count; i++)
         {
@@ -22,9 +22,9 @@
                 <img src="@Model.FilteredProducts[i].ImageUrl" alt="Product Image @(i + 1)" class="d-block w-100" style="max-height: 200px;" />
                 <div class="carousel-caption d-none d-md-block">
                     <h5>@Model.FilteredProducts[i].FullName</h5>
-                    <p>@Model.FilteredProducts[i].ShortProductDescription</p>
-                    <p>Price: @Model.FilteredProducts[i].Price.ToString("C", new CultureInfo("eu-EU"))</p>
-                    <a href="@Url.Action("Details", "Product", new { id = Model.FilteredProducts[i].Id })" class="btn btn-primary">Details</a>
+                   @* <p>@Model.FilteredProducts[i].ShortProductDescription</p>*@
+                    @*<p>Price: @Model.FilteredProducts[i].Price.ToString("C", new CultureInfo("eu-EU"))</p>*@
+     @*               
                 </div>
             </div>
         }
@@ -37,7 +37,7 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
     </a>
-</div>
+</div>*@
 
 
 
