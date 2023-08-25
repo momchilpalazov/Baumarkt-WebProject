@@ -143,14 +143,6 @@ namespace BaumarktSystem.Services.Data
         }
 
 
-
-      
-
-
-
-
-
-
         public async Task<ProductIndexViewModel?> GetProductByIdAsync(int id)
         {
             

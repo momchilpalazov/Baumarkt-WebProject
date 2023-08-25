@@ -68,41 +68,7 @@ namespace BaumarktSystem.Utility
             MailjetResponse response = await client.PostAsync(request);
 
 
-            //MailjetRequest request = new MailjetRequest
-            //{
-            //    Resource = Send.Resource,
-            //}
-            //.Property(Send.Messages, new JArray {
-            //     new JObject {
-            //      {
-            //       "From",
-            //       new JObject {
-            //        {"Email", email},
-            //        {"Name", "Momchil"}
-            //       }
-            //      }, {
-            //       "To",
-            //       new JArray {
-            //        new JObject {
-            //         {
-            //          "Email",
-            //          email
-            //         }, {
-            //          "Name",
-            //          "Baumarkt"
-            //         }
-            //        }
-            //       }
-            //      }, {
-            //       "Subject",
-            //       subject
-            //      }, {
-            //       "HTMLPart",
-            //       body
-            //      }
-            //     }
-            //            });
-            //MailjetResponse response  = await client.PostAsync(request);
+           
 
 
         }

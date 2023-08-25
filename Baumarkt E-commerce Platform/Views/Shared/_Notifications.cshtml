@@ -1,0 +1,25 @@
+﻿@using BaumarktSystem.Common
+
+
+@if (TempData[GeneralApplicationConstants.SuccessMessage] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>
+            toastr.success('@TempData[GeneralApplicationConstants.SuccessMessage]', 'Success');
+    </script>
+   
+}   
+
+@if (TempData[GeneralApplicationConstants.ErrorMessage] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>
+            toastr.error('@TempData[GeneralApplicationConstants.ErrorMessage]', 'Error');
+    </script>
+   
+}
+

@@ -66,20 +66,18 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         public async Task<IActionResult> Create(ProductIndexViewModel model,IFormFile image  )
         {
-            if (!this.ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
 
-                model.Categories = await this.productInterface.GetAllCategoriesListAsync();
-                model.ApplicationTypes = await this.productInterface.GetAllApplicationTypesListAsync();
+                TempData[GeneralApplicationConstants.ErrorMessage] = "Product Not Created Successfully";
+                return this.View(model);
 
-               // return this.View(model);
-                
             }
-
+            model.Categories = await this.productInterface.GetAllCategoriesListAsync();
+            model.ApplicationTypes = await this.productInterface.GetAllApplicationTypesListAsync();
             model.ImageUrl = await this.SaveImageAsync(image);
-
             await this.productInterface.CreateProductAsync(model);
-
+            TempData[GeneralApplicationConstants.SuccessMessage] = "Product Created Successfully";
             return this.RedirectToAction("AllProducts");        
 
 
@@ -107,16 +105,16 @@ namespace Baumarkt_E_commerce_Platform.Controllers
             if (!this.ModelState.IsValid)
             {
 
-                model.Categories = await this.productInterface.GetAllCategoriesListAsync();
-                model.ApplicationTypes = await this.productInterface.GetAllApplicationTypesListAsync();
-
-                // return this.View(model);
+                TempData[GeneralApplicationConstants.ErrorMessage] = "Product Not Edited Successfully"; 
+                return this.View(model);
 
             }
 
+            model.Categories = await this.productInterface.GetAllCategoriesListAsync();
+            model.ApplicationTypes = await this.productInterface.GetAllApplicationTypesListAsync();
             model.ImageUrl = await this.SaveImageAsync(image);
-
             await this.productInterface.EditProductAsync(model);
+            TempData[GeneralApplicationConstants.SuccessMessage] = "Product Edited Successfully";
 
             return this.RedirectToAction("AllProducts");
         }
@@ -142,10 +140,8 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         {
 
             await this.productInterface.DeleteProductByIdAsync(id);
-
+            TempData[GeneralApplicationConstants.SuccessMessage] = "Product Deleted Successfully";
             return this.RedirectToAction("AllProducts");
-
-
             
         }
 
@@ -161,10 +157,9 @@ namespace Baumarkt_E_commerce_Platform.Controllers
             List<CartItemIndexView> cartItemList = new List<CartItemIndexView>();
 
             if (userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey) != null
-                && userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey).Count() > 0)
+                && userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey).Count() > 0) 
             {
                 cartItemList = userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey).ToList();
-
 
             }
 
@@ -203,6 +198,12 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         public async Task<IActionResult> DetailsPost(int Id)
         {
 
+            if (Id == 0)
+            {
+                TempData[GeneralApplicationConstants.ErrorMessage] = "Product Not Added To Cart Successfully";
+                return this.NotFound();
+            }
+
             List<CartItemIndexView> cartItemList=new List<CartItemIndexView>();
 
             if (userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey) != null 
@@ -215,6 +216,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
             cartItemList.Add(new CartItemIndexView { Id = Id });
             userSession.Set<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey, cartItemList);
+            TempData[GeneralApplicationConstants.SuccessMessage] = "Product Added To Cart Successfully";
             return RedirectToAction("Index", "Home");
 
 
@@ -227,13 +229,21 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         public async Task<IActionResult> RemoveFromCart(int Id)
         {
 
+            if (Id == 0)
+            {
+                TempData[GeneralApplicationConstants.ErrorMessage] = "Product Not Removed From Cart Successfully";
+                return this.NotFound();
+            }
+
+
+
+
             List<CartItemIndexView> cartItemList = new List<CartItemIndexView>();
 
             if (userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey) != null
                 && userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey).Count() > 0)
             {
                 cartItemList = userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey).ToList();
-
 
             }
 
@@ -244,16 +254,10 @@ namespace Baumarkt_E_commerce_Platform.Controllers
             {
                 cartItemList.Remove(removeItem);
             }
-
-
-
-
            
             userSession.Set<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey, cartItemList);
+            TempData[GeneralApplicationConstants.SuccessMessage] = "Product Removed From Cart Successfully";
             return RedirectToAction("Index", "Home");
-
-
-
 
         }
 

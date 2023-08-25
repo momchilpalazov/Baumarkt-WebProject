@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using BaumarktSystem.Web.Infrastructure.Extensions;
 using BaumarktSystem.Web.ViewModels.Home;
+using BaumarktSystem.Common;
 
 namespace Baumarkt_E_commerce_Platform.Controllers
 {
@@ -48,6 +49,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         {
             if (!ModelState.IsValid)
             {
+                TempData[GeneralApplicationConstants.ErrorMessage] = "Supplier Not Created Successfully";
                 return this.View(supplier);
             }
 
@@ -92,7 +94,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
                 return this.RedirectToAction("Index", "Home");
             }
 
-
+            TempData[GeneralApplicationConstants.SuccessMessage] = "Supplier Created Successfully";
             return this.RedirectToAction("Index", "Home");
         }
 

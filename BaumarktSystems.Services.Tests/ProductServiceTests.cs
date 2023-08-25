@@ -102,65 +102,9 @@ namespace BaumarktSystems.Services.Tests
             Assert.That(result.Count(), Is.EqualTo(expectedProducts.Count));
         }
 
-        //[Test]
-
-        //public async Task CreateProduct_ShouldCreateProduct()
-        //{
-        //    // Arrange
-        //    var product = new ProductIndexViewModel { Id = 1, FullName = "Test Product" };
-
-        //    // Setup the mock repository behavior
-        //    _mockProductRepository.Setup(repo => repo.CreateProductAsync(product)).ReturnsAsync(product);
-
-        //    // Act
-        //    var result = await _productService.CreateProductAsync(product);
-
-        //    // Assert
-        //    Assert.IsNotNull(result);
-        //    Assert.AreEqual(product.Id, result.Id);
-        //    Assert.AreEqual(product.FullName, result.FullName);
-        //}
-
-        //[Test]
-
-        //public async Task UpdateProduct_ShouldUpdateProduct()
-        //{
-        //    // Arrange
-        //    var product = new ProductIndexViewModel { Id = 1, FullName = "Test Product" };
-
-        //    // Setup the 
-        //    _mockProductRepository.Setup(repo => repo.EditProductAsync(product)).ReturnsAsync(product);
-
-        //    // Act
-        //    var result = await _productService.EditProductAsync(product);
-
-        //    // Assert
-        //    Assert.IsNotNull(result);
-        //    Assert.AreEqual(product.Id, result.Id);
-        //    Assert.AreEqual(product.FullName, result.FullName);
-        //}
-
-        //[Test]
-
-        //public async Task DeleteProduct_ShouldDeleteProduct()
-        //{
-        //    // Arrange
-        //    var product = new ProductIndexViewModel { Id = 1, FullName = "Test Product" };
-
-        //    
-        //    _mockProductRepository.Setup(repo => repo.DeleteProductByIdAsync(product.Id)).ReturnsAsync(product);
-
-        //    // Act
-        //    var result = await _productService.DeleteProductByIdAsync(product.Id);
-
-        //    // Assert
-        //    Assert.IsNotNull(result);
-        //    Assert.AreEqual(product.Id, result.Id);
-        //    Assert.AreEqual(product.FullName, result.FullName);
-        //}
-
-
         [Test]
+
+       
 
         public async Task GetProductById_ShouldReturnNull()
         {

@@ -20,6 +20,7 @@
     <title>@ViewData["Title"] - Baumarkt Deutschland e-commerce Platform</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     <link href="https://cdn.datatables.net/v/bs5/dt-1.13.6/datatables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="~/fontawesome/css/all.css" />
     <link rel="stylesheet" href="~/Baumarkt_E_commerce_Platform.styles.css" asp-append-version="true" />
@@ -86,27 +87,6 @@
                             }
 
 
-                            @*<li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Content Management
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="AllCategory">Category</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="ApplicationType" asp-action="AllApplicationType">ApplicationType</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="AllProducts">Product</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Create Admin User</a>
-                                    </li>
-
-                                </ul>
-                            </li>                          *@
-
                             
                         }
 
@@ -152,6 +132,9 @@
 
     <div class="container">
         <main role="main" class="pb-3">
+
+            <partial name ="_Notifications"/>
+
             @RenderBody()
         </main>
     </div>
@@ -177,10 +160,12 @@
    
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+  @*  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>*@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/v/bs5/dt-1.13.6/datatables.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    
     
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>

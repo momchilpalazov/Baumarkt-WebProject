@@ -14,6 +14,10 @@
 
         public static string EmeilSender = "momchil.palazov@protonmail.com";  
 
+        public const string SuccessMessage = "Success";
+
+        public const string ErrorMessage = "Error";
+
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using BaumarktSystem.Services.Data.Interaces;
 using BaumarktSystem.Web.ViewModels.Home;
 using Microsoft.AspNetCore.Authorization;
+using BaumarktSystem.Common;
 using Microsoft.AspNetCore.Mvc;
 using static BaumarktSystem.Common.GeneralApplicationConstants;
 
@@ -47,12 +48,22 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         public async Task<IActionResult> Create(CategoryIndexViewModel category)
         {
 
-
             
+            if (!this.ModelState.IsValid)
+            {
+                await this.categoryInterface.CreateCategoryAsync(category);
+                TempData[GeneralApplicationConstants.SuccessMessage] = "Category Created Successfully";
+                return this.RedirectToAction("AllCategory");
+            }
+            else
+            {
+                TempData[GeneralApplicationConstants.ErrorMessage] = "Category Not Created Successfully";
+                return this.RedirectToAction("AllCategory");
+            }
 
-            await this.categoryInterface.CreateCategoryAsync(category);
+                 
 
-            return this.RedirectToAction("AllCategory");
+           
 
             
         }

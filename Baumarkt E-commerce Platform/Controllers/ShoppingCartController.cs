@@ -208,7 +208,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
             dbContext.SaveChanges();
 
 
-
+            
             return RedirectToAction(nameof(InquiryConfirm));
 
 
@@ -246,8 +246,8 @@ namespace Baumarkt_E_commerce_Platform.Controllers
             userSession.Set(UserSessionConstantsKey.SessionKey, cartItemList);
 
 
-           
 
+            TempData[GeneralApplicationConstants.SuccessMessage] = "Product removed successfully";
             return RedirectToAction("GetCartProducts");
 
 

@@ -1,4 +1,5 @@
-﻿using BaumarktSystem.Services.Data.Interaces;
+﻿using BaumarktSystem.Common;
+using BaumarktSystem.Services.Data.Interaces;
 using BaumarktSystem.Web.ViewModels.Home;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -41,10 +42,13 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         {
             if (this.ModelState.IsValid)
             {
+                TempData[GeneralApplicationConstants.ErrorMessage] = "Application Type Not Created Successfully";                
                 return this.View(applicationType);
             }
 
             await this.applicationTypeInterface.CreateApplicationTypeAsync(applicationType);
+            TempData[GeneralApplicationConstants.SuccessMessage] = "Application Type Created Successfully";
+
 
             return this.RedirectToAction("AllApplicationType");
         }
@@ -65,10 +69,12 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         {
             if (this.ModelState.IsValid)
             {
+                TempData[GeneralApplicationConstants.ErrorMessage] = "Application Type Not Edited Successfully";
                 return this.View(applicationType);
             }
 
             await this.applicationTypeInterface.EditApplicationTypePostAsync(applicationType);
+            TempData[GeneralApplicationConstants.SuccessMessage] = "Application Type Edited Successfully";
 
             return this.RedirectToAction("AllApplicationType");
         }
@@ -87,12 +93,10 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         public async Task<IActionResult> DeleteApplicationType(ApplicationTypeIndexViewModel applicationType)
         {
-            if (this.ModelState.IsValid)
-            {
-                return this.View(applicationType);
-            }
+            
 
             await this.applicationTypeInterface.DeleteApplicationTypeAsync(applicationType);
+            TempData[GeneralApplicationConstants.SuccessMessage] = "Application Type Deleted Successfully";
 
             return this.RedirectToAction("AllApplicationType");
         }

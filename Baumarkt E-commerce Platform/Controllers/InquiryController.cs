@@ -54,29 +54,15 @@ namespace Baumarkt_E_commerce_Platform.Controllers.Admin
 
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+      
         [ActionName("Details")]
         public IActionResult DetailsPost(int id)
         {
             List<CartItem> cartItems = new List<CartItem>();
 
-
-
-            //var inquiryDetails = inquiryDetailsInterface.GetInquiryDetails(InquiryViewModel.InquiryHedaer.Id);
+         
             var inquiryDetails = inquiryDetailsInterface.GetDetailsByHeaderId(id);
-            //InquiryViewModel.InquiryDetails = inquiryDetailsInterface.GetAll(inquiryViewModel);
-
-            //var inquiryDetails = inquiryDetailsInterface.GetAll(InquiryViewModel.InquiryHedaer.Id);
-
-            //foreach (var item in InquiryViewModel.InquiryDetails)
-            //{
-            //    CartItem cartItem = new CartItem
-            //    {
-            //        Id = item.ProductId
-
-            //    };
-            //    cartItems.Add(cartItem);
-            //}
+            
 
             foreach (var detail in inquiryDetails)
             {
@@ -94,7 +80,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers.Admin
             userSession.Set(SessionKey, cartItems);
             userSession.Set(SessionKeyForInquiry,id);
 
-
+            TempData[SuccessMessage] = "Product Added To Cart Successfully";
             return RedirectToAction("GetCartProducts", "ShoppingCart");
         }
 
@@ -109,7 +95,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers.Admin
         {
            
             inquiryDetailsInterface.Delete(id);
-
+            TempData[SuccessMessage] = "Inquiry Deleted Successfully";
             return RedirectToAction("Index");
         }
 
