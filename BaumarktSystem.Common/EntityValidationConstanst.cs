@@ -89,6 +89,12 @@ namespace BaumarktSystem.Common
             public const int PhoneNumberMaxLength = 20;
         }
 
+        public static class TempSqFt
+        {
+            public const int TempSqFtMinValue = 1;
+            public const int TempSqFtMaxValue = 1000;
+        }   
+
 
 
       

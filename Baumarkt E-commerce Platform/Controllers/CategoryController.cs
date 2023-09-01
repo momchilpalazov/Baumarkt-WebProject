@@ -88,10 +88,13 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         {
             if (this.ModelState.IsValid)
             {
+                TempData[GeneralApplicationConstants.ErrorMessage] = "Category Not Edited Successfully";
                 return this.View(category);
+                
             }
 
             await this.categoryInterface.EditCategorySaveAsync(category);
+            TempData[GeneralApplicationConstants.SuccessMessage] = "Category Edited Successfully";
 
             return this.RedirectToAction("AllCategory");
         }
@@ -118,6 +121,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
 
             await this.categoryInterface.DeleteCategoryByIdAsync(id);
+            TempData[GeneralApplicationConstants.SuccessMessage] = "Category Deleted Successfully";
 
             return this.RedirectToAction("AllCategory");          
 

@@ -102,7 +102,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         public async Task<IActionResult> EditProduct(ProductIndexViewModel model, IFormFile image)
         {
-            if (!this.ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
 
                 TempData[GeneralApplicationConstants.ErrorMessage] = "Product Not Edited Successfully"; 

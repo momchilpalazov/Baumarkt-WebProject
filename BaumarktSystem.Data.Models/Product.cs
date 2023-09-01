@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static BaumarktSystem.Common.EntityValidationConstanst.Product;
+using static BaumarktSystem.Common.EntityValidationConstanst.TempSqFt;
+
 
 namespace BaumarktSystem.Data.Models
 {
@@ -59,13 +61,10 @@ namespace BaumarktSystem.Data.Models
         [ForeignKey(nameof(ApplicationTypeId))]
         public virtual ApplicationType ApplicationType { get; set; } = null!;
 
-
-        //public virtual ICollection<Product> Products { get; set; } = new HashSet<Product>();
-
-        //public virtual ICollection<Category> Categories { get; set; } = new HashSet<Category>();
-
-        //public virtual ICollection<ApplicationType> ApplicationTypes { get; set; } = new HashSet<ApplicationType>();
-
+        [NotMapped]
+        [Display(Name = "TempSqFt")]
+        [Range(TempSqFtMinValue, TempSqFtMaxValue, ErrorMessage = "TempSqFt for product muss min 1.00")]
+        public int TempSqFt { get; set; }  
 
 
 
