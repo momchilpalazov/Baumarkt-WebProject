@@ -16,9 +16,13 @@ namespace BaumarktSystem.Data.Models
         [Key]
         public int Id { get; set; }
 
+        public Product()
+        {
+            this.TempQuantity = 1;  
+        }
 
-       /// [Required]
-       
+        /// [Required]
+
         [MaxLength(FullNameMaxLength)]
         [MinLength(FullNameMinLength)]
         public string? FullName { get; set; }
@@ -64,7 +68,7 @@ namespace BaumarktSystem.Data.Models
         [NotMapped]
         [Display(Name = "TempSqFt")]
         [Range(TempSqFtMinValue, TempSqFtMaxValue, ErrorMessage = "TempSqFt for product muss min 1.00")]
-        public int TempSqFt { get; set; }  
+        public int TempQuantity { get; set; }  
 
 
 

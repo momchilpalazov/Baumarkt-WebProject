@@ -15,7 +15,9 @@ namespace BaumarktSystem.Web.ViewModels.Home
 
 
 
-        public int Id { get; set; }     
+        public int Id { get; set; }    
+        
+        public int Quantity { get; set; }   
         
 
 

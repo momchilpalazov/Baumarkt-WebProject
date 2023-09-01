@@ -26,6 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Baumarkt.System.Web.Infrastructure\BaumarktSystem.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\BaumarktSystem.Common\BaumarktSystem.Common.csproj" />
+    <ProjectReference Include="..\BaumarktSystem.Data.Models\BaumarktSystem.Data.Models.csproj" />
     <ProjectReference Include="..\BaumarktSystem.Data\BaumarktSystem.Data.csproj" />
     <ProjectReference Include="..\BaumarktSystem.Services.Data\BaumarktSystem.Services.Data.csproj" />
     <ProjectReference Include="..\BaumarktSystem.Web.ViewModels\BaumarktSystem.Web.ViewModels.csproj" />

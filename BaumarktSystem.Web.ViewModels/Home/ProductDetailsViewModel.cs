@@ -12,10 +12,7 @@ namespace BaumarktSystem.Web.ViewModels.Home
     public class ProductDetailsViewModel
     {
 
-        public ProductDetailsViewModel()
-        {
-            TempSqFt = 1;   
-        }
+       
 
 
         public int Id { get; set; }
@@ -36,9 +33,9 @@ namespace BaumarktSystem.Web.ViewModels.Home
 
         public bool IsInCart { get; set; }=false;
 
-        [Display(Name = "TempSqFt")]
-        [Range(1, 100000, ErrorMessage = "TempSqFt muss min 1.00")]
-        public int TempSqFt { get; set; }
+       
+
+        public Product Product { get; set; } = new Product(); 
 
         public CategoryViewModel Category { get; set; } = new CategoryViewModel();
 

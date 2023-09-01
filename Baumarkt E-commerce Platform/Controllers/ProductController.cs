@@ -195,7 +195,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         [HttpPost,ActionName("AddTocart")]
         [AllowAnonymous]
         [Authorize(Roles = roleCustomer)]
-        public async Task<IActionResult> DetailsPost(int Id)
+        public async Task<IActionResult> DetailsPost(int Id,ProductDetailsViewModel productDetails)
         {
 
             if (Id == 0)
@@ -214,7 +214,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
             }
 
-            cartItemList.Add(new CartItemIndexView { Id = Id });
+            cartItemList.Add(new CartItemIndexView { Id = Id,Quantity=productDetails.Product.TempQuantity});
             userSession.Set<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey, cartItemList);
             TempData[GeneralApplicationConstants.SuccessMessage] = "Product Added To Cart Successfully";
             return RedirectToAction("Index", "Home");
