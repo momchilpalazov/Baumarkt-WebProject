@@ -1,4 +1,4 @@
-﻿@using BaumarktSystem.Data.Models
+﻿@*@using BaumarktSystem.Data.Models
 @using System.Globalization
 @model List<Product>
 
@@ -84,6 +84,85 @@ else
 
         alert("Proceeding to checkout...");
         window.location.href = '@Url.Action("ShoppingCartSummary", "ShoppingCart", new { area = "" })';
+    }
+</script>*@
+
+@using BaumarktSystem.Data.Models
+@using System.Globalization
+@model List<Product>
+
+<h2>Your Shopping Cart</h2>
+
+@if (Model != null && Model.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Image</th>
+                <th>Price per Item</th>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>@Model[i].FullName</td>
+                    <td><img src="@Model[i].ImageUrl" width="100" /></td>
+                    <td>@Model[i].Price.ToString("C", new CultureInfo("eu-EU"))</td>
+                    <td>@Model[i].Description</td>
+                    <td>
+                        <input type="number" class="form-control quantity-input"  value="@Model[i].TempQuantity"  min="1" onchange="updateTotalPrice(this, @i)" data-index="@i" data-price="@Model[i].Price" />
+                    </td>
+                    <td class="total-price" data-index="@i">@Model[i].Price * @Model[i].TempQuantity</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <p>Total Order Price: <span id="order-total">@Model.Sum(p => p.Price * p.TempQuantity).ToString("C", new CultureInfo("eu-EU"))</span></p>
+
+    <button class="btn btn-primary" onclick="checkout()">Checkout</button>
+    <a href="@Url.Action("Index", "Home", new { area = "" })" class="btn btn-secondary">Continue Shopping</a>
+}
+else
+{
+    <p>Your cart is empty.</p>
+    <a href="@Url.Action("Index", "Home", new { area = "" })" class="btn btn-primary">Continue Shopping</a>
+}
+
+<script>
+    // При зареждане на страницата, свържете събития за промяна на количеството
+    document.addEventListener("DOMContentLoaded", function () {
+        var quantityInputs = document.querySelectorAll(".quantity-input");
+        quantityInputs.forEach(function (input) {
+            input.addEventListener("change", updateTotalPrice);
+        });
+    });
+
+    function updateTotalPrice(input, index) {
+        var totalPriceElement = document.querySelector(".total-price[data-index='" + index + "']");
+        var pricePerItem = parseFloat(input.getAttribute("data-price"));
+        var quantity = parseInt(input.value);
+        var total = pricePerItem * quantity;
+        totalPriceElement.innerText = total.toLocaleString("eu-EU", { style: "currency", currency: "EUR" });
+
+        // Обновете общата цена
+        var orderTotal = 0;
+        var totalElements = document.querySelectorAll(".total-price");
+        totalElements.forEach(function (element) {
+            orderTotal += parseFloat(element.innerText);
+        });
+        var orderTotalElement = document.getElementById("order-total");
+        orderTotalElement.innerText = orderTotal.toLocaleString("eu-EU", { style: "currency", currency: "EUR" });
+    }
+
+    function checkout() {
+        // Пренасочване към страницата за оформяне на поръчката
+        window.location.href = '@Url.Action("Checkout", "Order", new { area = "" })';
     }
 </script>
 

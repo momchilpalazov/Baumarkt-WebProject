@@ -66,8 +66,18 @@ namespace Baumarkt_E_commerce_Platform.Controllers
             }
 
             List<int> productInCart= cartItemList.Select(p => p.Id).ToList(); 
-            IEnumerable<Product> productsList= dbContext.Product.Where(p => productInCart.Contains(p.Id)).ToList();
+            IEnumerable<Product> productsListTemp= dbContext.Product.Where(p => productInCart.Contains(p.Id)).ToList();
+            IList<Product> productsList = new List<Product>();
 
+            foreach (var item in cartItemList)
+            {
+
+                Product product = productsListTemp.FirstOrDefault(p => p.Id == item.Id);
+                product.TempQuantity = item.Quantity;
+                productsList.Add(product);
+
+            }
+            
 
             return View(productsList);
 
@@ -124,6 +134,8 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
 
         }
+
+       
 
 
         //checkout

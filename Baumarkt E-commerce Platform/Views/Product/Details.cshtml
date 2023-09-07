@@ -85,33 +85,7 @@
             }
            
 
-            @*<div class="d-flex justify-content-between">
-                <a asp-area="" asp-controller="Home" asp-action="IndexAll" class="btn btn-primary"><i class="fas fa-sign-out-alt"></i> Back to List</a>
-                @{                   
-
-
-                    
-                    if (Model.IsInCart)
-                    {
-                    
-                        <form asp-area="" asp-controller="Product" asp-action="RemoveFromCart" method="post">
-                            <input type="hidden" name="Id" value="@Model.Id" />
-                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Remove from Cart</button>
-                        </form>
-                    }
-                    else
-                    {
-                    
-                        <form asp-area="" asp-controller="Product" asp-action="AddToCart" method="post">
-                            <input type="hidden" name="Id" value="@Model.Id" />
-                            <button type="submit" class="btn btn-success"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
-                        </form>
-                    }
-
-
-
-                }
-            </div>*@
+            
         </div>
     </div>
 </div>
