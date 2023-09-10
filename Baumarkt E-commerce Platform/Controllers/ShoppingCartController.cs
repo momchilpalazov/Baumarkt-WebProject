@@ -99,7 +99,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         //Checkout
         [HttpGet]
-        public IActionResult ShoppingCartSummary()
+        public IActionResult ShoppingCartSummary( )
         {
 
             var claimsIdentity = (ClaimsIdentity)User.Identity;
@@ -130,6 +130,8 @@ namespace Baumarkt_E_commerce_Platform.Controllers
             };
 
 
+            
+
             return View(ShoppingCartSummaryView);
 
 
@@ -141,7 +143,9 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         //checkout
 
 
-        [HttpPost]     
+        [HttpPost]
+       
+        [ActionName("Checkout")]
 
         public async Task< IActionResult> ShoppingCartSummaryPost(ShoppingCartSummaryView ShoppingCartSummaryView)
         {
@@ -262,7 +266,30 @@ namespace Baumarkt_E_commerce_Platform.Controllers
             return RedirectToAction("GetCartProducts");
 
 
+        }
 
+
+        [HttpPost]
+        public IActionResult UpdateCart(List<Product> prodList)
+        {
+
+            List<CartItemIndexView> cartItemList = new List<CartItemIndexView>();
+
+            foreach (Product prod in prodList)
+            {
+
+                cartItemList.Add(new CartItemIndexView
+                {
+                    Id = prod.Id,
+                    Quantity = prod.TempQuantity
+
+                }); 
+            }
+
+            userSession.Set(UserSessionConstantsKey.SessionKey, cartItemList);
+            return RedirectToAction(nameof(GetCartProducts));   
+
+        
         }
     }
 }
