@@ -1,5 +1,6 @@
 ﻿@using BaumarktSystem.Web.ViewModels.Inquiry
 @using System.Globalization
+@using BaumarktSystem.Common
 @model IEnumerable<InquiryViewModel>
 
 
@@ -17,6 +18,7 @@
         <p>Phone Number: @Model.FirstOrDefault().InquiryHedaer.PhoneNumber</p>
         <p>Email: @Model.FirstOrDefault().InquiryHedaer.Email</p>
         <p>Date: @Model.FirstOrDefault().InquiryHedaer.InquiryDate</p>
+       
 
 
 

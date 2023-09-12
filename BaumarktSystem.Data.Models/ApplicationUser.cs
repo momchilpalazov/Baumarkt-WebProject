@@ -25,10 +25,20 @@ namespace BaumarktSystem.Data.Models
 
 
 
-
+        
         [MaxLength(NameMaxLength)]
         [MinLength(NameMinLength)]
-        public string? FullName { get; set; } 
+        public string? FullName { get; set; }
+
+        [NotMapped]
+        public string? StreetAddress { get; set; }
+
+        [NotMapped]
+        public string? City { get; set; }
+        [NotMapped]
+        public string? PostalCode { get; set; }
+        [NotMapped]
+        public string? State { get; set; }
 
 
        
