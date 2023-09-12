@@ -14,6 +14,8 @@ namespace BaumarktSystem.Web.ViewModels.Inquiry
 
         public List<InquiryDetails> InquiryDetails { get; set; }
 
+        public List<Product> Products { get; set; }
+
 
 
     }

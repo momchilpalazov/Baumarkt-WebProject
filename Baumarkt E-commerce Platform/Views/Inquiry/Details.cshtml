@@ -28,6 +28,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Product Name</th>
+                        <th>Quantity</th>
                         <th>Price</th>
                         <th>Image</th>
                         <!-- Add other columns if needed -->
@@ -37,6 +38,7 @@
                     <tr>
                         <td>@detail.Id</td>
                         <td>@detail.Product.FullName</td>
+                        <td>@detail.Product.TempQuantity</td>
                         <td>@detail.Product.Price.ToString("C", new CultureInfo("eu-Eu"))</td>
                         <td><img src="@detail.Product.ImageUrl" width="100" /></td>
                         <!-- Add other columns if needed -->

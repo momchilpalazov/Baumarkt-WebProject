@@ -18,6 +18,8 @@
 
         public const string ErrorMessage = "Error";
 
+        public const string SessionInquiryId = "InquiryId";
+
 
     }
 }

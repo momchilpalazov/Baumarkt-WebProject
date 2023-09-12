@@ -21,6 +21,7 @@
             <thead>
                 <tr>
                     <th>FullName</th>
+                    <th>Quantity</th>
                     <th>Price</th>
                     <th>Short Description</th>
                     <th>Image</th>
@@ -34,6 +35,7 @@
 
                     <tr>
                         <td>@Model.ProductsList[i].FullName</td>
+                        <td>@Model.ProductsList[i].TempQuantity</td>
                         <td>@Model.ProductsList[i].Price.ToString("C", new CultureInfo("eu-EU"))</td>
                         <td>@Model.ProductsList[i].ShortProductDescription</td>
                         <td><img src="@Model.ProductsList[i].ImageUrl" width="100" /></td>
@@ -47,7 +49,7 @@
         <input type="hidden" name="ShoppingCartSummaryView.ApplicationUser.PhoneNumber" value="@Model.ApplicationUser.PhoneNumber" />
         <input type="hidden" name="ShoppingCartSummaryView.ApplicationUser.Email" value="@Model.ApplicationUser.Email" />
 
-        <p>Total Price: @Model.ProductsList.Sum(p => p.Price).ToString("C", new CultureInfo("eu-EU"))</p>
+        <p>Total Price: @Model.ProductsList.Sum(p => p.Price*p.TempQuantity).ToString("C", new CultureInfo("eu-EU"))</p>
 
         <div class="button-group">
             <button type="submit" class="btn btn-primary">Proceed to Checkout</button>

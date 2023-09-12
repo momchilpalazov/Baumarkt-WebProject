@@ -88,8 +88,25 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public IActionResult GetCartProductsPost()
+        public IActionResult GetCartProductsPost(IEnumerable<Product> prodList)
         {
+
+
+            List<CartItemIndexView> cartItemList = new List<CartItemIndexView>();
+
+            foreach (Product prod in prodList)
+            {
+
+                cartItemList.Add(new CartItemIndexView
+                {
+                    Id = prod.Id,
+                    Quantity = prod.TempQuantity
+
+                });
+            }
+
+            userSession.Set(UserSessionConstantsKey.SessionKey, cartItemList);
+
 
 
             return RedirectToAction(nameof(ShoppingCartSummary));
@@ -102,22 +119,49 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         public IActionResult ShoppingCartSummary( )
         {
 
-            var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-           // var userId= User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ApplicationUser applicationUser;
 
-            List<CartItem> cartItemList = new List<CartItem>();
-
-            if (claim != null) 
+            if (User.IsInRole(roleAdmin))
             {
-                if (userSession.Get<IEnumerable<CartItem>>(UserSessionConstantsKey.SessionKey) != null
-                                   && userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey).Count() > 0)
+
+                if (userSession.Get<int>(SessionInquiryId)!=0)
                 {
-                    cartItemList = userSession.Get<IEnumerable<CartItem>>(UserSessionConstantsKey.SessionKey).ToList();
+                    InquiryHedaer inquiryHedaer = dbContext.InquiryHedaer.FirstOrDefault(p => p.Id == userSession.Get<int>(SessionInquiryId));
+                    applicationUser = new ApplicationUser()
+                    {
+                        FullName = inquiryHedaer.FullName,
+                        Email = inquiryHedaer.Email,
+                        PhoneNumber = inquiryHedaer.PhoneNumber
+                    };
+
                 }
-            
-            
+                else
+                {
+                    applicationUser = new ApplicationUser();
+                }
+               
             }
+            else
+            {
+                var claimsIdentity = (ClaimsIdentity)User.Identity;
+                var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+                // var userId= User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                applicationUser = dbContext.ApplicationUser.FirstOrDefault(p => p.Id == Guid.Parse(claim.Value));
+
+            }           
+
+
+            List<CartItem> cartItemList = new List<CartItem>();           
+            
+           if (userSession.Get<IEnumerable<CartItem>>(UserSessionConstantsKey.SessionKey) != null
+                                   && userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey).Count() > 0)
+           {
+                 cartItemList = userSession.Get<IEnumerable<CartItem>>(UserSessionConstantsKey.SessionKey).ToList();
+           }
+            
+            
+            
 
             List<int> productInCart = cartItemList.Select(p => p.Id).ToList();
             IEnumerable<Product> productsList = dbContext.Product.Where(p => productInCart.Contains(p.Id)).ToList();
@@ -125,9 +169,21 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
             ShoppingCartSummaryView = new ShoppingCartSummaryView()
             {
-                ApplicationUser = dbContext.ApplicationUser.FirstOrDefault(p => p.Id ==Guid.Parse (claim.Value)),
-                ProductsList = productsList.ToList()
+                ApplicationUser = applicationUser,
+                //ProductsList = productsList.ToList()
             };
+
+            foreach (var item in cartItemList)
+            {
+
+                Product product = productsList.FirstOrDefault(p => p.Id == item.Id);
+                product.TempQuantity = item.Quantity;
+                ShoppingCartSummaryView.ProductsList.Add(product);
+                
+
+               
+            }
+
 
 
             
@@ -145,7 +201,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         [HttpPost]
        
-        [ActionName("Checkout")]
+        //[ActionName("Checkout")]
 
         public async Task< IActionResult> ShoppingCartSummaryPost(ShoppingCartSummaryView ShoppingCartSummaryView)
         {

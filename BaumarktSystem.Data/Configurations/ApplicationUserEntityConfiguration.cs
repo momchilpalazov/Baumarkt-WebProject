@@ -12,47 +12,47 @@ using ApplicationUser = BaumarktSystem.Data.Models.ApplicationUser;
 
 namespace BaumarktSystem.Data.Configurations
 {
-    public class ApplicationUserEntityConfiguration : IEntityTypeConfiguration<ApplicationUser>
-    {
-        public void Configure(EntityTypeBuilder<ApplicationUser> builder)
-        {
+    //public class ApplicationUserEntityConfiguration : IEntityTypeConfiguration<ApplicationUser>
+    //{
+    //    public void Configure(EntityTypeBuilder<ApplicationUser> builder)
+    //    {
 
 
 
-            //builder
-            //    .Property(x => x.Name)
-            //    .HasDefaultValue("UserUserov");
+    //        //builder
+    //        //    .Property(x => x.Name)
+    //        //    .HasDefaultValue("UserUserov");
 
-            builder.HasData(AddApplicationUser());
+    //        builder.HasData(AddApplicationUser());
 
 
 
            
-        }
+    //    }
 
-        private ApplicationUser[] AddApplicationUser()
-        {
+    //    private ApplicationUser[] AddApplicationUser()
+    //    {
 
-            ICollection<ApplicationUser> applicationUsers = new HashSet<ApplicationUser>();
+    //        ICollection<ApplicationUser> applicationUsers = new HashSet<ApplicationUser>();
 
-            ApplicationUser applicationUser;
+    //        ApplicationUser applicationUser;
 
-            //Guid adminUserId = new Guid("ae6cebee-8421-4d00-8213-35b95ab97239");
+    //        //Guid adminUserId = new Guid("ae6cebee-8421-4d00-8213-35b95ab97239");
 
-            applicationUser = new ApplicationUser()
-            {
-                //Id = adminUserId,
-                FullName = "UserUserov",
+    //        applicationUser = new ApplicationUser()
+    //        {
+    //            //Id = adminUserId,
+    //            FullName = "UserUserov",
               
-            };
+    //        };
 
-            applicationUsers.Add(applicationUser);
+    //        applicationUsers.Add(applicationUser);
 
-            return applicationUsers.ToArray();
-        }
+    //        return applicationUsers.ToArray();
+    //    }
 
 
        
 
-    }
+    //}
 }

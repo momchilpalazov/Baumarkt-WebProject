@@ -12,12 +12,12 @@ namespace BaumarktSystem.Data.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required]
-        public string FullName { get; set; }=null!;
-        [Required]
-        public string  PhoneNumber { get; set; }=null!;
-        [Required]
-        public string  Email { get; set; }=null!;
+        //[Required]
+        public string? FullName { get; set; }
+        //[Required]
+        public string?  PhoneNumber { get; set; }
+        //[Required]
+        public string?  Email { get; set; }
         public DateTime InquiryDate { get; set; }
 
 

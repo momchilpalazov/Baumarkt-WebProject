@@ -46,8 +46,7 @@
                 }
             </p>
 
-            @if (User.IsInRole(GeneralApplicationConstants.roleAdmin))
-            {
+           
 
                 @using (Html.BeginForm("AddTocart", "Product", new { Id = Model.Id }, FormMethod.Post))
                 {
@@ -79,11 +78,6 @@
                     </div>
                 }
 
-
-
-
-            }
-           
 
             
         </div>
