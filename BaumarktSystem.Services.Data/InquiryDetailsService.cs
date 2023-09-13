@@ -40,27 +40,7 @@ namespace BaumarktSystem.Services.Data
             
         }
 
-        //public IEnumerable<InquiryViewModel> GetAll(int id)
-        //{
-
-        //    //var inquiryDetails = dbContext.InquiryDetails;
-        //    //var inquiryViewModels = new List<InquiryViewModel>();
-
-        //    //foreach (var detail in inquiryDetails)
-        //    //{
-        //    //    var header = dbContext.InquiryHedaer.Where(x => x.Id == detail.InquiryHeaderId).FirstOrDefault();
-        //    //    var inquiryViewModel = new InquiryViewModel
-        //    //    {
-        //    //        InquiryHedaer = header,
-        //    //        InquiryDetails = inquiryDetails.ToList()
-        //    //    };
-        //    //    inquiryViewModels.Add(inquiryViewModel);
-        //    //}
-
-        //    //return inquiryViewModels;
-
-
-        //}
+        
 
 
 
