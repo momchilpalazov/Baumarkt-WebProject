@@ -32,6 +32,10 @@ namespace BaumarktSystem.Data
 
         public DbSet<InquiryDetails> InquiryDetails { get; set; } = null!;
 
+        public DbSet<OrderHeader> OrderHeader { get; set; } = null!;
+
+        public DbSet<OrderDetails> OrderDetails { get; set; } = null!;
+
 
        
 
