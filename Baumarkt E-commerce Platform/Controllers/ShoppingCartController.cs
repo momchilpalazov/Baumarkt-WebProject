@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 
 using Microsoft.EntityFrameworkCore;
 using BaumarktSystem.Services.Data.Interfaces;
+using Braintree;
+using Baumarkt_E_commerce_Platform.Utility.BrainTree;
 
 namespace Baumarkt_E_commerce_Platform.Controllers
 {
@@ -33,6 +35,8 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         private readonly IOrderDetailsInterface orderDetailsInterface;
 
+        private readonly IBrainTreeGateInterface brainTreeGateInterface;
+
 
 
 
@@ -44,7 +48,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         private readonly UserSession userSession;
 
         public ShoppingCartController(UserSession userSession,BaumarktSystemDbContext dbContext,IWebHostEnvironment webHostEnvironment,
-            IEmailSender emailSender,IOrderDetailsInterface orderDetails,IOrderHeaderInterface orderHeader  )
+            IEmailSender emailSender,IOrderDetailsInterface orderDetails,IOrderHeaderInterface orderHeader,IBrainTreeGateInterface brainTreeGateInterface  )
         {
             
             this.userSession = userSession;
@@ -53,6 +57,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
             this.emailSender = emailSender;
             this.orderHeaderInterface = orderHeader;
             this.orderDetailsInterface = orderDetails;
+            this.brainTreeGateInterface = brainTreeGateInterface;
         }
 
 
@@ -147,8 +152,14 @@ namespace Baumarkt_E_commerce_Platform.Controllers
                 {
                     applicationUser = new ApplicationUser();
                 }
+
+                var gateway = brainTreeGateInterface.GetGateway();
+                var clientToken = gateway.ClientToken.Generate();
+                ViewBag.ClientToken = clientToken;
                
             }
+
+
             else
             {
                 var claimsIdentity = (ClaimsIdentity)User.Identity;
@@ -207,11 +218,9 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         //checkout
 
 
-        [HttpPost]
+        [HttpPost]      
        
-        //[ActionName("Checkout")]
-
-        public async Task< IActionResult> ShoppingCartSummaryPost(ShoppingCartSummaryView ShoppingCartSummaryView)
+        public async Task< IActionResult> ShoppingCartSummaryPost(IFormCollection collection , ShoppingCartSummaryView ShoppingCartSummaryView)
         {
 
 
@@ -269,6 +278,36 @@ namespace Baumarkt_E_commerce_Platform.Controllers
                 }
 
                 dbContext.SaveChanges();
+
+                string nonceFromTheClient = collection["payment_method_nonce"];
+
+
+                var request = new TransactionRequest
+                {
+                    Amount = Convert.ToDecimal(orderHeader.FinalOrderTotal),
+                    PaymentMethodNonce = nonceFromTheClient,
+                    OrderId=orderHeader.Id.ToString(),
+                    Options = new TransactionOptionsRequest
+                    {
+                        SubmitForSettlement = true
+                    }
+                };
+
+                var gateway = brainTreeGateInterface.GetGateway();
+                Result<Transaction> result = gateway.Transaction.Sale(request);
+
+                if (result.Target.ProcessorResponseText == "Approved")
+                {
+                    orderHeader.TransactionId = result.Target.Id;
+                    orderHeader.OrderStatus = StatusApproved;
+                }
+                else
+                {
+                    orderHeader.OrderStatus = StatusCancelled;
+                }
+
+                dbContext.SaveChanges();
+
                 return RedirectToAction(nameof(InquiryConfirm), new {id=orderHeader.Id});
 
             }

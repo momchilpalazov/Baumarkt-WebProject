@@ -7,15 +7,19 @@
     @if (Model!=null)
     {
 
-        <hi class="text-info">Order was Created</hi>
+        <hi class="card-text mb-3">ORDER WAS CREATED</hi>
         <h2>Order Number: @Model.Id was created succesfully</h2>
 
         
     }
-    
-    <h1 class="card-text mb-3">INQUIRY CONFIRMATION</h1>
+    else
+    {
+        <h1 class="card-text mb-3">INQUIRY CONFIRMATION</h1>
 
-    <p>We have recieved your inquiry and someone from our team will contact you shortly!</p>
+        <p>We have recieved your inquiry and someone from our team will contact you shortly!</p>
+    }
+    
+   
 
     <img src="/images/Thank-You-message_edited-1.jpg" width="80%" />
 </div>

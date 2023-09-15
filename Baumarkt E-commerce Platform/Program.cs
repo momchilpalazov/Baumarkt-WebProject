@@ -1,4 +1,5 @@
 
+using Baumarkt_E_commerce_Platform.Utility.BrainTree;
 using BaumarktSystem.Data;
 using BaumarktSystem.Data.Models;
 using BaumarktSystem.Services.Data;
@@ -53,8 +54,11 @@ namespace Baumarkt_E_commerce_Platform
 
             });
 
-            //builder.Services.AddSingleton<SessionExtensions>();
+           
 
+            //BrainTree
+            builder.Services.Configure<BrainTreePropertySettings>(builder.Configuration.GetSection("BrainTree"));
+            builder.Services.AddSingleton<IBrainTreeGateInterface, BrainTreeGate>();
             
 
             builder.Services.AddScoped<ICategoryInterface,CategoryService  >();
@@ -110,19 +114,7 @@ namespace Baumarkt_E_commerce_Platform
            
             app.UseSession();
 
-            //app.UseEndpoints(endpoints =>
-            //{
-
-            //    endpoints.MapControllerRoute(
-            //     name: "areas",
-            //     pattern: "/{area:exists}/{controller=Home}/{action=Index}/{id?}"
-            //   );
-
-            //    endpoints.MapControllers();
-
-
-
-            //});
+           
 
             app.UseEndpoints(endpoints =>
             {
