@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BaumarktSystem.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,10 @@ namespace BaumarktSystem.Services.Data.Interfaces
 {
     public interface IOrderHeaderInterface
     {
+
+        IEnumerable<OrderHeader> GetAll();
+
+
+
     }
 }

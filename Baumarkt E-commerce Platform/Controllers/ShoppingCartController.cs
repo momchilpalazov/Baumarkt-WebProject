@@ -13,6 +13,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity.UI.Services;
 
 using Microsoft.EntityFrameworkCore;
+using BaumarktSystem.Services.Data.Interfaces;
 
 namespace Baumarkt_E_commerce_Platform.Controllers
 {
@@ -28,6 +29,10 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         private readonly IEmailSender emailSender;
 
+        private readonly IOrderHeaderInterface orderHeaderInterface;
+
+        private readonly IOrderDetailsInterface orderDetailsInterface;
+
 
 
 
@@ -38,13 +43,16 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         private readonly UserSession userSession;
 
-        public ShoppingCartController(UserSession userSession,BaumarktSystemDbContext dbContext,IWebHostEnvironment webHostEnvironment,IEmailSender emailSender  )
+        public ShoppingCartController(UserSession userSession,BaumarktSystemDbContext dbContext,IWebHostEnvironment webHostEnvironment,
+            IEmailSender emailSender,IOrderDetailsInterface orderDetails,IOrderHeaderInterface orderHeader  )
         {
             
             this.userSession = userSession;
             this.dbContext = dbContext;
             this.webHostEnvironment = webHostEnvironment;
             this.emailSender = emailSender;
+            this.orderHeaderInterface = orderHeader;
+            this.orderDetailsInterface = orderDetails;
         }
 
 
@@ -206,30 +214,87 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         public async Task< IActionResult> ShoppingCartSummaryPost(ShoppingCartSummaryView ShoppingCartSummaryView)
         {
 
+
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
-
-            var roothToTemplate = webHostEnvironment.WebRootPath + Path.DirectorySeparatorChar.ToString()
-                + "templates" + Path.DirectorySeparatorChar.ToString() + "inquiry.html";
-
-
-            var subject = "New Inquiry";
-            string HtmlBody = "";
-            using (StreamReader sr = System.IO.File.OpenText(roothToTemplate))
+            if (ModelState.IsValid)
             {
-                HtmlBody = sr.ReadToEnd();
+                return RedirectToAction(nameof(ShoppingCartSummary));
             }
 
-            StringBuilder productListSB = new StringBuilder();
-            foreach (var item in ShoppingCartSummaryView.ProductsList)
+
+            if (User.IsInRole(roleAdmin))
             {
-                productListSB.Append($" - Name: {item.FullName} <span style='font-size:14px;'> (ID: {item.Id})</span><br />");
+                //need to create order
+
+                OrderHeader orderHeader = new OrderHeader()
+                {
+
+                    CreatedByUserId = Guid.Parse(claim.Value),
+                    FinalOrderTotal = (double)ShoppingCartSummaryView.ProductsList.Sum(p => p.TempQuantity * p.Price),
+                    City = ShoppingCartSummaryView.ApplicationUser.City,
+                    StreetAddress = ShoppingCartSummaryView.ApplicationUser.StreetAddress,
+                    State = ShoppingCartSummaryView.ApplicationUser.State,
+                    PostalCode = ShoppingCartSummaryView.ApplicationUser.PostalCode,
+                    FullName = ShoppingCartSummaryView.ApplicationUser.FullName,
+                    Email = ShoppingCartSummaryView.ApplicationUser.Email,
+                    PhoneNumber = ShoppingCartSummaryView.ApplicationUser.PhoneNumber,
+                    TransactionId = Guid.NewGuid().ToString(),
+                    OrderDate = DateTime.Now,
+                    OrderStatus = StatusPending,
+
+                };
+
+                dbContext.OrderHeader.Add(orderHeader);
+                dbContext.SaveChanges();
+
+
+                foreach (var item in ShoppingCartSummaryView.ProductsList)
+                {
+                    var product = await dbContext.Product.FirstOrDefaultAsync(p => p.Id == item.Id);
+
+                    if (product != null)
+                    {
+                        OrderDetails orderDetails = new OrderDetails()
+                        {
+                            OrderHeaderId = orderHeader.Id,
+                            PricePerTempQuantity = (double)item.Price,
+                            TempQuantity = item.TempQuantity,
+                            ProductId = item.Id,
+                        };
+
+                        dbContext.OrderDetails.Add(orderDetails);
+                    }
+                }
+
+                dbContext.SaveChanges();
+                return RedirectToAction(nameof(InquiryConfirm), new {id=orderHeader.Id});
+
             }
+            else
+            {
+                //need to create inquiry
+                var roothToTemplate = webHostEnvironment.WebRootPath + Path.DirectorySeparatorChar.ToString()
+               + "templates" + Path.DirectorySeparatorChar.ToString() + "inquiry.html";
 
-           
 
-            string messageBody = $@"
+                var subject = "New Inquiry";
+                string HtmlBody = "";
+                using (StreamReader sr = System.IO.File.OpenText(roothToTemplate))
+                {
+                    HtmlBody = sr.ReadToEnd();
+                }
+
+                StringBuilder productListSB = new StringBuilder();
+                foreach (var item in ShoppingCartSummaryView.ProductsList)
+                {
+                    productListSB.Append($" - Name: {item.FullName} <span style='font-size:14px;'> (ID: {item.Id})</span><br />");
+                }
+
+
+
+                string messageBody = $@"
             {HtmlBody}
             <p>FullName: {ShoppingCartSummaryView.ApplicationUser.FullName}</p>
             <p>Email: {ShoppingCartSummaryView.ApplicationUser.Email}</p>
@@ -239,45 +304,46 @@ namespace Baumarkt_E_commerce_Platform.Controllers
             <p>{productListSB.ToString()}</p>";
 
 
-            await emailSender.SendEmailAsync(EmeilSender, subject, messageBody);
+                await emailSender.SendEmailAsync(EmeilSender, subject, messageBody);
 
-            //Record User date in the database
-            InquiryHedaer inquiryHedaer = new InquiryHedaer()
-            {
-                ApplicationUserId = Guid.Parse(claim.Value),
-                FullName = ShoppingCartSummaryView.ApplicationUser.FullName,
-                Email = ShoppingCartSummaryView.ApplicationUser.Email,
-                PhoneNumber = ShoppingCartSummaryView.ApplicationUser.PhoneNumber,
-                InquiryDate = DateTime.Now,
-                
-                
-            };
-
-
-            dbContext.InquiryHedaer.Add(inquiryHedaer);
-            dbContext.SaveChanges();
-
-
-           
-
-            foreach (var item in ShoppingCartSummaryView.ProductsList)
-            {
-                var product = await dbContext.Product.FirstOrDefaultAsync(p => p.Id == item.Id);
-
-                if (product != null)
+                //Record User date in the database
+                InquiryHedaer inquiryHedaer = new InquiryHedaer()
                 {
-                    InquiryDetails inquiryDetails = new InquiryDetails()
+                    ApplicationUserId = Guid.Parse(claim.Value),
+                    FullName = ShoppingCartSummaryView.ApplicationUser.FullName,
+                    Email = ShoppingCartSummaryView.ApplicationUser.Email,
+                    PhoneNumber = ShoppingCartSummaryView.ApplicationUser.PhoneNumber,
+                    InquiryDate = DateTime.Now,
+
+
+                };
+
+
+                dbContext.InquiryHedaer.Add(inquiryHedaer);
+                dbContext.SaveChanges();
+
+
+
+
+                foreach (var item in ShoppingCartSummaryView.ProductsList)
+                {
+                    var product = await dbContext.Product.FirstOrDefaultAsync(p => p.Id == item.Id);
+
+                    if (product != null)
                     {
-                        InquiryHeaderId = inquiryHedaer.Id,
-                        ProductId = item.Id,
-                    };
+                        InquiryDetails inquiryDetails = new InquiryDetails()
+                        {
+                            InquiryHeaderId = inquiryHedaer.Id,
+                            ProductId = item.Id,
+                        };
 
-                    dbContext.InquiryDetails.Add(inquiryDetails);
+                        dbContext.InquiryDetails.Add(inquiryDetails);
+                    }
                 }
+
+                dbContext.SaveChanges();
+                TempData[GeneralApplicationConstants.SuccessMessage] = "Inquiry Created Successfully";
             }
-
-            dbContext.SaveChanges();
-
 
             
             return RedirectToAction(nameof(InquiryConfirm));
@@ -285,12 +351,12 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         }
 
-        public IActionResult InquiryConfirm()
+        public IActionResult InquiryConfirm(int id=0)
         {
 
+            OrderHeader orderHeader = dbContext.OrderHeader.FirstOrDefault(p => p.Id == id);
             userSession.Clear();
-
-           return View();
+            return View(orderHeader);
 
 
 

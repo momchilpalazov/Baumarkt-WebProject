@@ -1,5 +1,17 @@
-﻿﻿<div class="text-center">
+﻿
+@model BaumarktSystem.Data.Models.OrderHeader
 
+
+<div class="text-center">
+
+    @if (Model!=null)
+    {
+
+        <hi class="text-info">Order was Created</hi>
+        <h2>Order Number: @Model.Id was created succesfully</h2>
+
+        
+    }
     
     <h1 class="card-text mb-3">INQUIRY CONFIRMATION</h1>
 

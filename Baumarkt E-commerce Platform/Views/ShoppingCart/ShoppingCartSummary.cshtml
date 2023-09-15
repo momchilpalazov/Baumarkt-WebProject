@@ -1,9 +1,9 @@
-﻿@using BaumarktSystem.Web.ViewModels.ShoppingCart
+﻿
+
+@using BaumarktSystem.Web.ViewModels.ShoppingCart
 @using System.Globalization
 @using BaumarktSystem.Common
 @model ShoppingCartSummaryView
-
-
 
 <h2 class="card-text mb-3">YOUR SHOPPING BAG</h2>
 
@@ -12,15 +12,15 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="fullName">Full Name:</label>
-                <input required type="text" class="form-control" id="fullName" name="ShoppingCartSummaryView.ApplicationUser.FullName" value="@Model.ApplicationUser.FullName" />
+                <input asp-for="@Model.ApplicationUser.FullName" required type="text" class="form-control" />
             </div>
             <div class="form-group">
                 <label for="phoneNumber">Phone Number:</label>
-                <input required type="text" class="form-control" id="phoneNumber" name="ShoppingCartSummaryView.ApplicationUser.PhoneNumber" value="@Model.ApplicationUser.PhoneNumber" />
+                <input asp-for="@Model.ApplicationUser.PhoneNumber" required type="text" class="form-control" />
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input required type="text" class="form-control" id="email" name="ShoppingCartSummaryView.ApplicationUser.Email" value="@Model.ApplicationUser.Email" />
+                <input asp-for="@Model.ApplicationUser.Email" required type="text" class="form-control" />
             </div>
         </div>
         @if (User.IsInRole(GeneralApplicationConstants.roleAdmin))
@@ -28,33 +28,29 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="streetAddress">Street Address:</label>
-                    <input type="text" class="form-control" id="streetAddress" name="ShoppingCartSummaryView.ApplicationUser.StreetAddress" value="@Model.ApplicationUser.StreetAddress" />
+                    <input asp-for="@Model.ApplicationUser.StreetAddress" required type="text" class="form-control" />
                 </div>
                 <div class="form-group">
                     <label for="city">City:</label>
-                    <input type="text" class="form-control" id="city" name="ShoppingCartSummaryView.ApplicationUser.City" value="@Model.ApplicationUser.City" />
+                    <input asp-for="@Model.ApplicationUser.City" type="text" required class="form-control" />
                 </div>
                 <div class="form-group">
                     <label for="postalCode">Postal Code:</label>
-                    <input type="text" class="form-control" id="postalCode" name="ShoppingCartSummaryView.ApplicationUser.PostalCode" value="@Model.ApplicationUser.PostalCode" />
+                    <input asp-for="@Model.ApplicationUser.PostalCode" required type="text" class="form-control" />
                 </div>
                 <div class="form-group">
                     <label for="state">State:</label>
-                    <input type="text" class="form-control" id="state" name="ShoppingCartSummaryView.ApplicationUser.State" value="@Model.ApplicationUser.State" />
+                    <input asp-for="@Model.ApplicationUser.State" type="text" class="form-control" />
                 </div>
             </div>
         }
     </div>
-</form>
 
+    <h3>Cart Items</h3>
+    <a href="@Url.Action("GetCartProducts", "ShoppingCart")" class="btn btn-secondary">Back to Cart</a>
 
-
-<h3>Cart Items</h3>
-<a href="@Url.Action("GetCartProducts", "ShoppingCart")" class="btn btn-secondary">Back to Cart</a>
-
-@if (Model.ProductsList != null && Model.ProductsList.Any())
-{
-    <form method="post" asp-action="ShoppingCartSummaryPost">
+    @if (Model.ProductsList != null && Model.ProductsList.Any())
+    {
         <table class="table">
             <thead>
                 <tr>
@@ -68,11 +64,14 @@
             <tbody>
                 @for (int i = 0; i < Model.ProductsList.Count(); i++)
                 {
-                    <input type="hidden" name="ShoppingCartSummaryView.ProductsList[@i].Id" value="@Model.ProductsList[i].Id" />
-                    <input type="hidden" name="ShoppingCartSummaryView.ProductsList[@i].FullName" value="@Model.ProductsList[i].FullName" />
-
                     <tr>
-                        <td>@Model.ProductsList[i].FullName</td>
+                        <td>
+                            <input type="hidden" name="ProductsList[@i].Id" value="@Model.ProductsList[i].Id" />
+                            <input type="hidden" name="ProductsList[@i].FullName" value="@Model.ProductsList[i].FullName" />
+                            <input type="hidden" name="ProductsList[@i].TempQuantity" value="@Model.ProductsList[i].TempQuantity" />
+                            <input type="hidden" name="ProductsList[@i].Price" value="@Model.ProductsList[i].Price" />
+                            @Model.ProductsList[i].FullName
+                        </td>
                         <td>@Model.ProductsList[i].TempQuantity</td>
                         <td>@Model.ProductsList[i].Price.ToString("C", new CultureInfo("eu-EU"))</td>
                         <td>@Model.ProductsList[i].ShortProductDescription</td>
@@ -82,15 +81,9 @@
             </tbody>
         </table>
 
-        <!-- Hidden fields for ApplicationUser properties -->
-        <input type="hidden" name="ShoppingCartSummaryView.ApplicationUser.FullName" value="@Model.ApplicationUser.FullName" />
-        <input type="hidden" name="ShoppingCartSummaryView.ApplicationUser.PhoneNumber" value="@Model.ApplicationUser.PhoneNumber" />
-        <input type="hidden" name="ShoppingCartSummaryView.ApplicationUser.Email" value="@Model.ApplicationUser.Email" />
-
-        <p>Total Price: @Model.ProductsList.Sum(p => p.Price*p.TempQuantity).ToString("C", new CultureInfo("eu-EU"))</p>
+        <p>Total Price: @Model.ProductsList.Sum(p => p.Price * p.TempQuantity).ToString("C", new CultureInfo("eu-EU"))</p>
 
         <div class="button-group">
-
             @if (User.IsInRole(GeneralApplicationConstants.roleAdmin))
             {
                 <button type="submit" class="btn btn-success" id="checkout-button">Proceed to Checkout</button>
@@ -100,21 +93,18 @@
                 <button type="submit" class="btn btn-primary">Proceed to Checkout</button>
             }
 
-           
-            <a href="@Url.Action("Index", "Home",new { area = "" }))" class="btn btn-secondary">Continue Shopping</a>
+            <a href="@Url.Action("Index", "Home", new { area = "" })" class="btn btn-secondary">Continue Shopping</a>
         </div>
-    </form>
-}
-else
-{
-    <p>Your cart is empty.</p>
-    <a href="@Url.Action("Index", "Home",new { area = "" }))" class="btn btn-primary">Continue Shopping</a>
-}
+    }
+    else
+    {
+        <p>Your cart is empty.</p>
+        <a href="@Url.Action("Index", "Home", new { area = "" })" class="btn btn-primary">Continue Shopping</a>
+    }
+</form>
 
+ 
 @section Scripts {
-    <script>
-        // ...
-    </script>
+    <partial name="_ValidationScriptsPartial" />
 }
-
 
