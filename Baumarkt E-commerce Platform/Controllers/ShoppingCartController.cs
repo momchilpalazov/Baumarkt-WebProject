@@ -452,5 +452,14 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         
         }
+
+
+        [HttpPost]
+        public IActionResult Clear()
+        {
+
+            userSession.Clear();
+            return RedirectToAction("Index","Home");
+        }
     }
 }

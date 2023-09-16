@@ -10,6 +10,7 @@
 @if (Model != null && Model.Count > 0)
 {
     <form method="post" asp-action="UpdateCart" asp-controller="ShoppingCart">
+        
         <table class="table">
             <thead>
                 <tr>
@@ -55,12 +56,16 @@
         <input type="hidden" name="additionalData" value="Тази стойност ще се върне в модела" />
 
         <div class="text-center">
+            @*<button class="btn btn-primary" onclick="checkout()">Checkout</button>*@
+            <a href="@Url.Action("ShoppingCartSummary","ShoppingCart", new {area=""})" class="btn btn-primary" > </a>
             <button type="submit" class="btn btn-primary">Update Cart</button>           
-            <a href="@Url.Action("Index", "Home", new { area = "" })" class="btn btn-secondary">Continue Shopping</a>
+            <a href="@Url.Action("Index", "Home", new { area = "" })" class="btn btn-secondary">Continue Shopping</a>            
+            <button class="btn btn-warning" asp-controller="ShoppingCart" asp-action="Clear">Clear Cart</button>
         </div>
     </form>
-    <button class="btn btn-primary" onclick="checkout()">Checkout</button>
+  
 }
+   
 else
 {
     <p>Your cart is empty.</p>
@@ -89,6 +94,12 @@ else
             alert("Proceeding to checkout...");
             window.location.href = '@Url.Action("ShoppingCartSummary", "ShoppingCart", new { area = "" })';
         }
+
+        //function clearCart() {
+
+        //    alert("Clearing cart...");
+        //    window.location.href = '@Url./*Action("ClearCart", "ShoppingCart", new { area = "" })*/';
+        //}
 
     </script>
 }
