@@ -56,8 +56,8 @@
         <input type="hidden" name="additionalData" value="Тази стойност ще се върне в модела" />
 
         <div class="text-center">
-            @*<button class="btn btn-primary" onclick="checkout()">Checkout</button>*@
-            <a href="@Url.Action("ShoppingCartSummary","ShoppingCart", new {area=""})" class="btn btn-primary" > </a>
+           
+            <a href="@Url.Action("ShoppingCartSummary","ShoppingCart", new {area=""})" class="btn btn-primary" >Checkout</a>
             <button type="submit" class="btn btn-primary">Update Cart</button>           
             <a href="@Url.Action("Index", "Home", new { area = "" })" class="btn btn-secondary">Continue Shopping</a>            
             <button class="btn btn-warning" asp-controller="ShoppingCart" asp-action="Clear">Clear Cart</button>
@@ -95,11 +95,7 @@ else
             window.location.href = '@Url.Action("ShoppingCartSummary", "ShoppingCart", new { area = "" })';
         }
 
-        //function clearCart() {
-
-        //    alert("Clearing cart...");
-        //    window.location.href = '@Url./*Action("ClearCart", "ShoppingCart", new { area = "" })*/';
-        //}
+       
 
     </script>
 }

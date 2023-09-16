@@ -216,8 +216,6 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
 
         //checkout
-
-
         [HttpPost]      
        
         public async Task< IActionResult> ShoppingCartSummaryPost(IFormCollection collection , ShoppingCartSummaryView ShoppingCartSummaryView)
