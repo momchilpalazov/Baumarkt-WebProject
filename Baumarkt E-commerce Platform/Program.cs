@@ -12,6 +12,8 @@ using BaumarktSystem.Web.Utility;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGeneration;
+using System.Security.Principal;
 using static BaumarktSystem.Common.GeneralApplicationConstants;
 
 namespace Baumarkt_E_commerce_Platform
@@ -79,8 +81,13 @@ namespace Baumarkt_E_commerce_Platform
                 options.AppSecret = "10d596b782ef2ed2f64037aa476ddb3f";
             });
 
+         
+
+            
+
 
             //builder.Services.AddApplicationServices(typeof());
+
 
 
             builder.Services.AddControllersWithViews();

@@ -156,7 +156,7 @@ namespace Baumarkt_E_commerce_Platform.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _userManager.AddToRoleAsync(user,roleCustomer);
+                        await _userManager.AddToRoleAsync(user, roleCustomer);
 
                     }
 
@@ -189,12 +189,12 @@ namespace Baumarkt_E_commerce_Platform.Areas.Identity.Pages.Account
                         }
                         else
                         {
-                           return RedirectToAction("Index");
+                            return RedirectToAction("Index");
 
                         }
 
 
-                       
+
                         return LocalRedirect(returnUrl);
                     }
                 }

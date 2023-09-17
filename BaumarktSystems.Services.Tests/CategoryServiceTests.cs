@@ -32,7 +32,7 @@ namespace BaumarktSystems.Services.Tests
 
             _mockCategoryRepository = new Mock<ICategoryInterface>();
             //_categoryService = new CategoryService(_mockCategoryRepository.Object);
-            _categoryService = new CategoryService(dbContext,null,null);
+            _categoryService = new CategoryService(dbContext, null, null);
         }
 
         [Test]
