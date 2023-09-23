@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGeneration;
+using System.Configuration;
 using System.Security.Principal;
 using static BaumarktSystem.Common.GeneralApplicationConstants;
 
@@ -75,14 +76,21 @@ namespace Baumarkt_E_commerce_Platform
 
             builder.Services.AddScoped<UserSession>();
            
-            builder.Services.AddAuthentication().AddFacebook(options =>
+            builder.Services.AddAuthentication().AddFacebook(Options =>
             {
-                options.AppId = "269829345892609";
-                options.AppSecret = "10d596b782ef2ed2f64037aa476ddb3f";
+                Options.AppId = "269829345892609";
+                Options.AppSecret = "10d596b782ef2ed2f64037aa476ddb3f";
+
             });
 
-         
+            builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+            {
 
+                googleOptions.ClientId =builder.Configuration["Google:ClientId"];
+                googleOptions.ClientSecret =builder.Configuration["Google:ClientSecret"];
+
+
+            });
             
 
 

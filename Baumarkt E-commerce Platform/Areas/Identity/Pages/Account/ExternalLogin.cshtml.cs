@@ -85,8 +85,17 @@ namespace Baumarkt_E_commerce_Platform.Areas.Identity.Pages.Account
             [Required]
             [EmailAddress]
             public string Email { get; set; }
+
+            [Required]
+            [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Use letters only please")]
+            public string FullName { get; set; }
+
+
+            [Required]
+            public string PhoneNumber { get; set; }
+
         }
-        
+
         public IActionResult OnGet() => RedirectToPage("./Login");
 
         public IActionResult OnPost(string provider, string returnUrl = null)
@@ -132,7 +141,9 @@ namespace Baumarkt_E_commerce_Platform.Areas.Identity.Pages.Account
                 {
                     Input = new InputModel
                     {
-                        Email = info.Principal.FindFirstValue(ClaimTypes.Email)
+                        Email = info.Principal.FindFirstValue(ClaimTypes.Email),
+                        //Add Asked facebook for user name
+                        FullName = info.Principal.FindFirstValue(ClaimTypes.Name)
                     };
                 }
                 return Page();
