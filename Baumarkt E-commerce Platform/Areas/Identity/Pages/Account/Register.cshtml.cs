@@ -119,12 +119,12 @@ namespace Baumarkt_E_commerce_Platform.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            if (!await _roleManager.RoleExistsAsync(roleAdmin))
-            {
-                await _roleManager.CreateAsync(new IdentityRole<Guid>(roleAdmin));
-                await _roleManager.CreateAsync(new IdentityRole<Guid>(roleCustomer));
+            //if (!await _roleManager.RoleExistsAsync(roleAdmin))
+            //{
+            //    await _roleManager.CreateAsync(new IdentityRole<Guid>(roleAdmin));
+            //    await _roleManager.CreateAsync(new IdentityRole<Guid>(roleCustomer));
 
-            }
+            //}
 
 
             ReturnUrl = returnUrl;

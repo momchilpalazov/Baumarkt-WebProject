@@ -42,7 +42,7 @@ namespace Baumarkt_E_commerce_Platform
                 options.Password.RequiredLength = builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
 
             }).AddRoles<IdentityRole<Guid>>().
-            AddEntityFrameworkStores<BaumarktSystemDbContext>();
+            AddEntityFrameworkStores<BaumarktSystemDbContext>().AddDefaultUI().AddDefaultTokenProviders();
 
             //Emeil Sender registrations
             builder.Services.AddScoped<MailJetSettings>();

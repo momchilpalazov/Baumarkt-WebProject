@@ -1,4 +1,4 @@
-﻿@page
+﻿@*@page
 @model LoginModel
 
 @{
@@ -78,6 +78,91 @@
             }
         </section>
     </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+*@
+
+@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<div class="container">
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <h1 class="text-center mb-4">@ViewData["Title"]</h1>
+
+            @if (Model.ExternalLogins?.Count > 0)
+            {
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5>Use another service to log in</h5>
+
+                        <form id="external-login-form" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                            @foreach (var provider in Model.ExternalLogins)
+                            {
+                                <button type="submit" class="btn btn-outline-primary mb-2 w-100" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
+                                    <i class="fab fa-@provider.DisplayName.ToLowerInvariant() mr-2"></i>
+                                    Continue with @provider.DisplayName
+                                </button>
+                            }
+                        </form>
+                    </div>
+                </div>
+            }
+
+            <div class="card mb-4">
+                <div class="card-body">
+
+                    <h5>Use a local account to log in</h5>
+
+                    <form id="login-form" method="post">
+
+                        <div class="form-group">
+                            <label asp-for="Input.Email">Email address</label>
+                            <input asp-for="Input.Email" class="form-control" autocomplete="email" autofocus>
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Input.Password">Password</label>
+                            <input asp-for="Input.Password" class="form-control" autocomplete="current-password">
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group form-check">
+                            <input type="checkbox" asp-for="Input.RememberMe" class="form-check-input">
+                            <label asp-for="Input.RememberMe" class="form-check-label">Remember me</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Log in</button>
+
+                    </form>
+
+                    <div class="text-center mt-3 small">
+                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                    </div>
+
+                    <hr>
+
+                    <div class="text-center">
+                        <p>Don't have an account? <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register here</a></p>
+                        <p><a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a></p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 </div>
 
 @section Scripts {

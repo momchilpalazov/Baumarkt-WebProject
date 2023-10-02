@@ -1,4 +1,4 @@
-﻿@page
+﻿@*@page
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
@@ -60,6 +60,81 @@
             }
         </section>
     </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+*@
+
+@page
+@model RegisterModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="container">
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <h1 class="text-center mb-4">@ViewData["Title"]</h1>
+
+            @if (Model.ExternalLogins?.Count > 0)
+            {
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5>Register using another service</h5>
+
+                        <form id="external-register-form" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                            @foreach (var provider in Model.ExternalLogins)
+                            {
+                                <button type="submit" class="btn btn-outline-primary mb-2 w-100" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
+                                    <i class="fab fa-@provider.DisplayName.ToLowerInvariant() mr-2"></i>
+                                    Register with @provider.DisplayName
+                                </button>
+                            }
+                        </form>
+                    </div>
+                </div>
+            }
+
+            <div class="card">
+                <div class="card-body">
+
+                    <h5>Register a new local account</h5>
+
+                    <form id="register-form" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+
+                        <div class="form-group">
+                            <label asp-for="Input.Email">Email address</label>
+                            <input asp-for="Input.Email" class="form-control" autocomplete="email" autofocus>
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Input.Password">Password</label>
+                            <input asp-for="Input.Password" class="form-control" autocomplete="new-password">
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                            <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password">
+                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Register</button>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 </div>
 
 @section Scripts {
