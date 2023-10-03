@@ -34,5 +34,12 @@
         public const string StatusRefunded = "Refunded";
 
 
+        public static readonly IEnumerable<string> StatusList = new List<string>()
+        {
+            StatusApproved, StatusCancelled, StatusInProcess, StatusPending, StatusRefunded, StatusShipped
+        };
+
+
+
     }
 }
