@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-Baumarkt_E_commerce_Platform-c1fbf1a0-ae0b-4cc1-aa2b-5b373bbbe9c5</UserSecretsId>
-    <RootNamespace>Baumarkt_E_commerce_Platform</RootNamespace>
+    <RootNamespace>BaumarktSystem</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -38,6 +38,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Data\" />
+    <Folder Include="wwwroot\styles\" />
     <Folder Include="wwwroot\templates\" />
   </ItemGroup>
 

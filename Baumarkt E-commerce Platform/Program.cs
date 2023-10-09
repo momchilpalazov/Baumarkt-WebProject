@@ -17,7 +17,7 @@ using System.Configuration;
 using System.Security.Principal;
 using static BaumarktSystem.Common.GeneralApplicationConstants;
 
-namespace Baumarkt_E_commerce_Platform
+namespace BaumarktSystem.Web
 {
     public class Program
     {
@@ -118,7 +118,18 @@ namespace Baumarkt_E_commerce_Platform
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            app.UseStaticFiles(
+                
+                new StaticFileOptions
+                {
+                    OnPrepareResponse = ctx =>
+                    {
+                        ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=600");
+                    }
+                }   
+                
+                
+                );
 
             app.UseRouting();
 

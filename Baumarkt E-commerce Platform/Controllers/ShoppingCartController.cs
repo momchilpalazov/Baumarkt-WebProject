@@ -17,17 +17,17 @@ using BaumarktSystem.Services.Data.Interfaces;
 using Braintree;
 using Baumarkt_E_commerce_Platform.Utility.BrainTree;
 
-namespace Baumarkt_E_commerce_Platform.Controllers
+namespace BaumarktSystem.Controllers
 {
     [Authorize]
     public class ShoppingCartController : Controller
     {
 
-         
+
 
         private readonly BaumarktSystemDbContext dbContext;
 
-        private readonly IWebHostEnvironment  webHostEnvironment;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
         private readonly IEmailSender emailSender;
 
@@ -47,16 +47,16 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         private readonly UserSession userSession;
 
-        public ShoppingCartController(UserSession userSession,BaumarktSystemDbContext dbContext,IWebHostEnvironment webHostEnvironment,
-            IEmailSender emailSender,IOrderDetailsInterface orderDetails,IOrderHeaderInterface orderHeader,IBrainTreeGateInterface brainTreeGateInterface  )
+        public ShoppingCartController(UserSession userSession, BaumarktSystemDbContext dbContext, IWebHostEnvironment webHostEnvironment,
+            IEmailSender emailSender, IOrderDetailsInterface orderDetails, IOrderHeaderInterface orderHeader, IBrainTreeGateInterface brainTreeGateInterface)
         {
-            
+
             this.userSession = userSession;
             this.dbContext = dbContext;
             this.webHostEnvironment = webHostEnvironment;
             this.emailSender = emailSender;
-            this.orderHeaderInterface = orderHeader;
-            this.orderDetailsInterface = orderDetails;
+            orderHeaderInterface = orderHeader;
+            orderDetailsInterface = orderDetails;
             this.brainTreeGateInterface = brainTreeGateInterface;
         }
 
@@ -78,8 +78,8 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
             }
 
-            List<int> productInCart= cartItemList.Select(p => p.Id).ToList(); 
-            IEnumerable<Product> productsListTemp= dbContext.Product.Where(p => productInCart.Contains(p.Id)).ToList();
+            List<int> productInCart = cartItemList.Select(p => p.Id).ToList();
+            IEnumerable<Product> productsListTemp = dbContext.Product.Where(p => productInCart.Contains(p.Id)).ToList();
             IList<Product> productsList = new List<Product>();
 
             foreach (var item in cartItemList)
@@ -90,7 +90,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
                 productsList.Add(product);
 
             }
-            
+
 
             return View(productsList);
 
@@ -129,7 +129,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
         //Checkout
         [HttpGet]
-        public IActionResult ShoppingCartSummary( )
+        public IActionResult ShoppingCartSummary()
         {
 
             ApplicationUser applicationUser;
@@ -137,7 +137,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
             if (User.IsInRole(roleAdmin))
             {
 
-                if (userSession.Get<int>(SessionInquiryId)!=0)
+                if (userSession.Get<int>(SessionInquiryId) != 0)
                 {
                     InquiryHedaer inquiryHedaer = dbContext.InquiryHedaer.FirstOrDefault(p => p.Id == userSession.Get<int>(SessionInquiryId));
                     applicationUser = new ApplicationUser()
@@ -156,7 +156,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
                 var gateway = brainTreeGateInterface.GetGateway();
                 var clientToken = gateway.ClientToken.Generate();
                 ViewBag.ClientToken = clientToken;
-               
+
             }
 
 
@@ -168,19 +168,19 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
                 applicationUser = dbContext.ApplicationUser.FirstOrDefault(p => p.Id == Guid.Parse(claim.Value));
 
-            }           
+            }
 
 
-            List<CartItem> cartItemList = new List<CartItem>();           
-            
-           if (userSession.Get<IEnumerable<CartItem>>(UserSessionConstantsKey.SessionKey) != null
-                                   && userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey).Count() > 0)
-           {
-                 cartItemList = userSession.Get<IEnumerable<CartItem>>(UserSessionConstantsKey.SessionKey).ToList();
-           }
-            
-            
-            
+            List<CartItem> cartItemList = new List<CartItem>();
+
+            if (userSession.Get<IEnumerable<CartItem>>(UserSessionConstantsKey.SessionKey) != null
+                                    && userSession.Get<IEnumerable<CartItemIndexView>>(UserSessionConstantsKey.SessionKey).Count() > 0)
+            {
+                cartItemList = userSession.Get<IEnumerable<CartItem>>(UserSessionConstantsKey.SessionKey).ToList();
+            }
+
+
+
 
             List<int> productInCart = cartItemList.Select(p => p.Id).ToList();
             IEnumerable<Product> productsList = dbContext.Product.Where(p => productInCart.Contains(p.Id)).ToList();
@@ -198,27 +198,27 @@ namespace Baumarkt_E_commerce_Platform.Controllers
                 Product product = productsList.FirstOrDefault(p => p.Id == item.Id);
                 product.TempQuantity = item.Quantity;
                 ShoppingCartSummaryView.ProductsList.Add(product);
-                
 
-               
+
+
             }
 
 
 
-            
+
 
             return View(ShoppingCartSummaryView);
 
 
         }
 
-       
+
 
 
         //checkout
-        [HttpPost]      
-       
-        public async Task< IActionResult> ShoppingCartSummaryPost(IFormCollection collection , ShoppingCartSummaryView ShoppingCartSummaryView)
+        [HttpPost]
+
+        public async Task<IActionResult> ShoppingCartSummaryPost(IFormCollection collection, ShoppingCartSummaryView ShoppingCartSummaryView)
         {
 
 
@@ -284,7 +284,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
                 {
                     Amount = Convert.ToDecimal(orderHeader.FinalOrderTotal),
                     PaymentMethodNonce = nonceFromTheClient,
-                    OrderId=orderHeader.Id.ToString(),
+                    OrderId = orderHeader.Id.ToString(),
                     Options = new TransactionOptionsRequest
                     {
                         SubmitForSettlement = true
@@ -306,7 +306,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
                 dbContext.SaveChanges();
 
-                return RedirectToAction(nameof(InquiryConfirm), new {id=orderHeader.Id});
+                return RedirectToAction(nameof(InquiryConfirm), new { id = orderHeader.Id });
 
             }
             else
@@ -379,16 +379,16 @@ namespace Baumarkt_E_commerce_Platform.Controllers
                 }
 
                 dbContext.SaveChanges();
-                TempData[GeneralApplicationConstants.SuccessMessage] = "Inquiry Created Successfully";
+                TempData[SuccessMessage] = "Inquiry Created Successfully";
             }
 
-            
+
             return RedirectToAction(nameof(InquiryConfirm));
 
 
         }
 
-        public IActionResult InquiryConfirm(int id=0)
+        public IActionResult InquiryConfirm(int id = 0)
         {
 
             OrderHeader orderHeader = dbContext.OrderHeader.FirstOrDefault(p => p.Id == id);
@@ -421,7 +421,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
 
 
 
-            TempData[GeneralApplicationConstants.SuccessMessage] = "Product removed successfully";
+            TempData[SuccessMessage] = "Product removed successfully";
             return RedirectToAction("GetCartProducts");
 
 
@@ -442,13 +442,13 @@ namespace Baumarkt_E_commerce_Platform.Controllers
                     Id = prod.Id,
                     Quantity = prod.TempQuantity
 
-                }); 
+                });
             }
 
             userSession.Set(UserSessionConstantsKey.SessionKey, cartItemList);
-            return RedirectToAction(nameof(GetCartProducts));   
+            return RedirectToAction(nameof(GetCartProducts));
 
-        
+
         }
 
 
@@ -457,7 +457,7 @@ namespace Baumarkt_E_commerce_Platform.Controllers
         {
 
             userSession.Clear();
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

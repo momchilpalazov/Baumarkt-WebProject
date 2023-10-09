@@ -53,9 +53,11 @@ namespace BaumarktSystem.Admin.Controllers
             
             OrderListViewModel orderListViewModel = new OrderListViewModel()
             {
-                OrderHeadersList = dbContext.OrderHeader.Include(o => o.CreatedBy)
-                .OrderByDescending(o => o.OrderDate),
-                StatusList = GeneralApplicationConstants.StatusList.Select(s => new SelectListItem
+                //OrderHeadersList = dbContext.OrderHeader.Include(o => o.CreatedBy)
+                //.OrderByDescending(o => o.OrderDate),
+
+                OrderHeadersList = orderHeaderInterface.GetAll(),
+                StatusList = GeneralApplicationConstants.StatusList.ToList().Select(s => new Microsoft.AspNetCore.Mvc.Rendering. SelectListItem
                 {
                     Text = s,
                     Value = s
