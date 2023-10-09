@@ -8,20 +8,22 @@
     ViewBag.Title = "OrderPage";
 }
 
-<h1>Oreder Table</h1>
+<h1>ORDER TABLE</h1>
 
 
     <div class="control-section">
-        @Html.EJS().Grid("DefaultFunctionalities").DataSource(Model.OrderHeadersList).Columns(col=> {
+        @Html.EJS().Grid("Grid").DataSource(Model.OrderHeadersList).Columns(col=> {
 
     col.Field("Id").HeaderText("Order ID").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Width("120").Add();
     col.Field("FullName").HeaderText("Full Name").Width("150").Add();
     col.Field("Email").HeaderText("Email").Width("150").Add();
     col.Field("OrderDate").HeaderText("Order Date").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Right).Width("130").Format("yMd").Add();
     col.Field("PhoneNumber").HeaderText("Phone Number").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Right).Width("120").Add();
-    col.Field("OrderStatus").HeaderText("Order Status").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Right).Width("120").Format("C2").Add();   
+    col.Field("OrderStatus").HeaderText("Order Status").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Right).Width("120").Format("C2").Add();
+    col.Field("Id").HeaderText("").Width("120").Template("<button class='btn btn-primary' onclick='location.href=\"/Order/OrderDetails/?id=${Id}\"'>Details</button>").Add();
+    
 
-    }).AllowPaging().PageSettings(page=>page.PageCount(5)).Render()
+    }).AllowPaging().PageSettings(page=>page.PageCount(5)).Toolbar(new List<string>() { "Search" }).Render()
     </div>
 
     
