@@ -29,6 +29,16 @@ namespace BaumarktSystem.Services.Data
             }
         }
 
+        public IEnumerable<OrderDetails> GetAll()
+        {
+
+            var orderDetails = dbContext.OrderDetails;
+            return orderDetails;
+
+
+           
+        }
+
         public IEnumerable<OrderDetails> GetDetailsByHeaderId(int headerId)
         {
 
@@ -38,10 +48,9 @@ namespace BaumarktSystem.Services.Data
             
         }
 
-        
-
-
-
-
+        public IEnumerable<OrderDetails> GetDetailsByHeaderId()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

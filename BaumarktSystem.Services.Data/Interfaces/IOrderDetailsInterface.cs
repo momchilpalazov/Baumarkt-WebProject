@@ -12,8 +12,7 @@ namespace BaumarktSystem.Services.Data.Interfaces
 
         IEnumerable<OrderDetails> GetDetailsByHeaderId(int headerId);
         void Delete(int id);
-
-
-
+        IEnumerable<OrderDetails> GetDetailsByHeaderId();
+        IEnumerable<OrderDetails> GetAll();
     }
 }

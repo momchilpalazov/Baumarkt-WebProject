@@ -20,29 +20,26 @@ namespace BaumarktSystem.Admin.Controllers
 
         private readonly BaumarktSystemDbContext dbContext;
 
-        private readonly IWebHostEnvironment webHostEnvironment;
-
-        private readonly IEmailSender emailSender;
+       
 
         private readonly IOrderHeaderInterface orderHeaderInterface;
 
-        private readonly IOrderDetailsInterface orderDetailsInterface;
+        private readonly IOrderDetailsInterface orderDetailsInterface;      
 
-        private readonly IBrainTreeGateInterface brainTreeGateInterface;        
+      
 
-        private readonly UserSession userSession;
+        [BindProperty]
+        public  OrderViewModel OrderViewModel { get; set; }
 
-        public OrderController(UserSession userSession, BaumarktSystemDbContext dbContext, IWebHostEnvironment webHostEnvironment,
-            IEmailSender emailSender, IOrderDetailsInterface orderDetails, IOrderHeaderInterface orderHeader, IBrainTreeGateInterface brainTreeGateInterface)
+        public OrderController( BaumarktSystemDbContext dbContext
+            , IOrderDetailsInterface orderDetails, IOrderHeaderInterface orderHeader)
         {
 
-            this.userSession = userSession;
             this.dbContext = dbContext;
-            this.webHostEnvironment = webHostEnvironment;
-            this.emailSender = emailSender;
+         
             this.orderHeaderInterface = orderHeader;
             this.orderDetailsInterface = orderDetails;
-            this.brainTreeGateInterface = brainTreeGateInterface;
+            
         }
 
 
@@ -69,6 +66,20 @@ namespace BaumarktSystem.Admin.Controllers
             return View(orderListViewModel);
 
             
+        }
+
+
+        public async Task<IActionResult> OrderDetails(int id)
+        {
+
+            OrderViewModel  = new OrderViewModel()
+            {
+                OrderHeader = orderHeaderInterface.GetById(id).FirstOrDefault(x=>x.Id==id),
+                OrderDetails = orderDetailsInterface.GetAll().Where(o => o.OrderHeaderId == id).ToList(),
+                Products = dbContext.Product.ToList()
+            };
+
+            return View(OrderViewModel);
         }
     }
 }

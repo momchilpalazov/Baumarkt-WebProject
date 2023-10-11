@@ -28,5 +28,23 @@ namespace BaumarktSystem.Services.Data
 
             
         }
+
+        
+
+        IEnumerable<OrderHeader> IOrderHeaderInterface.GetById(int id)
+        {
+
+            var orderHeader = dbContext.OrderHeader.Where(x => x.Id == id);
+            if (orderHeader == null) 
+            {
+                return null;
+            
+            }
+
+            return orderHeader;
+
+
+            
+        }
     }
 }

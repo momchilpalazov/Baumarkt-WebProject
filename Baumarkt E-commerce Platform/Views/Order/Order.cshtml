@@ -1,7 +1,6 @@
 ﻿@using BaumarktSystem.Web.ViewModels.Order
-@model OrderListViewModel
 @using Syncfusion.EJ2
-
+@model OrderListViewModel 
 
 
 @{
@@ -10,20 +9,29 @@
 
 <h1>ORDER TABLE</h1>
 
-
     <div class="control-section">
-        @Html.EJS().Grid("Grid").DataSource(Model.OrderHeadersList).Columns(col=> {
-
-    col.Field("Id").HeaderText("Order ID").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Width("120").Add();
-    col.Field("FullName").HeaderText("Full Name").Width("150").Add();
-    col.Field("Email").HeaderText("Email").Width("150").Add();
-    col.Field("OrderDate").HeaderText("Order Date").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Right).Width("130").Format("yMd").Add();
-    col.Field("PhoneNumber").HeaderText("Phone Number").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Right).Width("120").Add();
-    col.Field("OrderStatus").HeaderText("Order Status").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Right).Width("120").Format("C2").Add();
-    col.Field("Id").HeaderText("").Width("120").Template("<button class='btn btn-primary' onclick='location.href=\"/Order/OrderDetails/?id=${Id}\"'>Details</button>").Add();
     
 
-    }).AllowPaging().PageSettings(page=>page.PageCount(5)).Toolbar(new List<string>() { "Search" }).Render()
+        @Html.EJS().Grid("Grid").DataSource(Model.OrderHeadersList).Columns(col => {
+        col.Field("Id").HeaderText("Order ID").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Width("120").Add();
+        col.Field("FullName").HeaderText("Full Name").Width("150").Add();
+        col.Field("Email").HeaderText("Email").Width("150").Add();
+        col.Field("OrderDate").HeaderText("Order Date").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Right).Width("130").Format("yMd").Add();
+        col.Field("PhoneNumber").HeaderText("Phone Number").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Right).Width("120").Add();
+        col.Field("OrderStatus").HeaderText("Order Status").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Right).Width("120").Format("C2").Add();
+        col.Template(@"<a rel='nofollow' href='OrderDetails/${Id}' class='btn btn-primary'>Details <i class=''></i><a>").HeaderText("").Width("120").Add();
+
+        }).AllowPaging().PageSettings(page => page.PageCount(5)).Toolbar(new List<string>() { "Search" }).Render()
+    
     </div>
 
-    
+
+    @*<script>
+    function redirectToDetails(Id) {
+        var orderId = $(".orderId").val(); // Вземете стойността на скритото поле с клас "orderId"
+        var url = `@Url.Action("OrderDetails", "Order")/${orderId}`;
+        window.location.href = url;
+        return false;
+    }
+    </script>*@
+

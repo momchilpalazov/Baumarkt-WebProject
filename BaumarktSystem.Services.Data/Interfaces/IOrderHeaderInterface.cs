@@ -11,8 +11,6 @@ namespace BaumarktSystem.Services.Data.Interfaces
     {
 
         IEnumerable<OrderHeader> GetAll();
-
-
-
+        IEnumerable<OrderHeader> GetById(int id);
     }
 }
