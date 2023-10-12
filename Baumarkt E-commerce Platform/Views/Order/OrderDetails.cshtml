@@ -16,7 +16,7 @@
                     <i class=""></i> &nbsp; Order Summary
                 </div>
                 <div class="col-12 col-md-4 offset-md-2 text-right">
-                    <a asp-controller="Order" asp-action="" class="btn btn-outline-info form-control btn-sm">Back to Orders</a>
+                    <a asp-controller="Order" asp-action="Order" class="btn btn-outline-info form-control btn-sm">Back to Orders</a>
                 </div>
             </div>
             <div class="card-body pb-0">
@@ -167,7 +167,7 @@
                             @if (Model.OrderHeader.OrderStatus == GeneralApplicationConstants.StatusApproved)
                             {
                                 <input type="submit" value="Start Processing"
-                                       formmethod="post" asp-action="StartProcessing"
+                                       formmethod="post" asp-action="StartProces"
                                        class="btn btn-info form-control" />
                             }
                             @if (Model.OrderHeader.OrderStatus == GeneralApplicationConstants.StatusInProcess)

@@ -6,6 +6,7 @@ using BaumarktSystem.Services.Data.Interfaces;
 using BaumarktSystem.Web.Utility;
 using BaumarktSystem.Web.ViewModels.Order;
 using BaumarktSystem.Web.ViewModels.ShoppingCart;
+using Braintree;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -24,7 +25,9 @@ namespace BaumarktSystem.Admin.Controllers
 
         private readonly IOrderHeaderInterface orderHeaderInterface;
 
-        private readonly IOrderDetailsInterface orderDetailsInterface;      
+        private readonly IOrderDetailsInterface orderDetailsInterface;    
+        
+        private readonly IBrainTreeGateInterface brainTreeGateInterface;
 
       
 
@@ -32,13 +35,14 @@ namespace BaumarktSystem.Admin.Controllers
         public  OrderViewModel OrderViewModel { get; set; }
 
         public OrderController( BaumarktSystemDbContext dbContext
-            , IOrderDetailsInterface orderDetails, IOrderHeaderInterface orderHeader)
+            , IOrderDetailsInterface orderDetails, IOrderHeaderInterface orderHeader,IBrainTreeGateInterface brainTreeGateInterface)
         {
 
             this.dbContext = dbContext;
          
             this.orderHeaderInterface = orderHeader;
             this.orderDetailsInterface = orderDetails;
+            this.brainTreeGateInterface = brainTreeGateInterface;
             
         }
 
@@ -81,5 +85,70 @@ namespace BaumarktSystem.Admin.Controllers
 
             return View(OrderViewModel);
         }
+
+
+        [HttpPost]
+        public IActionResult StartProces()
+        {
+            var orderHeader = orderHeaderInterface.GetAll().FirstOrDefault(x => x.Id == OrderViewModel.OrderHeader.Id);
+            orderHeader.OrderStatus = GeneralApplicationConstants.StatusInProcess;
+            dbContext.SaveChanges();
+
+            return RedirectToAction(nameof(Order));
+        }
+
+        [HttpPost]
+        public IActionResult ShipOrder()
+        {
+            var orderHeader = orderHeaderInterface.GetAll().FirstOrDefault(x => x.Id == OrderViewModel.OrderHeader.Id);
+            orderHeader.OrderStatus = GeneralApplicationConstants.StatusShipped;
+            orderHeader.ShippingDate = System.DateTime.Now;
+            dbContext.SaveChanges();
+
+            return RedirectToAction(nameof(Order));
+        }
+
+        [HttpPost]
+        public IActionResult CancelOrder()
+        {
+            var orderHeader = orderHeaderInterface.GetAll().FirstOrDefault(x => x.Id == OrderViewModel.OrderHeader.Id);
+
+            var gateway = brainTreeGateInterface.GetGateway();  
+            Transaction transaction = gateway.Transaction.Find(orderHeader.TransactionId);
+            if (transaction.Status == TransactionStatus.AUTHORIZED || transaction.Status == TransactionStatus.SUBMITTED_FOR_SETTLEMENT)
+            {
+                // No refund
+                Result<Transaction> resultVoid = gateway.Transaction.Void(orderHeader.TransactionId);
+            }
+            else
+            {
+                // Refund
+                Result<Transaction> resultRefund = gateway.Transaction.Refund(orderHeader.TransactionId);
+            }
+
+            orderHeader.OrderStatus = GeneralApplicationConstants.StatusRefunded;           
+            dbContext.SaveChanges();
+            return RedirectToAction(nameof(Order));
+        }
+
+        [HttpPost]
+
+        public IActionResult UpdateOrderDetails()
+        {
+            var orderHeaderDb = orderHeaderInterface.GetAll().FirstOrDefault(x => x.Id == OrderViewModel.OrderHeader.Id);
+            
+            orderHeaderDb.FullName= OrderViewModel.OrderHeader.FullName;
+            orderHeaderDb.PhoneNumber = OrderViewModel.OrderHeader.PhoneNumber;
+            orderHeaderDb.StreetAddress = OrderViewModel.OrderHeader.StreetAddress;
+            orderHeaderDb.City = OrderViewModel.OrderHeader.City;
+            orderHeaderDb.State = OrderViewModel.OrderHeader.State;
+            orderHeaderDb.PostalCode = OrderViewModel.OrderHeader.PostalCode;
+            orderHeaderDb.Email = OrderViewModel.OrderHeader.Email;
+
+            dbContext.SaveChanges();
+            TempData["Success"] = "Order details updated successfully";
+            return RedirectToAction(nameof(OrderDetails), new { id = orderHeaderDb.Id });
+        }
+
     }
 }
