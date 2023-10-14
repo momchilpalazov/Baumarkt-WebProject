@@ -3,18 +3,16 @@ using Baumarkt_E_commerce_Platform.Utility.BrainTree;
 using BaumarktSystem.Common;
 using BaumarktSystem.Data;
 using BaumarktSystem.Services.Data.Interfaces;
-using BaumarktSystem.Web.Utility;
 using BaumarktSystem.Web.ViewModels.Order;
-using BaumarktSystem.Web.ViewModels.ShoppingCart;
 using Braintree;
-using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+
 
 
 namespace BaumarktSystem.Admin.Controllers
 {
+    [Authorize(Roles = GeneralApplicationConstants.roleAdmin)]
     public class OrderController : Controller
     {
 
@@ -93,7 +91,7 @@ namespace BaumarktSystem.Admin.Controllers
             var orderHeader = orderHeaderInterface.GetAll().FirstOrDefault(x => x.Id == OrderViewModel.OrderHeader.Id);
             orderHeader.OrderStatus = GeneralApplicationConstants.StatusInProcess;
             dbContext.SaveChanges();
-
+            TempData["Success"] = "Order started successfully"; 
             return RedirectToAction(nameof(Order));
         }
 
@@ -104,7 +102,7 @@ namespace BaumarktSystem.Admin.Controllers
             orderHeader.OrderStatus = GeneralApplicationConstants.StatusShipped;
             orderHeader.ShippingDate = System.DateTime.Now;
             dbContext.SaveChanges();
-
+            TempData["Success"] = "Order shipped successfully";
             return RedirectToAction(nameof(Order));
         }
 
@@ -128,6 +126,7 @@ namespace BaumarktSystem.Admin.Controllers
 
             orderHeader.OrderStatus = GeneralApplicationConstants.StatusRefunded;           
             dbContext.SaveChanges();
+            TempData["Success"] = "Order cancelled successfully";
             return RedirectToAction(nameof(Order));
         }
 

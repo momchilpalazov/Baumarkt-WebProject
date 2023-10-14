@@ -1,6 +1,7 @@
 
 using Baumarkt_E_commerce_Platform.Utility.BrainTree;
 using BaumarktSystem.Data;
+using BaumarktSystem.Data.Initializer;
 using BaumarktSystem.Data.Models;
 using BaumarktSystem.Services.Data;
 
@@ -12,18 +13,22 @@ using BaumarktSystem.Web.Utility;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.Web.CodeGeneration;
-using System.Configuration;
-using System.Security.Principal;
+using BaumarktSystem.Data.Initializer;
+
 using static BaumarktSystem.Common.GeneralApplicationConstants;
+using Microsoft.Identity.Client;
 
 namespace BaumarktSystem.Web
 {
     public class Program
     {
+        
+
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            
 
             // Add services to the container.
             var connectionString = 
@@ -72,9 +77,14 @@ namespace BaumarktSystem.Web
             builder.Services.AddScoped<IInquiryHeaderInterface, InquiryHeaderService>();
             builder.Services.AddScoped<IInquiryDetailsInterface, InquiryDetailsService>();
             builder.Services.AddScoped<IOrderHeaderInterface, OrderHeaderService>();
-            builder.Services.AddScoped<IOrderDetailsInterface, OrderDetailsService>();  
+            builder.Services.AddScoped<IOrderDetailsInterface, OrderDetailsService>();
+            //builder.Services.AddScoped<IDateBaseInitializerInterface, DateBaseInitializer>();
+
+            //IDateBaseInitializerInterface dateBaseInitializer = builder.Services.BuildServiceProvider().GetRequiredService<IDateBaseInitializerInterface>();
+
 
             builder.Services.AddScoped<UserSession>();
+
            
             builder.Services.AddAuthentication().AddFacebook(Options =>
             {
@@ -91,6 +101,8 @@ namespace BaumarktSystem.Web
 
 
             });
+
+
             
 
 
@@ -103,9 +115,16 @@ namespace BaumarktSystem.Web
             builder.Services.AddRazorPages();
 
 
+
+
             var app = builder.Build();
 
+
+            
             // Configure the HTTP request pipeline.
+
+
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
@@ -136,9 +155,18 @@ namespace BaumarktSystem.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
+           
+
+
+
+
+
+
             if (app.Environment.IsDevelopment())
             {
-                app.SeedAdministrator(EmeilDevelopment);
+                //app.SeedAdministrator(EmeilDevelopment);
+                //dateBaseInitializer.Initialize();
+
 
             }
            
@@ -167,6 +195,11 @@ namespace BaumarktSystem.Web
             app.MapRazorPages();
 
             app.Run();
+
+
+            
         }
+
+
     }
 }

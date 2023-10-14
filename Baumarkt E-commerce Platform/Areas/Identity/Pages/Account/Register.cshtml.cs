@@ -188,6 +188,7 @@ namespace Baumarkt_E_commerce_Platform.Areas.Identity.Pages.Account
                         }
                         else
                         {
+                            TempData["Success"] = user.FullName + "has been  registered";
                             return RedirectToAction("Index");
 
                         }

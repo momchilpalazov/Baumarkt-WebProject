@@ -24,6 +24,8 @@ namespace BaumarktSystem.Data.Models
 
 
 
+        
+
 
         
         [MaxLength(NameMaxLength)]

@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using static BaumarktSystem.Common.GeneralApplicationConstants;
@@ -24,10 +22,8 @@ namespace BaumarktSystem.Web.Infrastructure.Extensions
 
             IServiceProvider serviceProvider = scopedServices.ServiceProvider;
 
-            UserManager<ApplicationUser> userManager =
-                serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            RoleManager<IdentityRole<Guid>> roleManager =
-                serviceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+            UserManager<ApplicationUser> userManager =  serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            RoleManager<IdentityRole<Guid>> roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
 
             Task.Run(async () =>
             {
@@ -36,11 +32,9 @@ namespace BaumarktSystem.Web.Infrastructure.Extensions
                     return;
                 }
 
-                IdentityRole<Guid> adminRole =
-                    new IdentityRole<Guid>(roleAdmin);
+                IdentityRole<Guid> adminRole = new IdentityRole<Guid>(roleAdmin);
 
-                IdentityRole<Guid> customerRole =
-                    new IdentityRole<Guid>(roleCustomer);
+                IdentityRole<Guid> customerRole = new IdentityRole<Guid>(roleCustomer);
 
                 await roleManager.CreateAsync(adminRole);
                 await roleManager.CreateAsync(customerRole);
@@ -53,9 +47,7 @@ namespace BaumarktSystem.Web.Infrastructure.Extensions
                 await userManager.AddToRoleAsync(adminUser,roleAdmin);
                 await userManager.AddToRoleAsync(adminUser,roleCustomer);
 
-            })
-            .GetAwaiter()
-            .GetResult();
+            }).GetAwaiter().GetResult();
 
             return app;
         }
