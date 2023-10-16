@@ -25,7 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaumarktSystem.Web.Infrastr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{00C19623-E3D9-45DC-AB7F-C3BD967555A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaumarktSystems.Services.Tests", "BaumarktSystems.Services.Tests\BaumarktSystems.Services.Tests.csproj", "{E7002F17-F40E-4F55-B2D7-6255D30EFA32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaumarktSystems.Services.Tests", "BaumarktSystems.Services.Tests\BaumarktSystems.Services.Tests.csproj", "{E7002F17-F40E-4F55-B2D7-6255D30EFA32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIListing", "APIListing\APIListing.csproj", "{43CC3B88-B909-4F17-8F7F-CC7BCAD9CB74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +67,10 @@ Global
 		{E7002F17-F40E-4F55-B2D7-6255D30EFA32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7002F17-F40E-4F55-B2D7-6255D30EFA32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7002F17-F40E-4F55-B2D7-6255D30EFA32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43CC3B88-B909-4F17-8F7F-CC7BCAD9CB74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43CC3B88-B909-4F17-8F7F-CC7BCAD9CB74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43CC3B88-B909-4F17-8F7F-CC7BCAD9CB74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43CC3B88-B909-4F17-8F7F-CC7BCAD9CB74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
